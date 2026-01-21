@@ -50,12 +50,7 @@ I am a passionate DevOps engineer with a robust background in implementing CI/CD
 
 ---
 
-## 🛠️ Tech Stack
 
-- **Frontend:** React.js, Vite
-- **Styling:** CSS3 (Variables, Flexbox, Grid, Glassmorphism)
-- **Deployment:** GitHub Pages
-- **Routing:** React Router
 
 ## 🚦 Running Locally
 
