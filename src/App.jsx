@@ -87,15 +87,22 @@ function App() {
             text-align: center;
         }
         .logo-container {
-            font-size: 2.5rem;
+            font-size: 2rem; /* Reduced from 2.5rem to fit long title */
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 1rem;
             margin-bottom: 0.5rem;
+            flex-wrap: nowrap; /* Prevent wrapping implies single line */
         }
-        .icon { font-size: 3rem; }
+        .logo-container h1 {
+            margin: 0;
+            font-size: inherit; /* Inherit 2rem */
+            line-height: 1;
+            white-space: nowrap; /* Force single line */
+        }
+        .icon { font-size: 2.5rem; }
         .highlight { color: var(--color-accent); }
         .subtitle {
             color: var(--color-text-secondary);
