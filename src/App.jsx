@@ -87,20 +87,22 @@ function App() {
             text-align: center;
         }
         .logo-container {
-            font-size: 2rem; /* Reduced from 2.5rem to fit long title */
+            font-size: clamp(1rem, 4vw, 2rem); /* Responsive size: min 1rem, max 2rem */
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-bottom: 0.5rem;
-            flex-wrap: nowrap; /* Prevent wrapping implies single line */
+            flex-wrap: nowrap; /* Prevent wrapping */
         }
         .logo-container h1 {
             margin: 0;
-            font-size: inherit; /* Inherit 2rem */
+            font-size: inherit;
             line-height: 1;
             white-space: nowrap; /* Force single line */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Graceful fallback */
         }
         .icon { font-size: 2.5rem; }
         .highlight { color: var(--color-accent); }
