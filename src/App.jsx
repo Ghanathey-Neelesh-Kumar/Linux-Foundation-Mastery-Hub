@@ -87,7 +87,7 @@ function App() {
             text-align: center;
         }
         .logo-container {
-            font-size: clamp(1rem, 4vw, 2rem); /* Responsive size: min 1rem, max 2rem */
+            font-size: clamp(1.2rem, 4vw, 2.5rem); /* Increased size for boldness */
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -104,7 +104,7 @@ function App() {
             overflow: hidden;
             text-overflow: ellipsis; /* Graceful fallback */
         }
-        .icon { font-size: 2.5rem; }
+        .icon { font-size: 1.2em; } /* Relative to container text size */
         .highlight { color: var(--color-accent); }
         .subtitle {
             color: var(--color-text-secondary);
