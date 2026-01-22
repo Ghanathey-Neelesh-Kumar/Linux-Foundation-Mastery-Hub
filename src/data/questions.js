@@ -488,7 +488,7 @@ Observability is traditionally built on three types of data:
       correctAnswer: "Never trust, always verify",
       explanation: `
 ### Concept: Cloud Native Security
-**Zero Trust** is a security framework requiring all users, whether in or outside the organization's network, to be authenticated, authorized, and continuously validated for security configuration and posture.
+**Zero Trust** is a security framework requiring all users, whether in or outside the organization's network, to be authenticated, authorized, and continuously validated for security configuration and risk posture.
       `
     },
     {
@@ -726,12 +726,12 @@ kubectl apply -f deployment.yaml  # Preferred
 **Containers** package application code together with all dependencies, libraries, and configuration files needed to run, ensuring consistency across different environments.
 
 **Key benefits:**
-- **Portability**: \"It works on my machine\" → \"It works everywhere\"
+- **Portability**: "It works on my machine" → "It works everywhere"
 - **Consistency**: Same environment from dev to production
 - **Isolation**: Applications don't interfere with each other
 - **Efficiency**: Share OS kernel, lighter than VMs
 
-**The \"dependency problem\" containers solve:**
+**The "dependency problem" containers solve:**
 - Different OS versions
 - Different library versions
 - Configuration drift
@@ -798,9 +798,7 @@ Kubernetes uses the **Container Runtime Interface (CRI)** to communicate with co
 - **CRI-O**: Lightweight, built specifically for Kubernetes
 - **Docker Engine**: Previously used via dockershim (deprecated in 1.24, removed in 1.25)
 
-**Podman** is a daemonless container engine for developing, managing, and running OCI containers. While excellent for local development and can run containers, it doesn't implement CRI for Kubernetes integration.
-
-**Note:** Dockershim was deprecated and removed, but containerd (which Docker uses internally) remains fully supported.
+**Podman** is a daemonless container engine for developing, managing, and running OCI containers. While Podman is excellent for local development and can manage containers, it does not implement the Kubernetes CRI by default; additional integration layers or shims are required for Podman to act as a CRI runtime in Kubernetes environments.
 
 **Current best practices:**
 - Use containerd or CRI-O as your runtime
@@ -992,364 +990,39 @@ kubectl → API Server → etcd
 A **ReplicaSet** ensures that a specified number of pod replicas are running at any given time. It's the mechanism that provides self-healing and scaling.
 
 **How ReplicaSets work:**
-1. You specify desired number of replicas
-2. ReplicaSet monitors actual number of pods
-3. Creates pods if too few exist
-4. Deletes pods if too many exist
+1. You specify desired number of replicas.
+2. ReplicaSet monitors actual number of pods.
+3. Creates pods if too few exist.
+4. Deletes pods if too many exist.
 
-**ReplicaSet configuration:**
-- **Replicas**: Desired number of pods
-- **Selector**: How to identify which pods to manage
-- **Pod template**: Specification for creating new pods
-
-**Important note:**
-You typically don't create ReplicaSets directly. Instead, create a **Deployment**, which manages ReplicaSets for you and provides additional features like rolling updates.
-
-**Hierarchy:**
-\`\`\`
-Deployment
-    ↓
-ReplicaSet
-    ↓
-Pods (3 replicas)
-\`\`\`
-
-**Why other options are incorrect:**
-- Data backup is handled by volumes and backup tools
-- Data replication is a replacement for storage
-- Image copies are managed by container registries
-      `
-    },
-    {
-      id: 321,
-      question: "Which Kubernetes object would you use to run a pod on every node in the cluster?",
-      options: [
-        "Deployment",
-        "StatefulSet",
-        "DaemonSet",
-        "Job"
-      ],
-      correctAnswer: "DaemonSet",
-      explanation: `
-### Concept: DaemonSets
-
-A **DaemonSet** ensures that all (or some) nodes run a copy of a specific pod. As nodes are added to the cluster, pods are automatically added to them.
-
-**Common use cases:**
-- **Log collection**: Fluentd, Logstash on every node
-- **Monitoring**: Node exporters, monitoring agents
-- **Storage**: Ceph, GlusterFS daemons
-- **Networking**: CNI plugins like Calico, Weave
-- **Security**: Security monitoring agents
-
-**How DaemonSets work:**
-- Automatically schedules one pod per node
-- When new nodes join, pods are added
-- When nodes are removed, pods are garbage collected
-- Can use node selectors to run only on specific nodes
+**Key fields in a ReplicaSet spec:**
+- \`replicas\`: desired number of pod replicas
+- \`selector\`: label selector used to identify which pods belong to the ReplicaSet
+- \`template\`: pod template used to create new pods
 
 **Example:**
 \`\`\`yaml
 apiVersion: apps/v1
-kind: DaemonSet
+kind: ReplicaSet
 metadata:
-  name: monitoring-agent
+  name: nginx-rs
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      app: monitoring
+      app: nginx
   template:
-    # Pod template
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
 \`\`\`
 
-**Why other options are incorrect:**
-- **Deployment**: Runs specified number of replicas (not one per node)
-- **StatefulSet**: For stateful applications needing stable identities
-- **Job**: For run-to-completion tasks
-      `
-    },
-    {
-      id: 322,
-      question: "What is a ConfigMap used for in Kubernetes?",
-      options: [
-        "To store encrypted sensitive data like passwords",
-        "To store non-confidential configuration data in key-value pairs",
-        "To configure the Kubernetes control plane",
-        "To map network routes between services"
-      ],
-      correctAnswer: "To store non-confidential configuration data in key-value pairs",
-      explanation: `
-### Concept: Configuration Management
-
-**ConfigMaps** allow you to decouple configuration from container images, making applications more portable and easier to manage.
-
-**What to store in ConfigMaps:**
-- Application configuration files
-- Environment variables
-- Command-line arguments
-- Configuration parameters (non-sensitive)
-
-**How to use ConfigMaps:**
-1. **Environment variables**: Inject into pod
-2. **Volume mounts**: Mount as files in container
-3. **Command-line arguments**: Pass to container
-
-**Example:**
-\`\`\`yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: app-config
-data:
-  database_url: \"postgres://db:5432\"
-  log_level: \"info\"
-\`\`\`
-
-**ConfigMap vs Secret:**
-- **ConfigMap**: Non-sensitive data (plaintext)
-- **Secret**: Sensitive data (base64 encoded, can be encrypted)
-
-**Best practices:**
-- Don't store passwords/tokens in ConfigMaps
-- Use Secrets for sensitive data
-- Can update ConfigMaps, pods need restart to see changes
-
-**Why other options are incorrect:**
-- Secrets (not ConfigMaps) are for sensitive data
-- Control plane configured via manifests and flags
-- Network routing handled by Services/Ingress
-      `
-    },
-    {
-      id: 323,
-      question: "What is the purpose of a Kubernetes Secret?",
-      options: [
-        "To hide pods from being discovered by services",
-        "To store sensitive information like passwords and API keys",
-        "To encrypt network traffic between pods",
-        "To create private namespaces"
-      ],
-      correctAnswer: "To store sensitive information like passwords and API keys",
-      explanation: `
-### Concept: Secrets Management
-
-**Secrets** are used to store and manage sensitive information such as passwords, OAuth tokens, SSH keys, and API keys.
-
-**Why use Secrets:**
-- Keep sensitive data separate from pod specs
-- Base64 encoded (not encrypted by default)
-- Can be encrypted at rest (requires configuration)
-- More secure than hardcoding in images
-
-**Types of Secrets:**
-- **Opaque**: Generic secret (default)
-- **kubernetes.io/tls**: TLS certificates and keys
-- **kubernetes.io/dockerconfigjson**: Docker registry credentials
-- **kubernetes.io/basic-auth**: Basic authentication
-- **kubernetes.io/ssh-auth**: SSH credentials
-
-**How to use Secrets:**
-\`\`\`yaml
-# As environment variable
-env:
-  - name: DB_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: db-secret
-        key: password
-
-# As volume mount
-volumes:
-  - name: secret-volume
-    secret:
-      secretName: my-secret
-\`\`\`
-
-**Security considerations:**
-- Enable encryption at rest in etcd
-- Use RBAC to control access
-- Consider external secret management (Vault, AWS Secrets Manager)
-
-**Why other options are incorrect:**
-- Pod discovery is handled by Services
-- Network encryption requires service mesh or network policies
-- Namespace privacy uses RBAC and network policies
-      `
-    },
-    {
-      id: 324,
-      question: "What does a PersistentVolume (PV) represent in Kubernetes?",
-      options: [
-        "A volume that exists only during the pod's lifetime",
-        "A piece of storage in the cluster that has been provisioned and exists independently of pods",
-        "A backup of pod data",
-        "A network storage controller"
-      ],
-      correctAnswer: "A piece of storage in the cluster that has been provisioned and exists independently of pods",
-      explanation: `
-### Concept: Persistent Storage
-
-**PersistentVolume (PV)** is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. It has a lifecycle independent of any pod.
-
-**Storage hierarchy:**
-1. **PersistentVolume (PV)**: Actual storage resource
-2. **PersistentVolumeClaim (PVC)**: Request for storage by user
-3. **Pod**: Uses PVC to mount storage
-
-**PV characteristics:**
-- Exists independently of pods
-- Can be statically provisioned (admin creates) or dynamic (auto-created)
-- Has storage capacity, access modes, and reclaim policy
-- Survives pod deletion and rescheduling
-
-**Access Modes:**
-- **ReadWriteOnce (RWO)**: Mounted by single node
-- **ReadOnlyMany (ROX)**: Mounted by multiple nodes (read-only)
-- **ReadWriteMany (RWX)**: Mounted by multiple nodes (read-write)
-
-**Reclaim Policies:**
-- **Retain**: Manual reclamation
-- **Delete**: Delete volume when claim is deleted
-- **Recycle**: Scrub data and make available again (deprecated)
-
-**Example use cases:**
-- Databases requiring persistent data
-- File uploads that must survive pod restarts
-- Shared configuration or data between pods
-
-**Why other options are incorrect:**
-- Ephemeral volumes (like emptyDir) exist only during pod lifetime
-- Backups are separate from PVs
-- Storage controllers are CSI drivers, not PVs
-      `
-    },
-    {
-      id: 325,
-      question: "What is the difference between a PersistentVolume (PV) and a PersistentVolumeClaim (PVC)?",
-      options: [
-        "There is no difference, they are the same",
-        "PV is the actual storage resource, PVC is a request for storage by a user",
-        "PV is for dynamic provisioning, PVC is for static provisioning",
-        "PV is used by administrators, PVC is used by applications"
-      ],
-      correctAnswer: "PV is the actual storage resource, PVC is a request for storage by a user",
-      explanation: `
-### Concept: Storage Abstraction
-
-**PersistentVolume (PV)** and **PersistentVolumeClaim (PVC)** provide an abstraction between storage resources and pods, separating concerns between admins and users.
-
-**PersistentVolume (PV):**
-- Created by cluster administrator or dynamically provisioned
-- Represents actual storage (NFS, iSCSI, cloud storage)
-- Cluster-level resource
-- Defines capacity, access mode, storage class
-
-**PersistentVolumeClaim (PVC):**
-- Created by users/developers
-- Request for storage (\"I need 10GB RWO storage\")
-- Namespace-scoped resource
-- Binds to a PV that meets requirements
-
-**The workflow:**
-\`\`\`
-1. Admin creates PV (or uses dynamic provisioning)
-2. User creates PVC requesting storage
-3. Kubernetes binds PVC to suitable PV
-4. Pod uses PVC to mount storage
-\`\`\`
-
-**Analogy:**
-- **PV** = Hotel room (physical resource)
-- **PVC** = Hotel reservation (request for resource)
-- **Pod** = Guest (uses the resource)
-
-**Example:**
-\`\`\`yaml
-# PVC
-apiVersion: v1
-kind: PersistentVolumeClaim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-\`\`\`
-
-**Why other options are incorrect:**
-- They serve different purposes (resource vs request)
-- Both can work with static or dynamic provisioning
-- While admins manage PVs, the fundamental difference is resource vs claim
-      `
-    },
-    {
-      id: 326,
-      question: "What is a StorageClass in Kubernetes?",
-      options: [
-        "A way to classify different types of pods",
-        "A way to describe and provision different types of storage dynamically",
-        "A security class for encrypting storage",
-        "A namespace for storage resources"
-      ],
-      correctAnswer: "A way to describe and provision different types of storage dynamically",
-      explanation: `
-### Concept: Dynamic Storage Provisioning
-
-**StorageClass** provides a way to describe different \"classes\" of storage and enables dynamic provisioning of PersistentVolumes.
-
-**What StorageClass defines:**
-- **Provisioner**: What creates the volume (AWS EBS, GCE PD, NFS, etc.)
-- **Parameters**: Storage-specific settings (type, IOPS, replication)
-- **Reclaim Policy**: What happens when PVC is deleted
-- **Volume Binding Mode**: When to provision and bind
-
-**Dynamic provisioning workflow:**
-\`\`\`
-1. Admin creates StorageClass
-2. User creates PVC referencing StorageClass
-3. Kubernetes automatically creates PV
-4. PVC binds to new PV
-5. Pod uses PVC
-\`\`\`
-
-**Example StorageClass:**
-\`\`\`yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: fast-ssd
-provisioner: kubernetes.io/aws-ebs
-parameters:
-  type: gp3
-  iopsPerGB: \"10\"
-\`\`\`
-
-**Common use cases:**
-- **fast-ssd**: High-performance SSD storage
-- **standard**: Regular HDD storage
-- **encrypted**: Storage with encryption
-- **backup**: Storage optimized for backups
-
-**Benefits:**
-- No manual PV creation
-- On-demand storage provisioning
-- Different tiers of storage (SSD vs HDD)
-
-**Why other options are incorrect:**
-- Not for classifying pods (that's labels/selectors)
-- Not specifically for encryption (though can be configured)
-- Not a namespace (cluster-wide resource)
+ReplicaSets are often managed by Deployments (which provide declarative updates, rolling updates, and rollback capabilities). If you need advanced ordering or stable network IDs, consider StatefulSet instead.
       `
     }
-  ],
-  kcsa: [],
-  pca: [],
-  ica: [],
-  cca: [],
-  capa: [],
-  cgoa: [],
-  cba: [],
-  otca: [],
-  kca: [],
-  cnpa: []
+  ]
 };
