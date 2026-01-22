@@ -4,7 +4,7 @@
 
 An interactive, React-based quiz application designed to help DevOps engineers and students prepare for Linux Foundation certifications, including KCNA, CKA, CKS, and more.
 
-[**🚀 Live Demo**](https://neeleshghanathey.github.io/Linux-Foundation-Mastery-Hub/)
+[**🚀 Live Demo**](https://ghanathey-neelesh-kumar.github.io/Linux-Foundation-Mastery-Hub/)
 
 ---
 
