@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import QuestionCard from './QuestionCard';
 import Explanation from './Explanation';
-import MotivationalModal from './MotivationalModal';
+import MotivationalModal from '../layout/MotivationalModal';
 
 // Helper to shuffle array
 const shuffleArray = (array) => {

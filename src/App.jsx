@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Quiz from './components/Quiz.jsx';
-import CategoryMenu from './components/CategoryMenu.jsx';
-import QuestionCountSelector from './components/QuestionCountSelector.jsx';
+import Quiz from './components/quiz/Quiz.jsx';
+import CategoryMenu from './components/quiz/CategoryMenu.jsx';
+import QuestionCountSelector from './components/quiz/QuestionCountSelector.jsx';
 import { questionBank } from './data/questions';
 
 function App() {

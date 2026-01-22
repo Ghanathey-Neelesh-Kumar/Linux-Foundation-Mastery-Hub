@@ -1,5 +1,4 @@
-import React from 'react';
-import CategoryMenu from './CategoryMenu';
+import CategoryMenu from '../quiz/CategoryMenu';
 import DailyTipsWidget from './DailyTipsWidget';
 import CertRoadmapWidget from './CertRoadmapWidget';
 

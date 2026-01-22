@@ -1,5 +1,5 @@
 import React from 'react';
-import { categories } from '../data/questions';
+import { categories } from '../../data/questions';
 
 const CategoryMenu = ({ onSelectCategory }) => {
     return (
