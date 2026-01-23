@@ -1042,26 +1042,196 @@ ReplicaSets are often managed by Deployments (which provide declarative updates,
 - **Service Mesh**: It can also act as a sidecarless service mesh.
 - **Observability**: Through the **Hubble** project, it provides deep visibility into network flows.
       `
-    }
+    },
     {
-  id: 322,
-  question: "Which component in Kubernetes is responsible for scheduling pods to nodes?",
-  options: [
-    "kube-apiserver",
-    "kube-scheduler",
-    "kube-controller-manager",
-    "kubelet"
-  ],
-  correctAnswer: "kube-scheduler",
-  explanation: `
+      id: 322,
+      question: "Which component in Kubernetes is responsible for scheduling pods to nodes?",
+      options: [
+        "kube-apiserver",
+        "kube-scheduler",
+        "kube-controller-manager",
+        "kubelet"
+      ],
+      correctAnswer: "kube-scheduler",
+      explanation: `
 ### Concept: Kubernetes Control Plane Components
 **kube-scheduler** is the control plane component responsible for assigning pods to nodes.
 - **Watch for Pods**: It watches for newly created pods that have no node assigned.
 - **Selection Criteria**: It selects an optimal node based on resource requirements, constraints, affinity/anti-affinity specifications, and other factors.
 - **Scheduling Decision**: The scheduler makes the decision but doesn't run the pod - that's the kubelet's job.
 - **Pluggable**: Custom schedulers can be implemented for specific scheduling requirements.
-  `
-}
-
+      `
+    },
+    {
+      id: 323,
+      question: "What is the primary purpose of a Container Runtime Interface (CRI)?",
+      options: [
+        "To provide a standard API for container orchestration",
+        "To enable Kubernetes to work with different container runtimes",
+        "To manage container images and registries",
+        "To handle container networking"
+      ],
+      correctAnswer: "To enable Kubernetes to work with different container runtimes",
+      explanation: `
+### Concept: Container Runtime Interface (CRI)
+**CRI** is a plugin interface that enables kubelet to use a variety of container runtimes without needing to recompile.
+- **Abstraction Layer**: It provides a standardized interface between Kubernetes and container runtimes.
+- **Runtime Examples**: containerd, CRI-O, and Docker Engine (via dockershim, now deprecated) are CRI-compatible runtimes.
+- **Flexibility**: Allows users to choose the container runtime that best fits their needs.
+- **gRPC Protocol**: CRI uses gRPC for communication between kubelet and the runtime.
+      `
+    },
+    {
+      id: 324,
+      question: "Which CNCF project provides distributed tracing for microservices?",
+      options: [
+        "Prometheus",
+        "Jaeger",
+        "Fluentd",
+        "Grafana"
+      ],
+      correctAnswer: "Jaeger",
+      explanation: `
+### Concept: Observability - Distributed Tracing
+**Jaeger** is an open-source, end-to-end distributed tracing system for monitoring and troubleshooting microservices-based architectures.
+- **Trace Propagation**: Tracks requests as they flow through multiple services.
+- **Performance Optimization**: Helps identify bottlenecks and latency issues.
+- **Root Cause Analysis**: Assists in debugging distributed transactions.
+- **OpenTelemetry Compatible**: Works with OpenTelemetry for standardized instrumentation.
+      `
+    },
+    {
+      id: 325,
+      question: "What is the default DNS service used in Kubernetes clusters?",
+      options: [
+        "BIND",
+        "CoreDNS",
+        "dnsmasq",
+        "Consul"
+      ],
+      correctAnswer: "CoreDNS",
+      explanation: `
+### Concept: Kubernetes Service Discovery
+**CoreDNS** is the default DNS server for Kubernetes clusters (since version 1.13).
+- **Service Discovery**: Automatically creates DNS records for Kubernetes services.
+- **Plugin Architecture**: Highly extensible through plugins for various DNS functions.
+- **DNS-Based**: Enables pods to discover services using DNS names.
+- **Replaced kube-dns**: CoreDNS replaced kube-dns as the default due to better performance and flexibility.
+      `
+    },
+    {
+      id: 326,
+      question: "Which of the following is NOT one of the 'Three Pillars of Observability'?",
+      options: [
+        "Metrics",
+        "Logs",
+        "Traces",
+        "Alerts"
+      ],
+      correctAnswer: "Alerts",
+      explanation: `
+### Concept: Observability in Cloud Native Systems
+The **Three Pillars of Observability** are fundamental data types for understanding system behavior:
+- **Metrics**: Numerical measurements over time (e.g., CPU usage, request rate).
+- **Logs**: Discrete event records with timestamps and context.
+- **Traces**: Request flows across distributed systems showing latency and dependencies.
+- **Alerts**: While important, alerts are actions taken based on observability data, not a pillar themselves.
+      `
+    },
+    {
+      id: 327,
+      question: "What does the 'declarative' nature of Kubernetes mean?",
+      options: [
+        "You write code to manually create each resource",
+        "You describe the desired state and Kubernetes works to maintain it",
+        "You must declare all variables before using them",
+        "You need to declare dependencies between resources"
+      ],
+      correctAnswer: "You describe the desired state and Kubernetes works to maintain it",
+      explanation: `
+### Concept: Declarative Configuration
+**Declarative configuration** is a core principle of Kubernetes where you specify what you want, not how to achieve it.
+- **Desired State**: You define the desired state in manifest files (YAML/JSON).
+- **Reconciliation Loop**: Kubernetes controllers continuously work to match the current state with the desired state.
+- **Self-Healing**: If the actual state drifts from desired state, Kubernetes automatically corrects it.
+- **vs Imperative**: Contrasts with imperative commands where you specify exact steps to execute.
+      `
+    },
+    {
+      id: 328,
+      question: "Which storage abstraction in Kubernetes allows pods to request storage without knowing the underlying storage provider?",
+      options: [
+        "Volume",
+        "PersistentVolume",
+        "PersistentVolumeClaim",
+        "StorageClass"
+      ],
+      correctAnswer: "PersistentVolumeClaim",
+      explanation: `
+### Concept: Kubernetes Storage Abstractions
+**PersistentVolumeClaim (PVC)** is a request for storage by a user, abstracting storage details from the pod.
+- **Storage Request**: Pods use PVCs to request storage without knowing implementation details.
+- **Binding**: PVCs are bound to PersistentVolumes (PVs) that satisfy the request.
+- **Dynamic Provisioning**: Can trigger automatic PV creation via StorageClass.
+- **Portability**: Makes applications portable across different storage backends.
+      `
+    },
+    {
+      id: 329,
+      question: "What is the purpose of a Service Mesh in cloud native architectures?",
+      options: [
+        "To provide load balancing for incoming traffic",
+        "To manage communication between microservices with features like traffic management and security",
+        "To store configuration data for services",
+        "To schedule containers across cluster nodes"
+      ],
+      correctAnswer: "To manage communication between microservices with features like traffic management and security",
+      explanation: `
+### Concept: Service Mesh
+A **Service Mesh** is a dedicated infrastructure layer for handling service-to-service communication in microservices architectures.
+- **Traffic Management**: Provides advanced routing, load balancing, and circuit breaking.
+- **Security**: Implements mTLS, authentication, and authorization between services.
+- **Observability**: Generates metrics, logs, and traces for all service interactions.
+- **Examples**: Istio, Linkerd, and Consul are popular service mesh implementations.
+      `
+    },
+    {
+      id: 330,
+      question: "Which Open Container Initiative (OCI) specification defines the structure and format of container images?",
+      options: [
+        "Runtime Specification",
+        "Image Specification",
+        "Distribution Specification",
+        "Container Specification"
+      ],
+      correctAnswer: "Image Specification",
+      explanation: `
+### Concept: OCI Standards
+The **OCI Image Specification** defines the format of container images to ensure portability across different platforms.
+- **Image Format**: Specifies how container images should be structured and packaged.
+- **Layers**: Defines the layer-based filesystem structure.
+- **Manifest**: Describes image configuration and layer references.
+- **Portability**: Ensures images work across different OCI-compliant runtimes and registries.
+      `
+    },
+    {
+      id: 331,
+      question: "In Kubernetes, what is the smallest deployable unit?",
+      options: [
+        "Container",
+        "Pod",
+        "Deployment",
+        "Node"
+      ],
+      correctAnswer: "Pod",
+      explanation: `
+### Concept: Kubernetes Workload Fundamentals
+A **Pod** is the smallest and simplest unit in the Kubernetes object model that you create or deploy.
+- **Container Group**: A pod can contain one or more containers that share resources.
+- **Shared Context**: Containers in a pod share network namespace, IP address, and storage volumes.
+- **Atomic Unit**: Pods are created, scheduled, and managed as a single unit.
+- **Ephemeral**: Pods are designed to be ephemeral and replaceable.
+      `
+    }
   ]
 };
