@@ -1024,7 +1024,7 @@ spec:
 ReplicaSets are often managed by Deployments (which provide declarative updates, rolling updates, and rollback capabilities). If you need advanced ordering or stable network IDs, consider StatefulSet instead.
       `
     },
-  {
+    {
       id: 321,
       question: "Which CNCF project is used for multi-cluster networking and security using eBPF?",
       options: [
@@ -1037,6 +1037,7 @@ ReplicaSets are often managed by Deployments (which provide declarative updates,
       explanation: `
 ### Concept: Cloud Native Networking
 **Cilium** is an open-source project that provides networking, security, and observability for cloud-native environments such as Kubernetes.
+
 - **eBPF-based**: It uses eBPF technology to provide high-performance networking and security.
 - **Service Mesh**: It can also act as a sidecarless service mesh.
 - **Observability**: Through the **Hubble** project, it provides deep visibility into network flows.
