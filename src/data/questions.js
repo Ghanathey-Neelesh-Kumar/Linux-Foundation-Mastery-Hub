@@ -1042,5 +1042,25 @@ ReplicaSets are often managed by Deployments (which provide declarative updates,
 - **Observability**: Through the **Hubble** project, it provides deep visibility into network flows.
       `
     }
+    {
+  id: 322,
+  question: "Which component in Kubernetes is responsible for scheduling pods to nodes?",
+  options: [
+    "kube-apiserver",
+    "kube-scheduler",
+    "kube-controller-manager",
+    "kubelet"
+  ],
+  correctAnswer: "kube-scheduler",
+  explanation: `
+### Concept: Kubernetes Control Plane Components
+**kube-scheduler** is the control plane component responsible for assigning pods to nodes.
+- **Watch for Pods**: It watches for newly created pods that have no node assigned.
+- **Selection Criteria**: It selects an optimal node based on resource requirements, constraints, affinity/anti-affinity specifications, and other factors.
+- **Scheduling Decision**: The scheduler makes the decision but doesn't run the pod - that's the kubelet's job.
+- **Pluggable**: Custom schedulers can be implemented for specific scheduling requirements.
+  `
+}
+
   ]
 };
