@@ -1776,24 +1776,24 @@ Application → OTel SDK → OTel Collector → Backend (Prometheus/Jaeger/etc.)
 **Helm Chart Structure**:
 ```
 mychart/
-    Chart.yaml          # Chart metadata
+  Chart.yaml          # Chart metadata
   values.yaml         # Default configuration values
-  templates /          # Kubernetes manifest templates
-  charts /             # Dependent charts
+  templates/          # Kubernetes manifest templates
+  charts/             # Dependent charts
   README.md
-      ```
+```
 
 **Usage Examples**:
 ```bash
 # Use defaults
-helm install myapp./ mychart
+helm install myapp ./mychart
 
 # Override with file
-helm install myapp ./ mychart - f prod- values.yaml
+helm install myapp ./mychart -f prod-values.yaml
 
 # Override specific values
-helm install myapp./ mychart--set replicas = 5
-  ```
+helm install myapp ./mychart --set replicas=5
+```
 
 **values.yaml Example**:
 ```yaml
@@ -1809,17 +1809,17 @@ port: 80
 **Best Practice**: Keep values.yaml minimal with well-documented defaults.
   `
     },
-{
-  id: 350,
-    question: "Which statement about Kubernetes etcd is CORRECT?",
+    {
+      id: 350,
+      question: "Which statement about Kubernetes etcd is CORRECT?",
       options: [
         "etcd runs on worker nodes to store pod data",
         "etcd is a distributed key-value store that serves as Kubernetes' backing store for all cluster data",
         "etcd is only used for storing container logs",
         "Each pod has its own etcd instance"
       ],
-        correctAnswer: "etcd is a distributed key-value store that serves as Kubernetes' backing store for all cluster data",
-          explanation: `
+      correctAnswer: "etcd is a distributed key-value store that serves as Kubernetes' backing store for all cluster data",
+      explanation: `
 ### Concept: Kubernetes Data Store - etcd
 **etcd** is a consistent, distributed key-value store that provides a reliable way to store Kubernetes cluster state and configuration.
 - **Single Source of Truth**: All cluster state (pods, services, configs, secrets) stored in etcd.
@@ -1847,18 +1847,18 @@ port: 80
 
 **Note**: Only API server communicates directly with etcd, not individual components.
   `
-},
-{
-  id: 351,
-    question: "A developer wants to ensure their pod continues running even if a health check temporarily fails. Which type of probe should they configure?",
+    },
+    {
+      id: 351,
+      question: "A developer wants to ensure their pod continues running even if a health check temporarily fails. Which type of probe should they configure?",
       options: [
         "livenessProbe only",
         "readinessProbe only",
         "startupProbe only",
         "Both readinessProbe and appropriate failureThreshold settings"
       ],
-        correctAnswer: "Both readinessProbe and appropriate failureThreshold settings",
-          explanation: `
+      correctAnswer: "Both readinessProbe and appropriate failureThreshold settings",
+      explanation: `
 ### Concept: Kubernetes Health Checks and Probes
 Understanding the different probe types and their configurations is crucial for application reliability.
 
@@ -1875,15 +1875,15 @@ Understanding the different probe types and their configurations is crucial for 
 
 **Configuration Example**:
 ```yaml
-  readinessProbe:
+readinessProbe:
   httpGet:
-  path: /health
-  port: 8080
+    path: /health
+    port: 8080
   initialDelaySeconds: 5
   periodSeconds: 10
   failureThreshold: 3    # Allows 3 failures before marking unready
   successThreshold: 1    # 1 success to mark ready again
-    ```
+```
 
 **Why readinessProbe is better for temporary issues**:
 - Pod stays alive, just stops receiving traffic
@@ -1893,10 +1893,10 @@ Understanding the different probe types and their configurations is crucial for 
 
 **Best Practice**: Use readinessProbe for temporary issues, livenessProbe only for deadlocks/unrecoverable states.
   `
-},
-{
-  id: 352,
-    question: "Which Cloud Native Computing Foundation (CNCF) maturity level indicates a project has the highest level of adoption and stability?",
+    },
+    {
+      id: 352,
+      question: "Which Cloud Native Computing Foundation (CNCF) maturity level indicates a project has the highest level of adoption and stability?",
       options: [
         "Sandbox",
         "Incubating",
