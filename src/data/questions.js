@@ -1232,6 +1232,710 @@ A **Pod** is the smallest and simplest unit in the Kubernetes object model that 
 - **Atomic Unit**: Pods are created, scheduled, and managed as a single unit.
 - **Ephemeral**: Pods are designed to be ephemeral and replaceable.
       `
+    },
+    {
+      id: 332,
+      question: "A developer wants to ensure that their application pods are distributed across different nodes for high availability. Which Kubernetes feature should they use?",
+      options: [
+        "NodeSelector",
+        "Pod Anti-Affinity",
+        "Taints and Tolerations",
+        "Resource Requests"
+      ],
+      correctAnswer: "Pod Anti-Affinity",
+      explanation: `
+### Concept: Pod Scheduling and High Availability
+**Pod Anti-Affinity** is used to spread pods across different nodes, zones, or other topology domains to ensure high availability.
+- **Distribution Strategy**: Prevents multiple replicas of the same application from running on the same node.
+- **Failure Isolation**: If a node fails, you won't lose all replicas at once.
+- **Topology Keys**: Can use labels like kubernetes.io/hostname, topology.kubernetes.io/zone for distribution.
+- **Required vs Preferred**: Can be hard (requiredDuringSchedulingIgnoredDuringExecution) or soft (preferredDuringSchedulingIgnoredDuringExecution).
+
+**Why other options are incorrect**:
+- NodeSelector: Only selects specific nodes, doesn't ensure distribution
+- Taints and Tolerations: Controls which pods can/cannot be scheduled on nodes
+- Resource Requests: For resource allocation, not distribution
+  `
+    },
+    {
+      id: 333,
+      question: "Your organization wants to implement a GitOps workflow for Kubernetes deployments. Which CNCF project is specifically designed for this purpose?",
+      options: [
+        "Jenkins",
+        "Helm",
+        "Argo CD",
+        "Prometheus"
+      ],
+      correctAnswer: "Argo CD",
+      explanation: `
+### Concept: GitOps and Continuous Deployment
+**Argo CD** is a declarative, GitOps continuous delivery tool for Kubernetes, and is a CNCF graduated project.
+- **Git as Source of Truth**: Keeps cluster state synchronized with Git repository declarations.
+- **Automated Sync**: Automatically deploys applications when Git repository changes are detected.
+- **Drift Detection**: Detects and corrects configuration drift from desired state.
+- **Multi-cluster Support**: Can manage deployments across multiple Kubernetes clusters.
+- **Visual UI**: Provides a web interface to visualize application state and sync status.
+
+**GitOps Principles**:
+1. Declarative configuration stored in Git
+2. Automated deployment from Git
+3. Continuous reconciliation of desired vs actual state
+4. Immutable infrastructure through version control
+  `
+    },
+    {
+      id: 334,
+      question: "Which statement is TRUE about container images and layers?",
+      options: [
+        "Each RUN instruction in a Dockerfile creates a new container",
+        "Image layers are mutable and can be modified after creation",
+        "Multiple containers can share the same read-only image layers",
+        "Deleting files in a later layer reduces the total image size"
+      ],
+      correctAnswer: "Multiple containers can share the same read-only image layers",
+      explanation: `
+### Concept: Container Image Architecture and Layering
+**Container images use a layered filesystem** where multiple containers can share common base layers, optimizing storage and transfer.
+- **Layer Sharing**: Read-only layers are shared between containers using the same base image.
+- **Copy-on-Write**: Each container gets its own writable layer on top of shared read-only layers.
+- **Storage Efficiency**: Dramatically reduces disk space usage when running multiple containers.
+- **Fast Deployment**: Layers already present don't need to be downloaded again.
+
+**Why other options are incorrect**:
+- RUN creates a layer, not a container
+- Image layers are immutable (read-only) once created
+- Deleting files in later layers doesn't reduce size - the deleted files still exist in previous layers (layer accumulation)
+
+**Best Practice**: Combine commands in Dockerfile to reduce layers and clean up in the same RUN instruction.
+  `
+    },
+    {
+      id: 335,
+      question: "In a microservices architecture, Service A needs to call Service B, but Service B is temporarily unavailable. Which service mesh feature prevents Service A from being overwhelmed with failed requests?",
+      options: [
+        "Load Balancing",
+        "Circuit Breaker",
+        "Mutual TLS",
+        "Traffic Splitting"
+      ],
+      correctAnswer: "Circuit Breaker",
+      explanation: `
+### Concept: Service Mesh Resilience Patterns
+**Circuit Breaker** is a pattern that prevents cascading failures by stopping requests to failing services after a threshold is reached.
+- **Failure Detection**: Monitors request failures and latency to detect service issues.
+- **Three States**: Closed (normal), Open (blocking requests), Half-Open (testing recovery).
+- **Fast Fail**: Returns errors immediately instead of waiting for timeouts when circuit is open.
+- **Auto Recovery**: Periodically tests if the failing service has recovered.
+- **Protection**: Prevents resource exhaustion from retrying failed operations.
+
+**Circuit Breaker States**:
+1. **Closed**: Requests flow normally, failures are counted
+2. **Open**: Threshold exceeded, requests fail immediately
+3. **Half-Open**: Limited requests allowed to test recovery
+
+**Implementation**: Available in service meshes like Istio, Linkerd, and libraries like Hystrix.
+  `
+    },
+    {
+      id: 336,
+      question: "A company wants to run different versions of their application simultaneously and gradually shift traffic from v1 to v2. What deployment strategy should they use?",
+      options: [
+        "Blue-Green Deployment",
+        "Recreate Deployment",
+        "Canary Deployment",
+        "Rolling Update"
+      ],
+      correctAnswer: "Canary Deployment",
+      explanation: `
+### Concept: Cloud Native Deployment Strategies
+**Canary Deployment** gradually shifts traffic from an old version to a new version, allowing for monitoring and quick rollback if issues arise.
+- **Gradual Rollout**: Start with small percentage (e.g., 5%) of traffic to new version.
+- **Monitor Metrics**: Observe error rates, latency, and other KPIs during rollout.
+- **Progressive Increase**: Gradually increase traffic to new version if metrics are healthy.
+- **Quick Rollback**: Easy to revert by shifting traffic back to old version.
+- **Risk Mitigation**: Limits blast radius of bugs or performance issues.
+
+**Comparison with other strategies**:
+- **Blue-Green**: Instant 100% switch between versions (all-or-nothing)
+- **Rolling Update**: Replaces pods gradually without traffic control
+- **Recreate**: Downtime approach, terminates all old pods before starting new ones
+
+**Tools**: Implemented via service mesh (Istio, Linkerd), Flagger, or Argo Rollouts.
+  `
+    },
+    {
+      id: 337,
+      question: "What is the primary benefit of using an Ingress Controller over a LoadBalancer Service in Kubernetes?",
+      options: [
+        "Ingress Controllers provide faster networking",
+        "A single Ingress can route to multiple services using path-based routing, reducing external load balancers needed",
+        "Ingress Controllers encrypt all traffic automatically",
+        "LoadBalancer Services only work with cloud providers"
+      ],
+      correctAnswer: "A single Ingress can route to multiple services using path-based routing, reducing external load balancers needed",
+      explanation: `
+### Concept: Kubernetes Ingress and Traffic Management
+**Ingress** provides HTTP/HTTPS routing to multiple services through a single entry point, offering cost and management benefits.
+- **Cost Efficiency**: One load balancer can route to multiple services instead of one per service.
+- **Path-Based Routing**: Routes like /api → api-service, /web → web-service from single endpoint.
+- **Host-Based Routing**: Different domains/subdomains can route to different services.
+- **TLS Termination**: Centralized SSL/TLS certificate management.
+- **Layer 7 Features**: URL rewriting, redirects, authentication at application layer.
+
+**Ingress Components**:
+- **Ingress Resource**: Kubernetes object defining routing rules
+- **Ingress Controller**: Implementation (NGINX, Traefik, HAProxy, etc.) that enforces rules
+
+**Example Use Case**: Instead of 10 LoadBalancer services (10 cloud load balancers = $$$), use 1 Ingress with routing rules.
+
+**Popular Ingress Controllers**: NGINX Ingress, Traefik, HAProxy, Kong, Contour, Ambassador
+  `
+    },
+    {
+      id: 338,
+      question: "In observability, what does 'cardinality' refer to, and why is it important?",
+      options: [
+        "The number of data points collected per second",
+        "The number of unique combinations of label values in metrics",
+        "The accuracy of measurements",
+        "The time it takes to query metrics"
+      ],
+      correctAnswer: "The number of unique combinations of label values in metrics",
+      explanation: `
+### Concept: Observability Metrics and Cardinality
+**Cardinality** refers to the number of unique time series created by different combinations of metric labels, which significantly impacts system performance.
+- **Time Series Explosion**: Each unique label combination creates a new time series.
+- **Resource Impact**: High cardinality can overwhelm metric storage and query systems.
+- **Example**: A metric with labels for user_id, request_id, and timestamp creates millions of series.
+- **Best Practice**: Use labels for aggregatable dimensions (service, endpoint, status) not unique IDs.
+
+**High Cardinality Problems**:
+- Increased storage costs
+- Slower queries
+- Higher memory usage in Prometheus/similar systems
+- Potential system crashes
+
+**Good Label Examples**: environment, service_name, http_status, region
+**Bad Label Examples**: user_id, transaction_id, email, timestamp
+
+**Rule of Thumb**: Keep total unique label combinations under 10,000 per metric in Prometheus.
+  `
+    },
+    {
+      id: 339,
+      question: "Your team needs to ensure that a Kubernetes cluster can automatically scale nodes based on pod resource requirements. Which component should be deployed?",
+      options: [
+        "Horizontal Pod Autoscaler (HPA)",
+        "Vertical Pod Autoscaler (VPA)",
+        "Cluster Autoscaler",
+        "Metrics Server"
+      ],
+      correctAnswer: "Cluster Autoscaler",
+      explanation: `
+### Concept: Kubernetes Autoscaling - Infrastructure Level
+**Cluster Autoscaler** automatically adjusts the number of nodes in a cluster based on pending pods and resource utilization.
+- **Scale Up**: Adds nodes when pods can't be scheduled due to insufficient resources.
+- **Scale Down**: Removes underutilized nodes when pods can be rescheduled elsewhere.
+- **Cloud Integration**: Works with cloud providers (AWS, GCP, Azure) to provision/terminate nodes.
+- **Pod Awareness**: Respects PodDisruptionBudgets and pod priorities during scale down.
+- **Cost Optimization**: Reduces costs by removing idle nodes while ensuring capacity.
+
+**Autoscaling Hierarchy**:
+1. **HPA**: Scales number of pod replicas based on metrics (CPU, memory, custom)
+2. **VPA**: Adjusts CPU/memory requests for individual pods
+3. **Cluster Autoscaler**: Scales number of nodes in the cluster
+
+**Trigger**: When scheduler cannot place pods due to insufficient node resources.
+
+**Considerations**: Requires cloud provider support, has cool-down periods, works with node groups/pools.
+  `
+    },
+    {
+      id: 340,
+      question: "Which Open Policy Agent (OPA) integration point in Kubernetes allows you to enforce policies BEFORE resources are persisted to etcd?",
+      options: [
+        "Custom Resource Definitions",
+        "Admission Controllers",
+        "Network Policies",
+        "RBAC Rules"
+      ],
+      correctAnswer: "Admission Controllers",
+      explanation: `
+### Concept: Kubernetes Policy Enforcement and Admission Control
+**Admission Controllers** are plugins that intercept requests to the Kubernetes API before object persistence, enabling policy enforcement.
+- **Validation Stage**: Checks if requests comply with policies before storing in etcd.
+- **Mutation Stage**: Can modify requests (e.g., inject sidecars, set defaults).
+- **OPA Integration**: OPA Gatekeeper uses ValidatingWebhookConfiguration and MutatingWebhookConfiguration.
+- **Early Enforcement**: Prevents non-compliant resources from being created.
+- **Policy Examples**: Require labels, enforce naming conventions, block privileged containers, require resource limits.
+
+**Admission Control Flow**:
+1. Request sent to API server
+2. Authentication (who are you?)
+3. Authorization (what can you do?)
+4. **Admission Controllers** (should this be allowed based on policy?)
+5. Validation
+6. Persistence to etcd
+
+**OPA Gatekeeper**: Kubernetes-native policy enforcement using OPA and ConstraintTemplates.
+
+**Built-in Admission Controllers**: PodSecurityPolicy, ResourceQuota, LimitRanger, NamespaceLifecycle
+  `
+    },
+    {
+      id: 341,
+      question: "A company wants to implement zero-trust security between microservices. Which capability is MOST important?",
+      options: [
+        "Network segmentation using Network Policies",
+        "Mutual TLS (mTLS) for service-to-service communication",
+        "Container image scanning",
+        "Secrets encryption at rest"
+      ],
+      correctAnswer: "Mutual TLS (mTLS) for service-to-service communication",
+      explanation: `
+### Concept: Zero Trust Security in Cloud Native Environments
+**Mutual TLS (mTLS)** provides bidirectional authentication and encryption between services, forming the foundation of zero-trust architecture.
+- **Bidirectional Auth**: Both client and server verify each other's identity using certificates.
+- **Encryption**: All communication is encrypted in transit.
+- **Identity-Based**: Services authenticate based on cryptographic identity, not network location.
+- **Zero Trust Principle**: "Never trust, always verify" - even internal communication is authenticated.
+- **Service Mesh Implementation**: Automatically handled by service meshes like Istio, Linkerd.
+
+**mTLS Benefits**:
+- Prevents man-in-the-middle attacks
+- Ensures only authorized services can communicate
+- Provides audit trail of service interactions
+- Encryption without application code changes
+
+**Zero Trust Components**:
+1. **mTLS**: Authentication and encryption (most critical)
+2. Network Policies: Traffic control
+3. RBAC: Authorization
+4. Policy Enforcement: OPA, service mesh policies
+
+**Comparison**: Network Policies control traffic flow, but don't verify identity or encrypt. mTLS does both.
+  `
+    },
+    {
+      id: 342,
+      question: "When designing a cloud native application, which principle suggests that configuration should be externalized from the application code?",
+      options: [
+        "Immutable Infrastructure",
+        "The Twelve-Factor App Methodology",
+        "Domain-Driven Design",
+        "Event-Driven Architecture"
+      ],
+      correctAnswer: "The Twelve-Factor App Methodology",
+      explanation: `
+### Concept: Cloud Native Application Design Principles
+**The Twelve-Factor App** is a methodology for building SaaS applications that emphasizes portability and cloud-native best practices.
+- **Factor III - Config**: Store configuration in environment variables, separate from code.
+- **Environment Parity**: Same codebase runs in dev, staging, and production with different configs.
+- **Portability**: Applications can move between environments without code changes.
+- **Security**: Credentials and secrets never committed to version control.
+- **Kubernetes Implementation**: ConfigMaps and Secrets for configuration management.
+
+**Key Twelve-Factor Principles**:
+1. One codebase, many deploys
+2. Explicit dependencies
+3. **Config in environment**
+4. Backing services as attached resources
+5. Build, release, run separation
+6. Stateless processes
+7. Port binding
+8. Concurrency through process model
+9. Fast startup and graceful shutdown
+10. Dev/prod parity
+11. Logs as event streams
+12. Admin processes
+
+**Configuration Anti-Pattern**: Hardcoding database URLs, API keys, or environment-specific settings in code.
+  `
+    },
+    {
+      id: 343,
+      question: "Your application needs to access cloud provider APIs (like AWS S3). What is the cloud-native way to provide credentials without storing them in the container?",
+      options: [
+        "Embed credentials in the container image",
+        "Use Kubernetes Secrets mounted as environment variables",
+        "Use Workload Identity / IAM Roles for Service Accounts (IRSA)",
+        "Store credentials in a ConfigMap"
+      ],
+      correctAnswer: "Use Workload Identity / IAM Roles for Service Accounts (IRSA)",
+      explanation: `
+### Concept: Cloud Native Security - Credential Management
+**Workload Identity** (GCP) and **IAM Roles for Service Accounts (IRSA)** (AWS) allow pods to assume cloud IAM roles without static credentials.
+- **No Static Credentials**: Eliminates need to store long-lived credentials.
+- **Automatic Rotation**: Credentials are temporary and auto-rotated.
+- **Least Privilege**: Each workload gets only the permissions it needs.
+- **Service Account Binding**: Kubernetes ServiceAccount is mapped to cloud IAM role.
+- **Transparent**: Application uses standard cloud SDK, credentials injected automatically.
+
+**How It Works** (AWS IRSA):
+1. Create IAM role with specific permissions
+2. Associate IAM role with Kubernetes ServiceAccount
+3. Pod uses the ServiceAccount
+4. AWS STS provides temporary credentials to pod
+5. Application uses credentials transparently
+
+**Why other options are worse**:
+- Embedding in image: Credentials leak, hard to rotate, security nightmare
+- K8s Secrets: Better, but still static credentials to manage
+- ConfigMap: NEVER for credentials - ConfigMaps are not encrypted
+
+**Azure Equivalent**: Azure AD Workload Identity
+  `
+    },
+    {
+      id: 344,
+      question: "In a Kubernetes cluster, which component is responsible for maintaining the desired state of pods on a specific node?",
+      options: [
+        "kube-scheduler",
+        "kube-controller-manager",
+        "kubelet",
+        "kube-proxy"
+      ],
+      correctAnswer: "kubelet",
+      explanation: `
+### Concept: Kubernetes Node Components
+**kubelet** is the primary node agent that ensures containers described in PodSpecs are running and healthy on its node.
+- **Pod Lifecycle**: Creates, starts, stops, and monitors containers in pods.
+- **Health Checks**: Executes liveness, readiness, and startup probes.
+- **Reports Status**: Sends node and pod status to control plane.
+- **Pulls Images**: Works with container runtime to pull images from registries.
+- **Resource Management**: Enforces resource limits and requests.
+- **Volume Management**: Mounts volumes for pods.
+
+**kubelet Responsibilities**:
+1. Watch API server for pods assigned to its node
+2. Ensure pod containers are running
+3. Report pod and node status back to control plane
+4. Execute container lifecycle hooks
+5. Collect and report resource metrics
+
+**Communication**:
+- **Receives**: Pod specs from API server
+- **Interacts**: With container runtime via CRI
+- **Reports**: Node status, pod status, events
+
+**Key Point**: kubelet maintains ACTUAL state to match DESIRED state defined in PodSpecs.
+  `
+    },
+    {
+      id: 345,
+      question: "Which CNCF project provides a standardized vendor-neutral way to collect telemetry data (metrics, logs, traces) from applications?",
+      options: [
+        "Prometheus",
+        "Jaeger",
+        "OpenTelemetry",
+        "Fluentd"
+      ],
+      correctAnswer: "OpenTelemetry",
+      explanation: `
+### Concept: Observability Standards and Instrumentation
+**OpenTelemetry (OTel)** is a CNCF project that provides a unified set of APIs, SDKs, and tools for collecting observability data.
+- **Vendor Neutral**: Avoids lock-in to specific observability backends.
+- **Three Signals**: Collects metrics, traces, and logs through single framework.
+- **Auto-Instrumentation**: Provides automatic instrumentation for many languages/frameworks.
+- **Exporters**: Can send data to multiple backends (Prometheus, Jaeger, Datadog, etc.).
+- **Standardization**: Merges OpenTracing and OpenCensus projects.
+
+**OpenTelemetry Components**:
+- **API**: Language-specific instrumentation interface
+- **SDK**: Implementation of API with configuration
+- **Collector**: Vendor-agnostic receiver, processor, and exporter for telemetry
+- **Instrumentation Libraries**: Pre-built instrumentation for frameworks
+
+**Data Flow**:
+Application → OTel SDK → OTel Collector → Backend (Prometheus/Jaeger/etc.)
+
+**Why It's Important**: Write instrumentation once, switch backends without code changes.
+
+**Adoption**: Supported by all major observability vendors and cloud providers.
+  `
+    },
+    {
+      id: 346,
+      question: "A StatefulSet manages pods with identities pod-0, pod-1, pod-2. If pod-1 is deleted, what happens?",
+      options: [
+        "A new pod is created with a random name",
+        "The pod is recreated with the same name 'pod-1' and reattaches to the same PersistentVolume",
+        "The StatefulSet creates pod-3 instead",
+        "The pod is not recreated until the entire StatefulSet is restarted"
+      ],
+      correctAnswer: "The pod is recreated with the same name 'pod-1' and reattaches to the same PersistentVolume",
+      explanation: `
+### Concept: StatefulSets and Stateful Applications
+**StatefulSets** provide stable, unique network identifiers and stable persistent storage for pods, essential for stateful workloads.
+- **Stable Identity**: Each pod gets a persistent identifier (pod-0, pod-1, etc.) that survives rescheduling.
+- **Ordered Deployment**: Pods are created sequentially (0→1→2) and terminated in reverse.
+- **Stable Storage**: Each pod's PersistentVolumeClaim is retained and remounted on pod recreation.
+- **Stable Network**: DNS entries remain consistent (pod-1.service-name.namespace.svc.cluster.local).
+- **Use Cases**: Databases, message queues, distributed systems requiring stable identity.
+
+**StatefulSet Guarantees**:
+1. Pods have ordinal index (0, 1, 2...)
+2. Pod names are deterministic: <statefulset-name>-<ordinal>
+3. Each pod gets dedicated PVC that persists across restarts
+4. Pods maintain identity even when rescheduled to different nodes
+
+**vs Deployment**: Deployments create pods with random names and treat all replicas as interchangeable.
+
+**Example Use Cases**: MySQL clusters, Kafka brokers, ZooKeeper ensembles, Cassandra nodes.
+  `
+    },
+    {
+      id: 347,
+      question: "What is the main purpose of a DaemonSet in Kubernetes?",
+      options: [
+        "To run a copy of a pod on every node (or selected nodes) in the cluster",
+        "To run pods that should never be terminated",
+        "To run pods with administrative privileges",
+        "To run background jobs on a schedule"
+      ],
+      correctAnswer: "To run a copy of a pod on every node (or selected nodes) in the cluster",
+      explanation: `
+### Concept: Kubernetes Workload Controllers - DaemonSet
+**DaemonSet** ensures that all (or specific) nodes run a copy of a pod, automatically adding/removing pods as nodes are added/removed.
+- **Node-Level Services**: Perfect for node-level functionality needed on every node.
+- **Automatic Scaling**: As cluster grows/shrinks, DaemonSet pods are added/removed automatically.
+- **Node Selection**: Can use nodeSelector or affinity to run on specific node subsets.
+- **No Replica Count**: Unlike Deployments, you don't specify replicas - it's one per node.
+
+**Common Use Cases**:
+- **Log Collection**: Fluentd, Filebeat running on each node
+- **Monitoring Agents**: Node exporters, monitoring daemons
+- **Network Plugins**: CNI network plugins, kube-proxy
+- **Storage Daemons**: Ceph, GlusterFS daemons
+- **Security Agents**: Intrusion detection, vulnerability scanners
+
+**DaemonSet Behavior**:
+- New node joins cluster → DaemonSet pod automatically scheduled
+- Node removed → DaemonSet pod automatically cleaned up
+- Node matches selector → Pod created
+- Node stops matching selector → Pod removed
+
+**Update Strategy**: Rolling update or OnDelete for controlled rollouts.
+  `
+    },
+    {
+      id: 348,
+      question: "In container security, what does 'rootless containers' refer to?",
+      options: [
+        "Containers that don't require root permissions to run the container runtime daemon",
+        "Containers without a root filesystem",
+        "Containers that cannot access the root directory",
+        "Containers without a base image"
+      ],
+      correctAnswer: "Containers that don't require root permissions to run the container runtime daemon",
+      explanation: `
+### Concept: Container Security - Rootless Containers
+**Rootless containers** allow running the container runtime daemon without root privileges, significantly reducing security risks.
+- **Daemon Privilege**: The container runtime itself runs as a non-root user.
+- **Security Improvement**: Container escapes don't grant root access to host.
+- **User Namespaces**: Leverages Linux user namespaces for isolation.
+- **Reduced Attack Surface**: Compromising container doesn't compromise entire system.
+- **Multi-Tenancy**: Safer for shared systems where users run their own containers.
+
+**Traditional vs Rootless**:
+- **Traditional**: Docker daemon runs as root, containers can be rootless but daemon isn't
+- **Rootless**: Both daemon and containers run without root
+
+**Limitations**:
+- Some features may not work (certain volume types, port binding <1024)
+- Performance overhead from user namespace mapping
+- Not all CNI plugins supported
+
+**Supported Runtimes**: 
+- Docker (rootless mode)
+- Podman (rootless by default)
+- containerd with rootless support
+
+**Security Principle**: Principle of least privilege - run with minimum necessary permissions.
+  `
+    },
+    {
+      id: 349,
+      question: "Your company uses Helm to package Kubernetes applications. What is the purpose of the values.yaml file?",
+      options: [
+        "It defines the Helm chart version and dependencies",
+        "It contains default configuration values that can be overridden during installation",
+        "It lists all Kubernetes resources to be created",
+        "It stores the release history"
+      ],
+      correctAnswer: "It contains default configuration values that can be overridden during installation",
+      explanation: `
+### Concept: Helm - Kubernetes Package Management
+**values.yaml** provides default configuration values for a Helm chart, enabling customization without modifying templates.
+- **Default Values**: Provides sensible defaults for chart installation.
+- **Parameterization**: Makes charts reusable across environments (dev/staging/prod).
+- **Override Mechanism**: Values can be overridden with -f custom-values.yaml or --set flags.
+- **Template Variables**: Values referenced in templates using {{ .Values.key }}.
+- **Type Safety**: Can include schema validation via values.schema.json.
+
+**Helm Chart Structure**:
+```
+mychart/
+    Chart.yaml          # Chart metadata
+  values.yaml         # Default configuration values
+  templates /          # Kubernetes manifest templates
+  charts /             # Dependent charts
+  README.md
+      ```
+
+**Usage Examples**:
+```bash
+# Use defaults
+helm install myapp./ mychart
+
+# Override with file
+helm install myapp ./ mychart - f prod- values.yaml
+
+# Override specific values
+helm install myapp./ mychart--set replicas = 5
+  ```
+
+**values.yaml Example**:
+```yaml
+replicaCount: 3
+image:
+repository: nginx
+tag: "1.21"
+service:
+type: LoadBalancer
+port: 80
+  ```
+
+**Best Practice**: Keep values.yaml minimal with well-documented defaults.
+  `
+    },
+{
+  id: 350,
+    question: "Which statement about Kubernetes etcd is CORRECT?",
+      options: [
+        "etcd runs on worker nodes to store pod data",
+        "etcd is a distributed key-value store that serves as Kubernetes' backing store for all cluster data",
+        "etcd is only used for storing container logs",
+        "Each pod has its own etcd instance"
+      ],
+        correctAnswer: "etcd is a distributed key-value store that serves as Kubernetes' backing store for all cluster data",
+          explanation: `
+### Concept: Kubernetes Data Store - etcd
+**etcd** is a consistent, distributed key-value store that provides a reliable way to store Kubernetes cluster state and configuration.
+- **Single Source of Truth**: All cluster state (pods, services, configs, secrets) stored in etcd.
+- **Distributed Consensus**: Uses Raft algorithm for consistency across multiple instances.
+- **Watch Mechanism**: Kubernetes components watch etcd for changes to react to state updates.
+- **Control Plane Only**: Runs on control plane nodes, not worker nodes.
+- **High Availability**: Typically run in clusters of 3 or 5 instances for fault tolerance.
+
+**What's Stored in etcd**:
+- All Kubernetes objects (Pods, Services, ConfigMaps, Secrets, etc.)
+- Cluster configuration
+- State information
+- Resource version data
+
+**Critical Importance**:
+- **No etcd = No cluster**: If etcd is down, cluster state cannot be modified
+- **Backup Critical**: etcd backups are essential for disaster recovery
+- **Performance Impact**: etcd performance directly affects cluster responsiveness
+
+**Security Considerations**:
+- Encrypt etcd data at rest
+- Use TLS for etcd communication
+- Restrict network access to etcd
+- Regular backups with encryption
+
+**Note**: Only API server communicates directly with etcd, not individual components.
+  `
+},
+{
+  id: 351,
+    question: "A developer wants to ensure their pod continues running even if a health check temporarily fails. Which type of probe should they configure?",
+      options: [
+        "livenessProbe only",
+        "readinessProbe only",
+        "startupProbe only",
+        "Both readinessProbe and appropriate failureThreshold settings"
+      ],
+        correctAnswer: "Both readinessProbe and appropriate failureThreshold settings",
+          explanation: `
+### Concept: Kubernetes Health Checks and Probes
+Understanding the different probe types and their configurations is crucial for application reliability.
+
+**Probe Types**:
+- **livenessProbe**: Determines if container should be restarted (kills and restarts on failure)
+- **readinessProbe**: Determines if pod should receive traffic (removes from service endpoints on failure)
+- **startupProbe**: Gives slow-starting containers time to start before other probes begin
+
+**For Temporary Failures**:
+- **readinessProbe is safer**: Removes pod from load balancer but doesn't restart it
+- **failureThreshold**: Number of consecutive failures before action (default: 3)
+- **periodSeconds**: How often to probe (default: 10)
+- **timeoutSeconds**: Probe timeout (default: 1)
+
+**Configuration Example**:
+```yaml
+  readinessProbe:
+  httpGet:
+  path: /health
+  port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3    # Allows 3 failures before marking unready
+  successThreshold: 1    # 1 success to mark ready again
+    ```
+
+**Why readinessProbe is better for temporary issues**:
+- Pod stays alive, just stops receiving traffic
+- Can recover automatically without restart
+- Maintains state and connections
+- No pod churn or restart overhead
+
+**Best Practice**: Use readinessProbe for temporary issues, livenessProbe only for deadlocks/unrecoverable states.
+  `
+},
+{
+  id: 352,
+    question: "Which Cloud Native Computing Foundation (CNCF) maturity level indicates a project has the highest level of adoption and stability?",
+      options: [
+        "Sandbox",
+        "Incubating",
+        "Graduated",
+        "Archived"
+      ],
+      correctAnswer: "Graduated",
+      explanation: `
+### Concept: CNCF Project Maturity Levels
+The **CNCF uses three maturity levels** to classify projects based on their adoption, governance, and community health.
+
+**CNCF Maturity Levels**:
+
+1. **Sandbox**: 
+   - Early-stage projects
+   - Experimental and innovative
+   - CNCF provides neutral home
+   - Example: Early-stage projects exploring new ideas
+
+2. **Incubating**:
+   - Growing adoption
+   - Healthy governance
+   - Production use by multiple organizations
+   - Example: Argo, Flux, Linkerd (at various points)
+
+3. **Graduated**: 
+   - Widespread production adoption
+   - Strong governance and committer diversity
+   - Documented security and stability
+   - Examples: Kubernetes, Prometheus, Envoy, containerd, CoreDNS, Helm, Jaeger
+
+**Graduation Criteria**:
+- Multiple production deployments
+- Healthy number of committers from multiple organizations
+- Clear governance process
+- Security audit completed
+- Adopted by multiple end users
+- Demonstrated growth in contributors and adoption
+      `
     }
   ]
 };
