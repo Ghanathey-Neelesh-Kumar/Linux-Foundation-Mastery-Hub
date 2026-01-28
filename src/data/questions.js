@@ -1774,17 +1774,17 @@ Application → OTel SDK → OTel Collector → Backend (Prometheus/Jaeger/etc.)
 - **Type Safety**: Can include schema validation via values.schema.json.
 
 **Helm Chart Structure**:
-```
+\`\`\`
 mychart/
   Chart.yaml          # Chart metadata
   values.yaml         # Default configuration values
   templates/          # Kubernetes manifest templates
   charts/             # Dependent charts
   README.md
-```
+\`\`\`
 
 **Usage Examples**:
-```bash
+\`\`\`bash
 # Use defaults
 helm install myapp ./mychart
 
@@ -1793,10 +1793,10 @@ helm install myapp ./mychart -f prod-values.yaml
 
 # Override specific values
 helm install myapp ./mychart --set replicas=5
-```
+\`\`\`
 
 **values.yaml Example**:
-```yaml
+\`\`\`yaml
 replicaCount: 3
 image:
 repository: nginx
@@ -1804,7 +1804,7 @@ tag: "1.21"
 service:
 type: LoadBalancer
 port: 80
-  ```
+\`\`\`
 
 **Best Practice**: Keep values.yaml minimal with well-documented defaults.
   `
@@ -1874,7 +1874,7 @@ Understanding the different probe types and their configurations is crucial for 
 - **timeoutSeconds**: Probe timeout (default: 1)
 
 **Configuration Example**:
-```yaml
+\`\`\`yaml
 readinessProbe:
   httpGet:
     path: /health
@@ -1883,7 +1883,7 @@ readinessProbe:
   periodSeconds: 10
   failureThreshold: 3    # Allows 3 failures before marking unready
   successThreshold: 1    # 1 success to mark ready again
-```
+\`\`\`
 
 **Why readinessProbe is better for temporary issues**:
 - Pod stays alive, just stops receiving traffic
@@ -1935,6 +1935,186 @@ The **CNCF uses three maturity levels** to classify projects based on their adop
 - Security audit completed
 - Adopted by multiple end users
 - Demonstrated growth in contributors and adoption
+      `
+    },
+    {
+      id: 353,
+      question: "What is the primary purpose of the Container Network Interface (CNI) in Kubernetes?",
+      options: [
+        "To manage container storage",
+        "To provide a standardized interface for networking plugins",
+        "To schedule containers to nodes",
+        "To manage container images"
+      ],
+      correctAnswer: "To provide a standardized interface for networking plugins",
+      explanation: `
+### Concept: Container Network Interface (CNI)
+**CNI** is a cloud-native standard for configuring network interfaces in Linux containers.
+- **Interoperability**: Allows different networking solutions (Flannel, Calico, Cilium, etc.) to work with multiple orchestrators.
+- **Responsibility**: CNI plugins are responsible for inserting a network interface into the container network namespace and making any necessary changes on the host.
+- **Standardized**: Kubernetes uses CNI to enable networking between pods across different nodes.
+      `
+    },
+    {
+      id: 354,
+      question: "Which Kubernetes component automatically adjusts the CPU and memory reservations (requests) for your pods based on historical resource usage?",
+      options: [
+        "Horizontal Pod Autoscaler (HPA)",
+        "Vertical Pod Autoscaler (VPA)",
+        "Cluster Autoscaler",
+        "Node Problem Detector"
+      ],
+      correctAnswer: "Vertical Pod Autoscaler (VPA)",
+      explanation: `
+### Concept: Vertical Pod Autoscaling
+**Vertical Pod Autoscaler (VPA)** frees users from having to set exact resource requests and limits for their pods.
+- **Resource Optimization**: It analyzes historical resource usage and automatically sets the appropriate CPU and memory requests.
+- **Rightsizing**: Prevents both over-provisioning (wasted costs) and under-provisioning (performance issues).
+- **Restarting**: Note that most VPA implementations currently require restarting the pod to apply changes (unlike HPA).
+      `
+    },
+    {
+      id: 355,
+      question: "In Kubernetes admission control, which type of webhook is allowed to modify the resource request before it is validated?",
+      options: [
+        "Validating Admission Webhook",
+        "Mutating Admission Webhook",
+        "Resource Admission Webhook",
+        "Configuration Admission Webhook"
+      ],
+      correctAnswer: "Mutating Admission Webhook",
+      explanation: `
+### Concept: Admission Controllers
+**Admission Webhooks** come in two flavors: Mutating and Validating.
+- **Mutating Webhooks**: These are called first. They can modify (mutate) the object sent to the API server (e.g., injecting a sidecar container or setting default labels).
+- **Validating Webhooks**: These are called second. They can only accept or reject the request based on policy, but cannot modify it.
+      `
+    },
+    {
+      id: 356,
+      question: "What is the primary data collection model used by Prometheus for gathering metrics from targets?",
+      options: [
+        "Push-based model",
+        "Pull-based model",
+        "Event-driven model",
+        "Stream-based model"
+      ],
+      correctAnswer: "Pull-based model",
+      explanation: `
+### Concept: Prometheus Data Collection
+**Prometheus** primarily uses a **pull-based model** for metrics collection.
+- **Scraping**: The Prometheus server periodically "scrapes" (HTTP GET) metrics from configured targets.
+- **Discovery**: It uses service discovery to find which targets to scrape.
+- **Push Gateway**: While a "Pushgateway" exists for short-lived jobs, the core philosophy is pull-based, which allows the server to control the scrape rate and detect if a target is down.
+      `
+    },
+    {
+      id: 357,
+      question: "Which Kubernetes object is used to limit the total resource consumption (like total CPU or number of Pods) within a specific Namespace?",
+      options: [
+        "LimitRange",
+        "ResourceQuota",
+        "HorizontalPodAutoscaler",
+        "PodDisruptionBudget"
+      ],
+      correctAnswer: "ResourceQuota",
+      explanation: `
+### Concept: Resource Quotas
+A **ResourceQuota** provides constraints that limit aggregate resource consumption per Namespace.
+- **Multi-tenancy**: Essential for clusters shared by multiple teams or projects.
+- **Resource Types**: Can limit CPU, Memory, number of Pods, Services, PersistentVolumeClaims, etc.
+- **Enforcement**: If a request exceeds the quota, the API server rejects the request.
+      `
+    },
+    {
+      id: 358,
+      question: "Which Kubernetes resource allows you to set default CPU and memory requests/limits for all containers in a namespace if they are not explicitly specified?",
+      options: [
+        "ResourceQuota",
+        "LimitRange",
+        "ConfigMap",
+        "PodSecurityContext"
+      ],
+      correctAnswer: "LimitRange",
+      explanation: `
+### Concept: Limit Ranges
+A **LimitRange** is used to enumerate min/max resource constraints and default values for resources (like Pods and Containers) in a Namespace.
+- **Defaulting**: If a user creates a pod without specifying resources, LimitRange can automatically apply default values.
+- **Constraints**: It can also enforce that a container's request/limit must be within a certain range.
+- **Quota vs LimitRange**: ResourceQuota limits *aggregate* usage, while LimitRange controls *individual* resource specifications.
+      `
+    },
+    {
+      id: 359,
+      question: "What does the Container Storage Interface (CSI) provide to the Kubernetes ecosystem?",
+      options: [
+        "A way to run containers without Docker",
+        "A standardized interface for storage vendors to integrate with container orchestrators",
+        "A distributed filesystem for pods",
+        "A tool for backing up etcd"
+      ],
+      correctAnswer: "A standardized interface for storage vendors to integrate with container orchestrators",
+      explanation: `
+### Concept: Container Storage Interface (CSI)
+**CSI** is a standard for exposing arbitrary block and file storage systems to containerized workloads.
+- **Decoupling**: It allows storage vendors to develop their plugins "out-of-tree" (independently of the Kubernetes core code).
+- **Standardization**: Plugins developed for CSI can work across different orchestrators (Kubernetes, Mesos, etc.).
+- **Operations**: Handles volume lifecycle operations like provision, attach, and mount.
+      `
+    },
+    {
+      id: 360,
+      question: "In Kubernetes scheduling, what occurs when a high-priority pod cannot be scheduled, and the scheduler evicts lower-priority pods to make room?",
+      options: [
+        "Scaling",
+        "Preemption",
+        "Rebalancing",
+        "Draining"
+      ],
+      correctAnswer: "Preemption",
+      explanation: `
+### Concept: Pod Priority and Preemption
+**Pod Priority** indicates the importance of a Pod relative to other Pods.
+- **Scheduling Order**: Higher priority pods are scheduled before lower priority ones.
+- **Preemption**: If a high-priority pod can't be scheduled due to lack of resources, the scheduler can kill (preempt) lower-priority pods to free up space.
+- **PriorityClass**: You define priority levels using PriorityClass objects.
+      `
+    },
+    {
+      id: 361,
+      question: "Which CNCF project extends Horizontal Pod Autoscaler (HPA) to scale applications based on external event sources like Kafka, RabbitMQ, or Prometheus metrics?",
+      options: [
+        "KNative",
+        "KEDA",
+        "Dapr",
+        "Crossplane"
+      ],
+      correctAnswer: "KEDA",
+      explanation: `
+### Concept: KEDA (Kubernetes Event-Driven Autoscaling)
+**KEDA** is a CNCF graduated project that provides event-driven autoscaling for Kubernetes.
+- **Event-Driven**: It can scale containers to zero or out to thousands based on the number of events waiting in a queue (e.g., Azure Service Bus, Kafka, RabbitMQ).
+- **HPA Integration**: It works by acting as an external metrics provider for the standard Horizontal Pod Autoscaler.
+- **Scalers**: It includes dozens of built-in "scalers" for different event sources.
+      `
+    },
+    {
+      id: 362,
+      question: "Which CNCF graduated project is commonly used as a unified logging layer to collect, process, and forward logs in cloud-native environments?",
+      options: [
+        "Prometheus",
+        "Jaeger",
+        "Fluentd",
+        "Envoy"
+      ],
+      correctAnswer: "Fluentd",
+      explanation: `
+### Concept: Fluentd
+**Fluentd** is an open-source data collector for unified logging.
+- **Unified Layer**: It decouples data sources from backend storage.
+- **JSON-based**: It treats logs as JSON, allowing for structured logging.
+- **Plugins**: Has over 1,000 plugins to connect various inputs (logs, metrics) to various outputs (Elasticsearch, S3, Kafka).
+- **Cloud Native**: Often deployed as a DaemonSet in Kubernetes to collect logs from every node.
       `
     }
   ]
