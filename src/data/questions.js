@@ -67,8 +67,7 @@ export const categories = [
   {
     id: 'kcsa',
     title: 'KCSA (Kubernetes and Cloud Native Security Associate)',
-    description: 'Security fundamentals for cloud-native architectures.',
-    comingSoon: true
+    description: 'Security fundamentals for cloud-native architectures.'
   },
   {
     id: 'pca',
@@ -422,6 +421,215 @@ A **hard link** points directly to the inode of the original file. Deleting the 
   cka: [],
   ckad: [],
   cnpe: [],
+  kcsa: [
+    {
+      id: 501,
+      question: "What does the '4C' security model in cloud-native computing stand for?",
+      options: [
+        "Cloud, Clusters, Containers, and Code",
+        "Compute, Capacity, Cost, and Connectivity",
+        "Control, Compliance, Configuration, and Consensus",
+        "Core, Cell, Chip, and Circuit"
+      ],
+      correctAnswer: "Cloud, Clusters, Containers, and Code",
+      explanation: `
+### Concept: Layers of Cloud Native Security
+The CNCF describes security in layers often referred to as the **4C's of Cloud Native Security**.
+
+**The Layers:**
+1.  **Cloud**: The underlying infrastructure (AWS, Azure, Home server). If the cloud is insecure, everything else is at risk.
+2.  **Cluster**: The Kubernetes control plane and node environment.
+3.  **Containers**: The image security and runtime isolation.
+4.  **Code**: Application security, including dependencies and business logic.
+
+Each layer builds upon the next, meaning security must be addressed at every level.
+      `
+    },
+    {
+      id: 502,
+      question: "Which of the following describes 'STRIDE' in the context of threat modeling?",
+      options: [
+        "A tool for scanning container images",
+        "A framework for identifying security threats",
+        "A Kubernetes network plugin",
+        "A protocol for encrypted storage"
+      ],
+      correctAnswer: "A framework for identifying security threats",
+      explanation: `
+### Concept: Threat Modeling (STRIDE)
+**STRIDE** is a mnemonic developed by Microsoft for identifying computer security threats.
+
+**S.T.R.I.D.E stands for:**
+- **S**poofing: Impersonating someone or something.
+- **T**ampering: Modifying data or code.
+- **R**epudiation: Claiming you didn't do an action.
+- **I**nformation Disclosure: Leaking private data.
+- **D**enial of Service: Crashing the system.
+- **E**levation of Privilege: Gaining unauthorized permissions.
+      `
+    },
+    {
+      id: 503,
+      question: "What is the primary difference between Authentication and Authorization?",
+      options: [
+        "Authentication is about 'who you are', Authorization is about 'what you can do'",
+        "Authentication is for users, Authorization is for machines",
+        "Authentication happens in the cloud, Authorization happens on the node",
+        "They are synonyms in cloud-native security"
+      ],
+      correctAnswer: "Authentication is about 'who you are', Authorization is about 'what you can do'",
+      explanation: `
+### Concept: Identity & Access Management (IAM)
+- **Authentication (AuthN)**: The process of verifying the identity of a user or process (e.g., using a certificate, token, or password).
+- **Authorization (AuthZ)**: The process of determining if a verified identity has permission to perform a specific action (e.g., RBAC rules).
+
+**Analogy:**
+- **AuthN**: Showing your ID to a security guard to enter a building.
+- **AuthZ**: Using your keycard to see if you are allowed to enter the server room once inside.
+      `
+    },
+    {
+      id: 504,
+      question: "Which Kubernetes component is the primary target for securing the cluster's API?",
+      options: [
+        "kube-proxy",
+        "kube-apiserver",
+        "kube-scheduler",
+        "etcd"
+      ],
+      correctAnswer: "kube-apiserver",
+      explanation: `
+### Concept: Securing the Control Plane
+The **kube-apiserver** is the central gateway for all cluster operations.
+
+**Security Measures:**
+- **TLS**: Use certificates for all communication.
+- **Bypass prevention**: Ensure users can't talk to kubelets or etcd directly.
+- **Authentication**: Enable OIDC, Service Accounts, or Client Certs.
+- **Audit Logging**: Track who did what and when.
+      `
+    },
+    {
+      id: 505,
+      question: "In Kubernetes RBAC, what is the difference between a Role and a ClusterRole?",
+      options: [
+        "Role is for pods, ClusterRole is for nodes",
+        "Role is limited to a specific namespace, ClusterRole is cluster-wide",
+        "Role is for users, ClusterRole is for services",
+        "There is no difference"
+      ],
+      correctAnswer: "Role is limited to a specific namespace, ClusterRole is cluster-wide",
+      explanation: `
+### Concept: RBAC (Role-Based Access Control)
+- **Role**: Defines permissions within a single namespace (e.g., 'can read pods in \"dev\" namespace').
+- **ClusterRole**: Defines permissions cluster-wide or for non-namespaced resources (e.g., 'can read nodes' or 'can read pods in all namespaces').
+
+**Matching Bindings:**
+- **RoleBinding**: Grants Role permissions to a user/group within a specific namespace.
+- **ClusterRoleBinding**: Grants ClusterRole permissions to a user/group cluster-wide.
+      `
+    },
+    {
+      id: 506,
+      question: "What is 'Image Scanning' primarily used for in a CI/CD pipeline?",
+      options: [
+        "Making the image file size smaller",
+        "Identifying known vulnerabilities (CVEs) in the container image",
+        "Speeding up the build process",
+        "Uploading the image to a registry"
+      ],
+      correctAnswer: "Identifying known vulnerabilities (CVEs) in the container image",
+      explanation: `
+### Concept: Supply Chain Security
+**Image Scanning** tools (like Trivy, Grype, or Clair) look at the packages and libraries inside a container image and compare them against a database of **Known Vulnerabilities (CVEs)**.
+
+**Why it matters:** It prevents you from deploying software with security holes that attackers could exploit. Best practice is to scan during build, in the registry, and continuously in production.
+      `
+    },
+    {
+      id: 507,
+      question: "What is the security benefit of 'Distroless' images?",
+      options: [
+        "They are easier to debug",
+        "They have a smaller attack surface as they contain only the app and its runtime dependencies",
+        "They include all Linux utilities for convenience",
+        "They automatically encrypt data"
+      ],
+      correctAnswer: "They have a smaller attack surface as they contain only the app and its runtime dependencies",
+      explanation: `
+### Concept: Hardening Container Images
+**Distroless** images contain only your application and its runtime dependencies. They do **not** contain package managers, shells, or standard Linux utilities (like \`ls\`, \`curl\`, \`sh\`).
+
+**Benefits:**
+- **Reduced Attack Surface**: Attackers cannot use a shell to explore your pod if they compromise the app.
+- **Smaller Size**: Faster downloads and less storage.
+- **Less Noise**: Scanners find fewer vulnerabilities because there are fewer packages.
+      `
+    },
+    {
+      id: 508,
+      question: "What does 'Network Policy' provide in Kubernetes?",
+      options: [
+        "A way to assign IP addresses to nodes",
+        "Specification of how groups of pods are allowed to communicate with each other",
+        "A method for encrypting traffic",
+        "Hardware firewall configuration"
+      ],
+      correctAnswer: "Specification of how groups of pods are allowed to communicate with each other",
+      explanation: `
+### Concept: Network Security
+By default, Kubernetes pods follow a **non-isolated** model (every pod can talk to every other pod).
+
+**Network Policies** allow you to implement **Zero Trust** by:
+- **Default Deny**: Blocking all traffic and only allowing what is necessary.
+- **Isolation**: Restricting traffic based on labels, namespaces, or IP blocks.
+- **Ingress/Egress control**: Managing both incoming and outgoing connections.
+
+**Note**: You need a CNI plugin that supports Network Policies (like Calico or Cilium) for these rules to be enforced.
+      `
+    },
+    {
+      id: 509,
+      question: "What is 'Secrets Management' in the context of cloud-native applications?",
+      options: [
+        "Hiding the existence of your application",
+        "Safely storing and retrieving sensitive data (API keys, passwords, certificates)",
+        "Storing large database backups",
+        "Managing cluster administrator names"
+      ],
+      correctAnswer: "Safely storing and retrieving sensitive data (API keys, passwords, certificates)",
+      explanation: `
+### Concept: Managing Sensitive Data
+**Secrets Management** ensures that sensitive data is not stored in plain text (like in your Git repo or Dockerfile).
+
+**Approaches:**
+1.  **K8s Secrets**: Better than plain text, but only base64 encoded by default. Should be combined with **Encryption at Rest**.
+2.  **External Vaults**: Using tools like **HashiCorp Vault**, AWS Secrets Manager, or Azure Key Vault to store secrets externally and inject them at runtime.
+      `
+    },
+    {
+      id: 510,
+      question: "Which CNCF project provides a policy engine for Kubernetes, allowing you to enforce security policies as code?",
+      options: [
+        "Kyverno",
+        "Prometheus",
+        "Envoy",
+        "Helm"
+      ],
+      correctAnswer: "Kyverno",
+      explanation: `
+### Concept: Policy-as-Code
+**Kyverno** is a policy engine designed for Kubernetes.
+
+**What it does:**
+- **Validate**: Check if a resource follows rules (e.g., \"Must have a 'team' label\").
+- **Mutate**: Change a resource automatically (e.g., \"Inject a sidecar proxy\").
+- **Generate**: Create secondary resources (e.g., \"Create a default NetworkPolicy for every new namespace\").
+
+**Why it's cool:** It uses standard Kubernetes YAML for policies, so you don't need to learn a new language.
+      `
+    }
+  ],
   kcna: [
     {
       id: 301,
