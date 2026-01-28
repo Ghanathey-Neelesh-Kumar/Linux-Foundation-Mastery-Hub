@@ -2116,6 +2116,690 @@ A **LimitRange** is used to enumerate min/max resource constraints and default v
 - **Plugins**: Has over 1,000 plugins to connect various inputs (logs, metrics) to various outputs (Elasticsearch, S3, Kafka).
 - **Cloud Native**: Often deployed as a DaemonSet in Kubernetes to collect logs from every node.
       `
+    },
+    {
+      id: 27,
+      question: "What is an Ingress in Kubernetes?",
+      options: [
+        "A way to manage inbound traffic and provide routing rules to services",
+        "A security policy that controls which pods can communicate",
+        "A storage volume type for external data",
+        "A component that monitors cluster health"
+      ],
+      correctAnswer: "A way to manage inbound traffic and provide routing rules to services",
+      explanation: `
+### Concept: Ingress and Load Balancing
+
+**Ingress** is a Kubernetes resource that manages external access to services, typically HTTP/HTTPS. It provides load balancing, SSL termination, and name-based virtual hosting.
+
+**What Ingress provides:**
+- **Path-based routing**: /api → API Service, /web → Web Service
+- **Host-based routing**: api.example.com → API Service, web.example.com → Web Service
+- **SSL/TLS termination**: Handle HTTPS at the edge
+- **Load balancing**: Distribute traffic across pods
+
+**Ingress vs Service:**
+- **Service (LoadBalancer)**: One external IP per service (expensive)
+- **Ingress**: One entry point, routes to multiple services
+
+**Requires Ingress Controller:**
+- **NGINX Ingress Controller** (most popular)
+- **Traefik**
+- **HAProxy**
+- **Cloud provider ingress** (GKE, EKS, AKS)
+
+**Example use case:**
+\`\`\`yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 8080
+\`\`\`
+
+**Why other options are incorrect:**
+- Security/communication control is Network Policies
+- Storage volumes are PV/PVC
+- Cluster health monitoring is done by Prometheus/metrics-server
+      `
+    },
+    {
+      id: 28,
+      question: "What is the purpose of a Liveness Probe in Kubernetes?",
+      options: [
+        "To check if a container is ready to accept traffic",
+        "To determine if a container is running and restart it if it's not responding",
+        "To monitor the overall health of the cluster",
+        "To check if a pod has sufficient resources"
+      ],
+      correctAnswer: "To determine if a container is running and restart it if it's not responding",
+      explanation: `
+### Concept: Health Checks and Probes
+
+**Liveness Probe** checks if a container is still running properly. If the probe fails, Kubernetes kills and restarts the container.
+
+**When to use Liveness Probe:**
+- Application is running but stuck in deadlock
+- Process exists but can't handle requests
+- Application has become unresponsive
+
+**Probe types:**
+1. **HTTP GET**: Send HTTP request, expect 200-399 status
+2. **TCP Socket**: Try to open TCP connection
+3. **Exec**: Run command inside container, expect exit code 0
+
+**Example:**
+\`\`\`yaml
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+\`\`\`
+
+**Liveness vs Readiness vs Startup:**
+- **Liveness**: "Is the app alive?" → Restart if fails
+- **Readiness**: "Is the app ready for traffic?" → Remove from service if fails
+- **Startup**: "Has the app started?" → For slow-starting containers
+
+**Real-world scenario:**
+A web app has a memory leak. After 2 hours, it stops responding. Liveness probe fails, Kubernetes restarts the container, app works again.
+
+**Best practices:**
+- Set appropriate initialDelaySeconds for startup
+- Don't check external dependencies in liveness (only the app itself)
+- Keep probe lightweight
+
+**Why other options are incorrect:**
+- Ready to accept traffic → That's Readiness Probe
+- Cluster health → That's monitoring tools
+- Resource checking → That's resource limits/metrics
+      `
+    },
+    {
+      id: 29,
+      question: "What is the difference between Liveness and Readiness probes?",
+      options: [
+        "They are the same thing with different names",
+        "Liveness restarts failed containers; Readiness removes pods from service endpoints",
+        "Liveness checks CPU, Readiness checks memory",
+        "Liveness is for containers, Readiness is for pods"
+      ],
+      correctAnswer: "Liveness restarts failed containers; Readiness removes pods from service endpoints",
+      explanation: `
+### Concept: Probe Types and Actions
+
+**Liveness Probe** and **Readiness Probe** serve different purposes and trigger different actions when they fail.
+
+**Liveness Probe:**
+- **Purpose**: Detect if container is alive/healthy
+- **Action on failure**: **Restart the container**
+- **Use case**: Deadlocks, hung processes, corrupted state
+- **Question it answers**: "Should this container be restarted?"
+
+**Readiness Probe:**
+- **Purpose**: Detect if container is ready to serve traffic
+- **Action on failure**: **Remove from Service endpoints** (no restart)
+- **Use case**: Warming up, loading data, waiting for dependencies
+- **Question it answers**: "Should this pod receive traffic?"
+
+**Key difference in action:**
+\`\`\`
+Liveness fails → kubelet RESTARTS container
+Readiness fails → kube-proxy STOPS sending traffic (pod stays running)
+\`\`\`
+
+**Example scenario:**
+\`\`\`yaml
+readinessProbe:
+  httpGet:
+    path: /ready  # Returns 200 when cache is loaded
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+livenessProbe:
+  httpGet:
+    path: /healthz  # Returns 200 if app is functioning
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+\`\`\`
+
+**Real-world example:**
+App needs 30 seconds to load cache:
+- **Readiness**: Fails for 30s (no traffic sent), then passes (traffic flows)
+- **Liveness**: Always passes (app is healthy, just initializing)
+
+**Why other options are incorrect:**
+- They have different purposes and actions
+- Both can check any endpoint (not CPU/memory specific)
+- Both check containers (pods contain containers)
+      `
+    },
+    {
+      id: 30,
+      question: "What is a StatefulSet used for in Kubernetes?",
+      options: [
+        "To manage stateless applications with replicas",
+        "To manage stateful applications that require stable network identities and persistent storage",
+        "To store application state in memory",
+        "To create static IP addresses for pods"
+      ],
+      correctAnswer: "To manage stateful applications that require stable network identities and persistent storage",
+      explanation: `
+### Concept: Stateful Applications
+
+**StatefulSet** is a workload resource for managing stateful applications that require stable, unique network identities and persistent storage.
+
+**Key characteristics:**
+1. **Stable network identity**: Predictable pod names (app-0, app-1, app-2)
+2. **Stable storage**: Each pod gets its own PersistentVolume
+3. **Ordered deployment**: Pods created sequentially (0 → 1 → 2)
+4. **Ordered termination**: Pods deleted in reverse (2 → 1 → 0)
+5. **Ordered updates**: Rolling updates in order
+
+**When to use StatefulSet:**
+- **Databases**: MySQL, PostgreSQL, MongoDB
+- **Distributed systems**: Kafka, ZooKeeper, etcd
+- **Applications needing**: Stable hostnames, ordered startup/shutdown
+
+**StatefulSet vs Deployment:**
+\`\`\`
+Deployment:
+- Random pod names: web-7d8f9-abc12
+- Any pod is interchangeable
+- Stateless apps (web servers, APIs)
+
+StatefulSet:
+- Predictable names: mysql-0, mysql-1, mysql-2
+- Each pod has unique identity
+- Stateful apps (databases, queues)
+\`\`\`
+
+**Example:**
+\`\`\`yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  serviceName: mysql
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    # Pod template
+  volumeClaimTemplates:
+    # Each pod gets its own PVC
+\`\`\`
+
+**Pod naming:**
+- mysql-0 (always first to start, last to stop)
+- mysql-1 (starts after mysql-0)
+- mysql-2 (starts after mysql-1)
+
+**Why other options are incorrect:**
+- Stateless apps use Deployments, not StatefulSets
+- Doesn't store state in memory (uses persistent volumes)
+- Provides stable DNS names, not static IPs
+      `
+    },
+    {
+      id: 31,
+      question: "What is a Service Mesh?",
+      options: [
+        "A network of physical servers hosting services",
+        "Infrastructure layer that handles service-to-service communication with features like traffic management and security",
+        "A type of Kubernetes Service",
+        "A mesh network topology for containers"
+      ],
+      correctAnswer: "Infrastructure layer that handles service-to-service communication with features like traffic management and security",
+      explanation: `
+### Concept: Service Mesh Architecture
+
+**Service Mesh** is a dedicated infrastructure layer for managing service-to-service communication in microservices architectures. It provides observability, security, and traffic management without changing application code.
+
+**Key features:**
+- **Traffic management**: Load balancing, routing, retries, timeouts
+- **Security**: mTLS encryption, authentication, authorization
+- **Observability**: Distributed tracing, metrics, logging
+- **Resilience**: Circuit breaking, fault injection, retries
+
+**How it works:**
+\`\`\`
+Service A → Sidecar Proxy → Network → Sidecar Proxy → Service B
+                ↓                              ↓
+          Control Plane ← Telemetry/Policies → Control Plane
+\`\`\`
+
+**Architecture components:**
+1. **Data Plane**: Sidecar proxies (Envoy) next to each service
+2. **Control Plane**: Configuration and policy management
+
+**Popular service meshes:**
+- **Istio**: Feature-rich, complex (uses Envoy)
+- **Linkerd**: Lightweight, simpler (CNCF graduated)
+- **Consul Connect**: From HashiCorp
+- **AWS App Mesh**: AWS managed service mesh
+
+**What service mesh provides:**
+- **mTLS**: Automatic encryption between services
+- **Traffic splitting**: 90% to v1, 10% to v2 (canary deployments)
+- **Circuit breaking**: Stop calling failing services
+- **Observability**: Built-in metrics and tracing
+
+**When to use:**
+- Many microservices (10+ services)
+- Need for advanced traffic control
+- Security requirements (encryption, auth)
+- Complex deployment strategies
+
+**Trade-offs:**
+- Adds complexity and latency
+- Resource overhead (sidecar proxies)
+- Learning curve
+
+**Why other options are incorrect:**
+- Not about physical infrastructure
+- Different from Kubernetes Service objects
+- Not a network topology, but a communication layer
+      `
+    },
+    {
+      id: 32,
+      question: "What is the primary purpose of Helm in Kubernetes?",
+      options: [
+        "To monitor Kubernetes clusters",
+        "To package, share, and manage Kubernetes applications using charts",
+        "To provide security scanning for containers",
+        "To manage Kubernetes node resources"
+      ],
+      correctAnswer: "To package, share, and manage Kubernetes applications using charts",
+      explanation: `
+### Concept: Package Management
+
+**Helm** is a package manager for Kubernetes that helps you define, install, and upgrade complex Kubernetes applications using reusable packages called Charts.
+
+**Key concepts:**
+- **Chart**: Package of pre-configured Kubernetes resources
+- **Release**: Instance of a chart running in cluster
+- **Repository**: Collection of charts (like npm registry)
+- **Values**: Configuration parameters for charts
+
+**What Helm solves:**
+\`\`\`
+Without Helm:
+- 15 separate YAML files
+- Manual configuration for each environment
+- Difficult to version and share
+- Hard to update/rollback
+
+With Helm:
+- One chart
+- Values files for different environments
+- Easy versioning
+- Simple install/upgrade/rollback
+\`\`\`
+
+**Common Helm commands:**
+\`\`\`bash
+helm install myapp ./mychart          # Install chart
+helm upgrade myapp ./mychart          # Upgrade release
+helm rollback myapp 1                 # Rollback to version 1
+helm uninstall myapp                  # Remove release
+helm list                             # List releases
+\`\`\`
+
+**Chart structure:**
+\`\`\`
+mychart/
+  Chart.yaml           # Chart metadata
+  values.yaml          # Default configuration
+  templates/           # Kubernetes manifests
+    deployment.yaml
+    service.yaml
+    ingress.yaml
+\`\`\`
+
+**Benefits:**
+- **Reusability**: Share charts via repositories
+- **Templating**: Parameterize configurations
+- **Version control**: Track application versions
+- **Dependency management**: Charts can depend on other charts
+- **Easy rollbacks**: Go back to previous versions
+
+**Popular chart repositories:**
+- **Artifact Hub**: Public charts (prometheus, nginx, mysql)
+- **Bitnami**: Well-maintained application charts
+- **Private repos**: For internal applications
+
+**Why other options are incorrect:**
+- Monitoring: That's Prometheus/Grafana
+- Security scanning: That's Trivy/Snyk
+- Node management: That's Kubernetes itself
+      `
+    },
+    {
+      id: 33,
+      question: "What is the Container Network Interface (CNI)?",
+      options: [
+        "A user interface for managing containers",
+        "A specification for configuring network interfaces in Linux containers",
+        "A network monitoring tool for containers",
+        "A container registry interface"
+      ],
+      correctAnswer: "A specification for configuring network interfaces in Linux containers",
+      explanation: `
+### Concept: Container Networking
+
+**CNI (Container Network Interface)** is a specification and set of libraries for configuring network interfaces in Linux containers. It provides a plugin-based architecture for container networking.
+
+**What CNI does:**
+- Creates network interfaces for containers
+- Assigns IP addresses to pods
+- Sets up routing rules
+- Enables pod-to-pod communication
+- Provides network isolation
+
+**How CNI works:**
+\`\`\`
+1. kubelet calls CNI plugin
+2. CNI plugin creates network interface
+3. Assigns IP from configured range
+4. Sets up routes and firewall rules
+5. Returns network configuration to kubelet
+\`\`\`
+
+**Popular CNI plugins:**
+- **Calico**: Network policies, BGP routing (popular choice)
+- **Flannel**: Simple overlay network (easy to set up)
+- **Weave Net**: Mesh network with encryption
+- **Cilium**: eBPF-based, advanced features
+- **AWS VPC CNI**: Native AWS networking for EKS
+- **Azure CNI**: Native Azure networking for AKS
+
+**CNI responsibilities:**
+- **IP Address Management (IPAM)**: Assign IPs to pods
+- **Network connectivity**: Enable pod communication
+- **Network policies**: Security rules (some plugins)
+
+**Example network requirements:**
+\`\`\`
+Kubernetes networking model requires:
+1. All pods can communicate without NAT
+2. All nodes can communicate with all pods
+3. Pod sees same IP as others see it
+
+CNI plugins implement these requirements
+\`\`\`
+
+**Choosing a CNI:**
+- **Calico**: Network policies, performance
+- **Flannel**: Simplicity, getting started
+- **Cilium**: Advanced features, observability
+- **Cloud CNI**: Best integration with cloud provider
+
+**Why other options are incorrect:**
+- Not a user interface (it's a specification)
+- Not a monitoring tool (it's for networking setup)
+- Not related to container registries
+      `
+    },
+    {
+      id: 34,
+      question: "What is autoscaling in Kubernetes, and what types are available?",
+      options: [
+        "Only manual scaling by changing replica counts",
+        "Horizontal Pod Autoscaler (HPA), Vertical Pod Autoscaler (VPA), and Cluster Autoscaler",
+        "Only CPU-based scaling",
+        "Automatic container image updates"
+      ],
+      correctAnswer: "Horizontal Pod Autoscaler (HPA), Vertical Pod Autoscaler (VPA), and Cluster Autoscaler",
+      explanation: `
+### Concept: Dynamic Resource Scaling
+
+**Autoscaling** in Kubernetes automatically adjusts resources based on demand. There are three main types, each serving different purposes.
+
+**1. Horizontal Pod Autoscaler (HPA):**
+- **Scales**: Number of pod replicas (scale out/in)
+- **Based on**: CPU, memory, custom metrics
+- **Use case**: Handle variable traffic load
+\`\`\`yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+spec:
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+\`\`\`
+
+**2. Vertical Pod Autoscaler (VPA):**
+- **Scales**: CPU and memory requests/limits (scale up/down)
+- **Based on**: Historical usage patterns
+- **Use case**: Right-size pod resources
+- **Note**: Requires pod restart to apply changes
+
+**3. Cluster Autoscaler:**
+- **Scales**: Number of nodes in the cluster
+- **Based on**: Pending pods that can't be scheduled
+- **Use case**: Add nodes when needed, remove when idle
+- **Cloud integration**: Works with AWS, GCP, Azure
+
+**How they work together:**
+\`\`\`
+1. Traffic increases
+2. HPA adds more pods
+3. Pods can't be scheduled (no node capacity)
+4. Cluster Autoscaler adds nodes
+5. Pods scheduled on new nodes
+
+6. Traffic decreases
+7. HPA removes pods
+8. Nodes become underutilized
+9. Cluster Autoscaler removes nodes
+\`\`\`
+
+**Metrics sources:**
+- **Resource metrics**: CPU, memory (metrics-server)
+- **Custom metrics**: Application metrics via Prometheus
+- **External metrics**: Cloud provider metrics
+
+**Best practices:**
+- Set appropriate min/max replicas
+- Configure resource requests (required for HPA)
+- Use VPA for workloads with variable resource needs
+- Monitor autoscaling behavior
+
+**Why other options are incorrect:**
+- Manual scaling exists but isn't autoscaling
+- Can scale based on many metrics, not just CPU
+- Not related to image updates (that's different)
+      `
+    },
+    {
+      id: 35,
+      question: "What is the purpose of Resource Quotas in Kubernetes?",
+      options: [
+        "To limit the number of users in a cluster",
+        "To limit aggregate resource consumption per namespace",
+        "To set CPU and memory limits for individual containers",
+        "To control the number of Kubernetes API requests"
+      ],
+      correctAnswer: "To limit aggregate resource consumption per namespace",
+      explanation: `
+### Concept: Resource Management and Governance
+
+**Resource Quotas** provide constraints that limit the aggregate resource consumption per namespace, enabling fair resource sharing in multi-tenant clusters.
+
+**What Resource Quotas limit:**
+- **Compute resources**: CPU, memory (total across all pods)
+- **Storage resources**: PersistentVolumeClaims, storage capacity
+- **Object counts**: Pods, Services, ConfigMaps, Secrets, etc.
+
+**Example ResourceQuota:**
+\`\`\`yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: team-quota
+  namespace: development
+spec:
+  hard:
+    requests.cpu: "10"           # Max 10 CPU cores requested
+    requests.memory: 20Gi         # Max 20GB memory requested
+    limits.cpu: "20"              # Max 20 CPU cores limit
+    limits.memory: 40Gi           # Max 40GB memory limit
+    persistentvolumeclaims: "5"   # Max 5 PVCs
+    pods: "20"                    # Max 20 pods
+    services: "10"                # Max 10 services
+\`\`\`
+
+**How it works:**
+\`\`\`
+1. Admin creates ResourceQuota in namespace
+2. User tries to create pod
+3. Kubernetes checks if quota allows it
+4. If within quota → pod created
+5. If exceeds quota → request rejected
+\`\`\`
+
+**Use cases:**
+- **Multi-tenancy**: Prevent one team from using all cluster resources
+- **Cost control**: Limit spending in cloud environments
+- **Capacity planning**: Ensure fair distribution
+- **Environment separation**: Dev gets less than prod
+
+**ResourceQuota vs LimitRange:**
+- **ResourceQuota**: Limits **total** resources in namespace
+- **LimitRange**: Sets **default/min/max** for individual pods/containers
+
+**Best practices:**
+\`\`\`yaml
+# Combine with LimitRange for complete control
+ResourceQuota: "Namespace can use max 20 cores total"
+LimitRange: "Each pod can use 0.5-2 cores"
+\`\`\`
+
+**Monitoring quotas:**
+\`\`\`bash
+kubectl describe resourcequota -n development
+# Shows used vs hard limits
+\`\`\`
+
+**Why other options are incorrect:**
+- User limits are handled by RBAC, not quotas
+- Individual container limits are set in pod specs (resources.limits)
+- API rate limiting is separate (API priority and fairness)
+      `
+    },
+    {
+      id: 36,
+      question: "What is a Custom Resource Definition (CRD) in Kubernetes?",
+      options: [
+        "A custom Docker image for specific use cases",
+        "A way to extend Kubernetes API with custom resource types",
+        "A custom configuration for existing Kubernetes resources",
+        "A security definition for custom roles"
+      ],
+      correctAnswer: "A way to extend Kubernetes API with custom resource types",
+      explanation: `
+### Concept: Kubernetes Extensibility
+
+**Custom Resource Definition (CRD)** allows you to extend the Kubernetes API by defining your own custom resource types, treating them as first-class Kubernetes objects.
+
+**What CRDs enable:**
+- Define new resource types beyond built-in ones
+- Use kubectl to manage custom resources
+- Store custom objects in etcd
+- Watch and react to custom resources
+- Integrate with Kubernetes ecosystem
+
+**How CRDs work:**
+\`\`\`yaml
+# 1. Define the CRD
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: databases.example.com
+spec:
+  group: example.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+  scope: Namespaced
+  names:
+    plural: databases
+    singular: database
+    kind: Database
+
+# 2. Create instances of your custom resource
+apiVersion: example.com/v1
+kind: Database
+metadata:
+  name: my-postgres
+spec:
+  type: postgresql
+  version: "14"
+  storage: 100Gi
+\`\`\`
+
+**Real-world examples:**
+- **Prometheus Operator**: ServiceMonitor, PrometheusRule CRDs
+- **Cert-Manager**: Certificate, Issuer CRDs
+- **Istio**: VirtualService, DestinationRule CRDs
+- **ArgoCD**: Application, AppProject CRDs
+
+**CRDs + Operators pattern:**
+\`\`\`
+CRD defines: "What a Database resource looks like"
+Operator (controller) implements: "How to create/manage actual databases"
+
+User creates Database CR → Operator watches → Creates actual DB pods/services
+\`\`\`
+
+**Benefits:**
+- **Declarative management**: Use YAML like any Kubernetes resource
+- **Kubectl integration**: \`kubectl get databases\`
+- **RBAC**: Apply standard Kubernetes permissions
+- **Ecosystem integration**: Works with GitOps, Helm, etc.
+
+**Use cases:**
+- Application-specific resources (databases, message queues)
+- Infrastructure resources (load balancers, DNS records)
+- Configuration abstractions
+- Custom workflows
+
+**CRD vs ConfigMap:**
+- **ConfigMap**: Store configuration data
+- **CRD**: Define new API resource types with validation and versioning
+
+**Why other options are incorrect:**
+- Not related to Docker images
+- Not for configuring existing resources (that's annotations/labels)
+- Not related to RBAC roles (though RBAC can control access to CRDs)
+      `
     }
   ]
 };
