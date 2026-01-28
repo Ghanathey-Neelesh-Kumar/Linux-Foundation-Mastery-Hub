@@ -2800,6 +2800,605 @@ User creates Database CR → Operator watches → Creates actual DB pods/service
 - Not for configuring existing resources (that's annotations/labels)
 - Not related to RBAC roles (though RBAC can control access to CRDs)
       `
+    },
+    {
+      id: 400,
+      question: "What is the Open Container Initiative (OCI) primarily responsible for?",
+      options: [
+        "Developing Kubernetes features",
+        "Defining industry standards for container formats and runtimes",
+        "Managing cloud provider infrastructure",
+        "Creating service mesh specifications"
+      ],
+      correctAnswer: "Defining industry standards for container formats and runtimes",
+      explanation: `
+### Concept: Container Standards (OCI)
+The **Open Container Initiative (OCI)** is an open governance structure for the express purpose of creating open industry standards around container formats and runtimes.
+
+**Two Main Specifications:**
+1.  **Image Spec**: Defines how a container image should be built.
+2.  **Runtime Spec**: Defines how a container should be executed.
+
+**Why it matters:** It ensures that an image built with one tool (like Docker) can run on any compliant runtime (like containerd or CRI-O).
+      `
+    },
+    {
+      id: 401,
+      question: "According to the CNCF, what is a key characteristic of cloud-native technologies?",
+      options: [
+        "They only run on public clouds",
+        "They empower organizations to build and run scalable applications in dynamic environments",
+        "They require manual scaling and management",
+        "They are strictly monolithic in nature"
+      ],
+      correctAnswer: "They empower organizations to build and run scalable applications in dynamic environments",
+      explanation: `
+### Concept: Cloud Native Definition
+The **CNCF definition** states that cloud-native technologies empower organizations to build and run scalable applications in modern, dynamic environments such as public, private, and hybrid clouds.
+
+**Core Pillars:**
+- **Containers**: Isolated environments.
+- **Service Meshes**: Managing communication.
+- **Microservices**: Independent components.
+- **Immutable Infrastructure**: Predictable changes.
+- **Declarative APIs**: Defining the "what" rather than the "how."
+      `
+    },
+    {
+      id: 402,
+      question: "Which Kubernetes component acts as the cluster's 'brain' by storing the entire cluster state?",
+      options: [
+        "kube-apiserver",
+        "etcd",
+        "kube-scheduler",
+        "kube-controller-manager"
+      ],
+      correctAnswer: "etcd",
+      explanation: `
+### Concept: Control Plane Architecture
+**etcd** is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+
+**Key Roles:**
+- **Source of Truth**: If it's not in etcd, it's not in the cluster.
+- **Consistency**: Uses the Raft consensus algorithm.
+- **Watch Mechanism**: Allows other components to react to changes in state.
+      `
+    },
+    {
+      id: 403,
+      question: "Which component is responsible for selecting the best node for a newly created pod?",
+      options: [
+        "kube-controller-manager",
+        "kube-scheduler",
+        "kube-proxy",
+        "kubelet"
+      ],
+      correctAnswer: "kube-scheduler",
+      explanation: `
+### Concept: Scheduling
+The **kube-scheduler** is a control plane process which assigns Pods to Nodes.
+
+**Selection Process:**
+1.  **Filtering**: Finds nodes that meet pod requirements (CPU, RAM, Taints/Tolerations).
+2.  **Scoring**: Ranks the filtered nodes to pick the best fit.
+3.  **Binding**: Notifies the API server of the decision.
+      `
+    },
+    {
+      id: 404,
+      question: "Which component runs on every node and ensures that the containers described in PodSpecs are running and healthy?",
+      options: [
+        "kube-proxy",
+        "containerd",
+        "kubelet",
+        "kube-apiserver"
+      ],
+      correctAnswer: "kubelet",
+      explanation: `
+### Concept: Node Components
+The **kubelet** is an agent that runs on each node in the cluster. It does not manage containers which were not created by Kubernetes.
+
+**Main Tasks:**
+- **Pod Lifecycle**: Starts, stops, and monitors containers.
+- **Reporting**: Tells the control plane about node and pod status.
+- **Health Checks**: Executes Liveness and Readiness probes.
+      `
+    },
+    {
+      id: 405,
+      question: "What is the primary role of kube-proxy in a Kubernetes cluster?",
+      options: [
+        "To manage storage volumes",
+        "To maintain network rules on nodes and allow communication to pods",
+        "To schedule pods to nodes",
+        "To authenticate users"
+      ],
+      correctAnswer: "To maintain network rules on nodes and allow communication to pods",
+      explanation: `
+### Concept: Kubernetes Networking
+**kube-proxy** is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
+
+**Functions:**
+- **Load Balancing**: Distributes traffic to pods behind a Service.
+- **Rule Management**: Uses iptables, IPVS, or nftables to handle routing.
+- **Connection Handling**: Manages network connections from inside or outside the cluster.
+      `
+    },
+    {
+      id: 406,
+      question: "Which Kubernetes resource is used to run a background task on every single node of the cluster?",
+      options: [
+        "Deployment",
+        "StatefulSet",
+        "DaemonSet",
+        "ReplicaSet"
+      ],
+      correctAnswer: "DaemonSet",
+      explanation: `
+### Concept: Workload Controllers
+A **DaemonSet** ensures that all (or some) Nodes run a copy of a Pod.
+
+**Common Use Cases:**
+- **Logging**: Running fluentd or logstash on every node.
+- **Monitoring**: Running prometheus node-exporter on every node.
+- **Networking**: Running a CNI plugin or kube-proxy on every node.
+      `
+    },
+    {
+      id: 407,
+      question: "What is the difference between a Job and a CronJob?",
+      options: [
+        "Jobs are for web servers, CronJobs are for databases",
+        "Jobs run once to completion, while CronJobs run on a schedule",
+        "Jobs run on nodes, CronJobs run in the control plane",
+        "There is no difference"
+      ],
+      correctAnswer: "Jobs run once to completion, while CronJobs run on a schedule",
+      explanation: `
+### Concept: Batch Workloads
+- **Job**: Creates one or more Pods and ensures that a specified number of them successfully terminate (e.g., a data migration or backup).
+- **CronJob**: Manages Jobs based on a time-based schedule (CRON format). Think of it as a wrapper around the Job object.
+      `
+    },
+    {
+      id: 408,
+      question: "Which tool is commonly used to automate the deployment of Kubernetes applications using a Git-based workflow?",
+      options: [
+        "ArgoCD",
+        "Jenkins",
+        "Docker Desktop",
+        "Postman"
+      ],
+      correctAnswer: "ArgoCD",
+      explanation: `
+### Concept: GitOps
+**ArgoCD** is a declarative, GitOps continuous delivery tool for Kubernetes.
+
+**How it works:**
+1.  **Git as Source of Truth**: Application state is stored in Git.
+2.  **Pull-based**: ArgoCD watches the Git repo and automatically syncs changes to the cluster.
+3.  **Drift Detection**: It can detect and fix differences between Git and the live cluster state.
+      `
+    },
+    {
+      id: 409,
+      question: "What does the 'Serverless' model primarily focus on for developers?",
+      options: [
+        "Managing the underline physical hardware",
+        "Writing code/functions without worrying about server provisioning or scaling",
+        "Running applications without any servers anywhere",
+        "Using only local storage"
+      ],
+      correctAnswer: "Writing code/functions without worrying about server provisioning or scaling",
+      explanation: `
+### Concept: Serverless Computing
+The **Serverless** model (also known as FaaS - Function as a Service) abstracts away the server management layer.
+
+**Key Traits:**
+- **No Provisioning**: Developers focus on code, not infrastructure.
+- **Auto-scaling**: Scales automatically based on events (often to zero).
+- **Pay-per-use**: Costs are based on actual execution time and resources used.
+      `
+    },
+    {
+      id: 410,
+      question: "In the context of Observability, what are 'Distributed Traces' used for?",
+      options: [
+        "Measuring CPU usage",
+        "Tracking a single request as it moves through multiple microservices",
+        "Counting the number of errors in logs",
+        "Mapping physical hardware addresses"
+      ],
+      correctAnswer: "Tracking a single request as it moves through multiple microservices",
+      explanation: `
+### Concept: Observability (Tracing)
+**Distributed Tracing** allows you to see the path a request takes through a complex microservices architecture.
+
+**Benefits:**
+- **Pinpointing Latency**: Finding which service is slow.
+- **Dependency Mapping**: Understanding how services interact.
+- **Error Analysis**: Seeing where in the chain a request failed.
+- **Project Examples**: Jaeger, Zipkin, Honeycomb.
+      `
+    },
+    {
+      id: 411,
+      question: "What is the primary function of a Service Mesh Control Plane?",
+      options: [
+        "To forward network packets between containers",
+        "To manage and configure the sidecar proxies (Data Plane)",
+        "To store application data in a database",
+        "To schedule pods onto nodes"
+      ],
+      correctAnswer: "To manage and configure the sidecar proxies (Data Plane)",
+      explanation: `
+### Concept: Service Mesh Architecture
+A Service Mesh is split into two parts:
+1.  **Data Plane**: Sidecar proxies (like Envoy) that handle actual traffic.
+2.  **Control Plane**: The central brain that distributes policies, certificates, and configurations to those proxies.
+
+**Examples**: Istio's 'istiod' or Linkerd's control plane components.
+      `
+    },
+    {
+      id: 412,
+      question: "Which security concept ensures that a pod only has the minimum permissions necessary to perform its job?",
+      options: [
+        "Role-Based Access Control (RBAC)",
+        "Least Privilege",
+        "Network Segmentation",
+        "Encryption at rest"
+      ],
+      correctAnswer: "Least Privilege",
+      explanation: `
+### Concept: Security Best Practices
+The **Principle of Least Privilege** is the practice of limiting access rights for users, accounts, and computing processes to only those resources which are absolutely necessary.
+
+**In Kubernetes:**
+- Use **RBAC** to restrict API access.
+- Use **Network Policies** to restrict network traffic.
+- Use **SecurityContext** to run containers as non-root.
+      `
+    },
+    {
+      id: 413,
+      question: "What is a 'StorageClass' in Kubernetes primarily used for?",
+      options: [
+        "Defining the type of storage to be dynamically provisioned",
+        "Manually mounting a local disk to a pod",
+        "Backing up etcd data",
+        "Managing cluster secrets"
+      ],
+      correctAnswer: "Defining the type of storage to be dynamically provisioned",
+      explanation: `
+### Concept: Dynamic Storage Provisioning
+A **StorageClass** provides a way for administrators to describe the \"classes\" of storage they offer.
+
+**How it works:**
+1.  **Admin** creates a StorageClass (e.g., \"fast-ssd\").
+2.  **Developer** creates a PersistentVolumeClaim (PVC) referencing that class.
+3.  **Kubernetes** automatically creates the actual disk (PV) based on the class definition.
+      `
+    },
+    {
+      id: 414,
+      question: "Which tool is a vendor-neutral, open-standard framework for collecting observability telemetry (logs, metrics, and traces)?",
+      options: [
+        "Prometheus",
+        "OpenTelemetry",
+        "Grafana",
+        "Fluentd"
+      ],
+      correctAnswer: "OpenTelemetry",
+      explanation: `
+### Concept: Observability Standardization
+**OpenTelemetry (OTel)** is a CNCF project that provides a standardized set of APIs, SDKs, and tools to ingest, transform, and send telemetry data to an observability backend.
+
+**Why it's important:** It prevents vendor lock-in, as you can switch backends (like switching from Jaeger to Datadog) without changing your application code.
+      `
+    },
+    {
+      id: 415,
+      question: "What is the purpose of the 'helm install' command?",
+      options: [
+        "To create a new Kubernetes cluster",
+        "To deploy a Helm Chart into the cluster as a 'Release'",
+        "To update a container image",
+        "To delete a namespace"
+      ],
+      correctAnswer: "To deploy a Helm Chart into the cluster as a 'Release'",
+      explanation: `
+### Concept: Helm (Package Management)
+**Helm** uses a packaging format called charts.
+- **Chart**: A bundle of information necessary to create an instance of a Kubernetes application.
+- **Release**: A running instance of a chart in a cluster.
+
+The \`helm install\` command takes a chart and creates a new release.
+      `
+    },
+    {
+      id: 416,
+      question: "In Kubernetes, what is a 'Static Pod'?",
+      options: [
+        "A pod that never changes its IP address",
+        "A pod managed directly by the kubelet on a specific node, bypassing the API server",
+        "A pod that doesn't run any containers",
+        "A pod used for permanent storage"
+      ],
+      correctAnswer: "A pod managed directly by the kubelet on a specific node, bypassing the API server",
+      explanation: `
+### Concept: Specialized Pods
+**Static Pods** are managed directly by the kubelet daemon on a specific node, without the API server observing them.
+
+**Characteristics:**
+- **No Controller**: Not managed by Deployments or DaemonSets.
+- **File-based**: Kubelet watches a directory on the host (e.g., \`/etc/kubernetes/manifests\`).
+- **Use Case**: Often used to run control plane components (API server, Scheduler) on the master nodes before the cluster is fully up.
+      `
+    },
+    {
+      id: 417,
+      question: "Which of the following is an example of an L7 (Application Layer) Service Mesh feature?",
+      options: [
+        "Port-based routing",
+        "IP address filtering",
+        "HTTP Header-based traffic splitting",
+        "TCP connection limiting"
+      ],
+      correctAnswer: "HTTP Header-based traffic splitting",
+      explanation: `
+### Concept: Service Mesh Capabilities
+Service Meshes operate at the **Application Layer (L7)**, allowing them to understand protocol-specific data (HTTP, gRPC).
+
+**L7 Features:**
+- **Canary Deployments**: Route 10% of users with header \`version: beta\` to a new service.
+- **Retries/Timeouts**: Automatically retry failed HTTP calls.
+- **Traces**: Inject headers for distributed tracing.
+- **mTLS**: Encrypt communication based on service identity.
+      `
+    },
+    {
+      id: 418,
+      question: "What is the role of an 'Ingress Controller'?",
+      options: [
+        "To define routing rules only",
+        "To act as a load balancer and implement the rules defined in Ingress resources",
+        "To manage pod-to-pod communication",
+        "To schedule containers"
+      ],
+      correctAnswer: "To act as a load balancer and implement the rules defined in Ingress resources",
+      explanation: `
+### Concept: External Access
+The **Ingress resource** is just a configuration object (a piece of metadata). To make it work, you need an **Ingress Controller**.
+
+**How it works:**
+1.  The controller watches the API server for Ingress objects.
+2.  It reconfigures a load balancer (like NGINX, HAProxy, or a Cloud LB) to match those rules.
+3.  Traffic hits the LB and gets routed to the correct Services.
+      `
+    },
+    {
+      id: 419,
+      question: "Which CNCF project is a graduated tool for cloud-native storage, providing a unified interface for multiple storage backends?",
+      options: [
+        "Rook",
+        "Longhorn",
+        "Etcd",
+        "Velero"
+      ],
+      correctAnswer: "Rook",
+      explanation: `
+### Concept: Cloud Native Storage
+**Rook** is an open-source cloud-native storage orchestrator for Kubernetes.
+
+**What it does:**
+- Turns storage software (like **Ceph**) into self-managing, self-scaling, self-healing storage services.
+- Automates the tasks of a storage administrator: deployment, bootstrapping, configuration, provisioning, scaling, and monitoring.
+      `
+    },
+    {
+      id: 420,
+      question: "What does 'Immutable Infrastructure' mean in a cloud-native context?",
+      options: [
+        "Updating servers by logging in and changing config files",
+        "Infrastructure that cannot be changed once deployed; updates involve replacing the entire component",
+        "Infrastructure that never needs updates",
+        "Hardware that is water-proof and fire-proof"
+      ],
+      correctAnswer: "Infrastructure that cannot be changed once deployed; updates involve replacing the entire component",
+      explanation: `
+### Concept: Infrastructure Patterns
+**Immutable Infrastructure** is the practice of replacing components rather than modifying them in place.
+
+**Benefits:**
+- **Consistency**: No configuration drift (all instances are identical).
+- **Predictability**: You know exactly what is running.
+- **Rollbacks**: Reverting to a previous version is as simple as re-deploying the old image.
+- **Tools**: Containers and Terraform are core to this pattern.
+      `
+    },
+    {
+      id: 421,
+      question: "What is the purpose of 'Pod Disruption Budgets' (PDBs)?",
+      options: [
+        "To limit the amount of money spent on pods",
+        "To ensure a minimum number of pods remain available during voluntary disruptions (like node maintenance)",
+        "To stop pods from consuming too much CPU",
+        "To automate the deletion of old pods"
+      ],
+      correctAnswer: "To ensure a minimum number of pods remain available during voluntary disruptions (like node maintenance)",
+      explanation: `
+### Concept: High Availability
+A **Pod Disruption Budget (PDB)** limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions.
+
+**Voluntary Disruptions:**
+- Draining a node for maintenance.
+- Cluster autoscaling.
+- Deleting a deployment.
+
+**Involuntary Disruptions** (PDBs cannot prevent these):
+- Hardware failure.
+- Kernel panic.
+- Network split.
+      `
+    },
+    {
+      id: 422,
+      question: "In Kubernetes, what is the role of a 'Custom Controller'?",
+      options: [
+        "To provide a custom UI for the cluster",
+        "To watch Custom Resources (CRDs) and implement the logic to move the current state to the desired state",
+        "To manage user authentication",
+        "To replace the default scheduler"
+      ],
+      correctAnswer: "To watch Custom Resources (CRDs) and implement the logic to move the current state to the desired state",
+      explanation: `
+### Concept: The Operator Pattern
+The **Operator Pattern** combines Custom Resources (CRDs) and Custom Controllers.
+
+**The Loop:**
+1.  **Observe**: Check the state of the Custom Resource.
+2.  **Analyze**: Determine the difference between desired state (YAML) and actual state.
+3.  **Act**: Perform actions (create pods, configure DBs, etc.) to match the desired state.
+      `
+    },
+    {
+      id: 423,
+      question: "Which of the following describes 'Loose Coupling' as a microservices best practice?",
+      options: [
+        "Services should share the same database for performance",
+        "Services should be independent and communicate through well-defined APIs",
+        "Services should be written in the same programming language",
+        "Services should all run on a single large server"
+      ],
+      correctAnswer: "Services should be independent and communicate through well-defined APIs",
+      explanation: `
+### Concept: Microservices Design
+**Loose Coupling** is a design goal where each service is independent of others.
+
+**Key results:**
+- **Independent Scaling**: Scale only the checkout service, not the whole site.
+- **Fault Tolerance**: If the search service fails, the checkout can still work.
+- **Agility**: Teams can use different languages or frameworks (Polyglot).
+- **Technology Choice**: One service can use MongoDB while another uses MySQL.
+      `
+    },
+    {
+      id: 424,
+      question: "What is 'Polyglot Persistence'?",
+      options: [
+        "Using multiple languages for documentation",
+        "Using different database technologies based on the specific needs of each microservice",
+        "Storing data in multiple geographical regions",
+        "Backing up data to multiple types of media"
+      ],
+      correctAnswer: "Using different database technologies based on the specific needs of each microservice",
+      explanation: `
+### Concept: Modern Data Architecture
+**Polyglot Persistence** is the idea that different data storage technologies are best suited for different data tasks.
+
+**Examples in one application:**
+- **Product Catalog**: Document store (MongoDB).
+- **Inventory/Transactions**: Relational database (PostgreSQL).
+- **Search**: Search engine (Elasticsearch).
+- **Session Cache**: Key-value store (Redis).
+      `
+    },
+    {
+      id: 425,
+      question: "What is the function of the CNCF 'Sandbox' stage?",
+      options: [
+        "For projects that are ready for mass production",
+        "For early-stage projects that need a neutral home and are being experimented with",
+        "For projects that are being retired",
+        "For projects that are fully proprietary"
+      ],
+      correctAnswer: "For early-stage projects that need a neutral home and are being experimented with",
+      explanation: `
+### Concept: CNCF Project Stages
+1.  **Sandbox**: Early-stage, experimental, minimal requirements.
+2.  **Incubating**: Used in production by several companies, healthy contributor base.
+3.  **Graduated**: Widely adopted, clear governance, security audit complete (e.g., Kubernetes, Prometheus, Envoy).
+      `
+    },
+    {
+      id: 426,
+      question: "Which tool is commonly used for distributed tracing in cloud-native environments?",
+      options: [
+        "Prometheus",
+        "Jaeger",
+        "Logstash",
+        "Kibana"
+      ],
+      correctAnswer: "Jaeger",
+      explanation: `
+### Concept: Tracing Tools
+**Jaeger** is an open-source, end-to-end distributed tracing tool.
+
+**Features:**
+- Distributed context propagation.
+- Distributed transaction monitoring.
+- Root cause analysis.
+- Service dependency analysis.
+      `
+    },
+    {
+      id: 427,
+      question: "What is the primary benefit of 'Declarative Configuration' in Kubernetes?",
+      options: [
+        "It's faster to type than imperative commands",
+        "You define the desired state, and Kubernetes works to maintain it automatically",
+        "It doesn't require any YAML files",
+        "It makes pods run faster"
+      ],
+      correctAnswer: "You define the desired state, and Kubernetes works to maintain it automatically",
+      explanation: `
+### Concept: Declarative vs Imperative
+- **Imperative**: \"Run these three containers now.\" ( kubectl run ... )
+- **Declarative**: \"I want three containers to be running at all times.\" ( apply -f deployment.yaml )
+
+**The Power of Declarative:**
+If a node crashes and a pod dies, Kubernetes notices the actual state (2 pods) doesn't match the desired state (3 pods) and automatically starts a new one to self-heal.
+      `
+    },
+    {
+      id: 428,
+      question: "Which component of a Kubernetes node is responsible for managing the container lifecycle?",
+      options: [
+        "kube-proxy",
+        "the container runtime (e.g., containerd)",
+        "kubelet",
+        "the cloud provider"
+      ],
+      correctAnswer: "the container runtime (e.g., containerd)",
+      explanation: `
+### Concept: Container Runtimes
+While the **kubelet** is the architect, the **container runtime** is the actual construction worker.
+
+**Responsibilities:**
+- Pulling images from a registry.
+- Unpacking images.
+- Creating the isolated environment (namespaces/cgroups).
+- Starting and stopping the container processes.
+      `
+    },
+    {
+      id: 429,
+      question: "What does 'Observability' provide that 'Monitoring' traditionally does not?",
+      options: [
+        "More graphs and dashboards",
+        "Deep insights into 'unknown unknowns' and complex system behaviors",
+        "Alerts when a server goes down",
+        "A way to count the number of users"
+      ],
+      correctAnswer: "Deep insights into 'unknown unknowns' and complex system behaviors",
+      explanation: `
+### Concept: Monitoring vs Observability
+- **Monitoring**: Tells you *what* is happening (CPU is 90%, Server is down). It handles \"known unknowns.\"
+- **Observability**: Tells you *why* it's happening by exploring the internal state of a system based on its outputs. It handles \"unknown unknowns.\"
+
+**Observability requires**: Logs, Metrics, and Traces (The Three Pillars) to be correlated.
+      `
     }
   ]
 };
