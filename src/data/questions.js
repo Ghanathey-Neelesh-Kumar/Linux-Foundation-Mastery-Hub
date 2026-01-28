@@ -29,6 +29,11 @@ export const categories = [
     // Active by default
   },
   {
+    id: 'kcsa',
+    title: 'KCSA (Kubernetes and Cloud Native Security Associate)',
+    description: 'Security fundamentals for cloud-native architectures.'
+  },
+  {
     id: 'lfcs',
     title: 'LFCS (Linux Foundation Certified SysAdmin)',
     description: 'Essential commands, file systems, and user management.',
@@ -63,11 +68,6 @@ export const categories = [
     title: 'CNPE (Certified Cloud Native Platform Engineer)',
     description: 'Platform engineering practices for cloud-native ecosystems.',
     comingSoon: true
-  },
-  {
-    id: 'kcsa',
-    title: 'KCSA (Kubernetes and Cloud Native Security Associate)',
-    description: 'Security fundamentals for cloud-native architectures.'
   },
   {
     id: 'pca',
