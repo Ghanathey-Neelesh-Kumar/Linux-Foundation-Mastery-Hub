@@ -628,6 +628,1414 @@ By default, Kubernetes pods follow a **non-isolated** model (every pod can talk 
 
 **Why it's cool:** It uses standard Kubernetes YAML for policies, so you don't need to learn a new language.
       `
+    },
+    {
+      id: 511,
+      question: "Which DREAD category measures how many users are affected by an exploit?",
+      options: ["Discoverability", "Reproducibility", "Affected Users", "Explanability"],
+      correctAnswer: "Affected Users",
+      explanation: `
+### Concept: Threat Modeling (DREAD)
+**DREAD** is a framework for risk assessment.
+- **Affected Users**: Measures the blast radius (how many people/systems impacted).
+- **Discoverability**: How easy it is to find the vulnerability.
+- **Reproducibility**: How easy it is to repeat the exploit.
+      `
+    },
+    {
+      id: 512,
+      question: "What is the primary purpose of 'Security by Design' in cloud-native application development?",
+      options: [
+        "To scan for vulnerabilities after deployment",
+        "To integrate security considerations into every phase of the development lifecycle",
+        "To use only specific secure programming languages",
+        "To hide the source code from public view"
+      ],
+      correctAnswer: "To integrate security considerations into every phase of the development lifecycle",
+      explanation: `
+### Concept: Security by Design
+Security by Design means making security a core requirement from the start, rather than an afterthought or an "add-on" after the code is written.
+      `
+    },
+    {
+      id: 513,
+      question: "Which Pod Security Standard profile provides the tightest restrictions, preventing potential privilege escalation?",
+      options: ["Privileged", "Baseline", "Restricted", "Default"],
+      correctAnswer: "Restricted",
+      explanation: `
+### Concept: Pod Security Standards
+- **Privileged**: Unrestricted (allows for escalation).
+- **Baseline**: Minimal restrictions (prevents known escalations).
+- **Restricted**: Heavily restricted (best practice for security-sensitive workloads).
+      `
+    },
+    {
+      id: 514,
+      question: "What does the 'Supply Chain Levels for Software Artifacts' (SLSA) framework aim to prevent?",
+      options: [
+        "Network-based DDoS attacks",
+        "Unauthorized access to the Kubernetes API",
+        "Tampering and compromise during the software build and distribution process",
+        "Data leaks from production databases"
+      ],
+      correctAnswer: "Tampering and compromise during the software build and distribution process",
+      explanation: `
+### Concept: Supply Chain Security (SLSA)
+**SLSA** (pronounced "salsa") provides a set of standards and controls to ensure the integrity of software artifacts throughout their lifecycle.
+      `
+    },
+    {
+      id: 515,
+      question: "In Kubernetes, which component is responsible for authorizing requests after they have been authenticated?",
+      options: ["kube-scheduler", "kube-apiserver", "kubelet", "container runtime"],
+      correctAnswer: "kube-apiserver",
+      explanation: `
+### Concept: API Server Security
+The **kube-apiserver** performs Authentication (Who are you?), Authorization (What can you do?), and Admission Control (Is this allowed?).
+      `
+    },
+    {
+      id: 516,
+      question: "Which Linux kernel feature is used by Kubernetes to isolate the resource usage (CPU, Memory) of different containers?",
+      options: ["Namespaces", "Control Groups (cgroups)", "SELinux", "AppArmor"],
+      correctAnswer: "Control Groups (cgroups)",
+      explanation: `
+### Concept: Container Isolation
+- **cgroups**: Manage and limit resource usage (CPU, RAM).
+- **Namespaces**: Provide isolation for view of the system (Network, Process IDs, Mount points).
+      `
+    },
+    {
+      id: 517,
+      question: "What is the role of a 'Mutating Admission Webhook'?",
+      options: [
+        "To validate if a resource follows specific security rules",
+        "To modify the content of a resource request before it is saved to etcd",
+        "To delete unauthorized pods automatically",
+        "To rotate certificates for the cluster nodes"
+      ],
+      correctAnswer: "To modify the content of a resource request before it is saved to etcd",
+      explanation: `
+### Concept: Admission Control
+**Mutating Webhooks** can change the resource (e.g., injecting a sidecar container or setting default resource limits).
+      `
+    },
+    {
+      id: 518,
+      question: "Which standard provides a comprehensive set of security benchmarks specifically for Kubernetes clusters?",
+      options: ["PCI-DSS", "HIPAA", "CIS Benchmarks", "GDPR"],
+      correctAnswer: "CIS Benchmarks",
+      explanation: `
+### Concept: Compliance and Standards
+The **CIS (Center for Internet Security) Benchmarks** are highly regarded industry standards for hardening Kubernetes clusters and their components.
+      `
+    },
+    {
+      id: 519,
+      question: "What does 'Shift Left' mean in the context of Cloud Native Security?",
+      options: [
+        "Moving workloads from public cloud to private cloud",
+        "Addressing security earlier in the development lifecycle (DevSecOps)",
+        "Changing the orientation of network diagrams",
+        "Prioritizing frontend security over backend security"
+      ],
+      correctAnswer: "Addressing security earlier in the development lifecycle (DevSecOps)",
+      explanation: `
+### Concept: Shift Left
+By shifting left, teams identify and fix vulnerabilities during the coding and build phases, reducing the cost and risk of security issues in production.
+      `
+    },
+    {
+      id: 520,
+      question: "Which Kubernetes resource is used to provide fine-grained control over what a pod is capable of doing on the host node?",
+      options: ["NetworkPolicy", "RuntimeClass", "SecurityContext", "ResourceQuota"],
+      correctAnswer: "SecurityContext",
+      explanation: `
+### Concept: Pod Security
+A **SecurityContext** defines privilege and access control settings for a Pod or Container (e.g., runAsUser, privileged: false, allowPrivilegeEscalation: false).
+      `
+    },
+    {
+      id: 521,
+      question: "What is the primary security risk of running containers with the 'privileged' flag set to true?",
+      options: [
+        "The container will consume too much memory",
+        "The container can bypass most security isolations and access the host node's resources",
+        "The container will have a slower network connection",
+        "The container cannot be scanned by vulnerability tools"
+      ],
+      correctAnswer: "The container can bypass most security isolations and access the host node's resources",
+      explanation: `
+### Concept: Privileged Containers
+Privileged containers have nearly all the capabilities of the host, making a "container escape" much easier for an attacker.
+      `
+    },
+    {
+      id: 522,
+      question: "Which CNCF project acts as an open-source, cloud-native runtime security tool for detecting unusual behavior in containers?",
+      options: ["Falco", "Trivy", "Prometheus", "Envoy"],
+      correctAnswer: "Falco",
+      explanation: `
+### Concept: Runtime Security
+**Falco** uses kernel instrumentation (eBPF) to monitor system calls and detect suspicious activity (e.g., a shell being spawned in a production container).
+      `
+    },
+    {
+      id: 523,
+      question: "What is an 'SBOM' in the context of software supply chain security?",
+      options: [
+        "Secure Backup of Metadata",
+        "Software Bill of Materials",
+        "Standard Binary Object Mapping",
+        "System Build Operation Management"
+      ],
+      correctAnswer: "Software Bill of Materials",
+      explanation: `
+### Concept: Supply Chain Security (SBOM)
+An **SBOM** is a complete list of all components (libraries, dependencies) used to build a piece of software, allowing for better vulnerability tracking.
+      `
+    },
+    {
+      id: 524,
+      question: "In the '4C' security model, which layer is responsible for the physical security of the data center?",
+      options: ["Cloud", "Cluster", "Container", "Code"],
+      correctAnswer: "Cloud",
+      explanation: `
+### Concept: 4C Model
+The **Cloud** layer includes the physical infrastructure, whether provided by a public cloud vendor or managed in an on-premise data center.
+      `
+    },
+    {
+      id: 525,
+      question: "What does 'Least Privilege' mean when defining RBAC roles in Kubernetes?",
+      options: [
+        "Giving users as few permissions as possible while still allowing them to do their job",
+        "Only allowing senior developers to access the cluster",
+        "Creating only one admin role for the entire cluster",
+        "Hiding the existence of certain namespaces from users"
+      ],
+      correctAnswer: "Giving users as few permissions as possible while still allowing them to do their job",
+      explanation: `
+### Concept: RBAC Principles
+The **Principle of Least Privilege** reduces the blast radius of a compromised account by ensuring it only has the specific permissions it needs.
+      `
+    },
+    {
+      id: 526,
+      question: "Which format is typically used for Kubernetes Network Policies?",
+      options: ["JSON", "YAML", "XML", "TOML"],
+      correctAnswer: "YAML",
+      explanation: `
+### Concept: Network Policies
+Like most Kubernetes resources, **NetworkPolicies** are defined using YAML manifests.
+      `
+    },
+    {
+      id: 527,
+      question: "What is the primary benefit of using 'Namespaced' resources in Kubernetes for multi-tenancy?",
+      options: [
+        "Better performance for large clusters",
+        "Logical isolation and resource quota management for different teams",
+        "Automatic encryption of all data in the namespace",
+        "Hiding pods from the cluster administrator"
+      ],
+      correctAnswer: "Logical isolation and resource quota management for different teams",
+      explanation: `
+### Concept: Namespaces
+Namespaces allow multiple teams to share a single cluster without accidentally interfering with each others' resources.
+      `
+    },
+    {
+      id: 528,
+      question: "Which tool is commonly used to sign container images to ensure their integrity?",
+      options: ["Cosign", "Docker Hub", "Kubectl", "Minikube"],
+      correctAnswer: "Cosign",
+      explanation: `
+### Concept: Supply Chain Security (Signing)
+**Cosign** (part of the Sigstore project) allows developers to sign images, providing a way to verify that an image hasn't been tampered with since it was built.
+      `
+    },
+    {
+      id: 529,
+      question: "What is a 'Deny All' Network Policy used for?",
+      options: [
+        "To block all internet access for the entire cluster",
+        "To prevent any communication between pods in a namespace by default",
+        "To delete all pods that are not compliant with security rules",
+        "To disable the Kubernetes API server permanently"
+      ],
+      correctAnswer: "To prevent any communication between pods in a namespace by default",
+      explanation: `
+### Concept: Zero Trust Networking
+Starting with a **Deny All** policy and explicitly allowing only necessary traffic is a core practice of the "Zero Trust" security model.
+      `
+    },
+    {
+      id: 530,
+      question: "Which Kubernetes component manages the encryption of secrets at rest in etcd?",
+      options: ["kube-apiserver", "kube-scheduler", "kube-controller-manager", "etcd"],
+      correctAnswer: "kube-apiserver",
+      explanation: `
+### Concept: Secret Security
+The **kube-apiserver** handles the encryption/decryption of secrets before they are written to or read from **etcd**.
+      `
+    },
+    {
+      id: 531,
+      question: "What is 'Runtime Security' focused on?",
+      options: [
+        "Finding bugs in the source code",
+        "Scanning images in a registry",
+        "Detecting and preventing malicious activity while containers are running",
+        "Setting up hardware firewalls in the data center"
+      ],
+      correctAnswer: "Detecting and preventing malicious activity while containers are running",
+      explanation: `
+### Concept: Runtime Security
+Detection of unexpected process execution, suspicious network connections, or unauthorized file access occurs at the runtime layer.
+      `
+    },
+    {
+      id: 532,
+      question: "Which of the following is a potential risk of using third-party container images from public registries?",
+      options: [
+        "They might contain malware or unpatched vulnerabilities",
+        "They are always slower to download than private images",
+        "They cannot be used in production environments",
+        "They require a special license from the CNCF"
+      ],
+      correctAnswer: "They might contain malware or unpatched vulnerabilities",
+      explanation: `
+### Concept: Supply Chain Security
+Always scan and verify third-party images before use, and ideally use a private registry to mirror only trusted versions.
+      `
+    },
+    {
+      id: 533,
+      question: "What is the purpose of 'Audit Logs' in Kubernetes?",
+      options: [
+        "To improve the performance of the API server",
+        "To provide a chronological record of calls to the Kubernetes API",
+        "To store application level logs for debugging",
+        "To replace standard Linux system logs"
+      ],
+      correctAnswer: "To provide a chronological record of calls to the Kubernetes API",
+      explanation: `
+### Concept: Auditing
+Audit logs answer: "Who did what, when, and from where?", which is essential for security forensic and compliance.
+      `
+    },
+    {
+      id: 534,
+      question: "Which admission controller is used to limit the amount of resources (CPU/Memory) a namespace can consume?",
+      options: ["LimitRanger", "ResourceQuota", "PodSecurity", "NodeRestriction"],
+      correctAnswer: "ResourceQuota",
+      explanation: `
+### Concept: Resource Management
+**ResourceQuotas** prevent a single team or application from consuming all the resources in a cluster (Denial of Service).
+      `
+    },
+    {
+      id: 535,
+      question: "What is 'Vulnerability Scanning'?",
+      options: [
+        "Checking if a computer is plugged in",
+        "Identifying known security flaws in software components",
+        "Writing code that is impossible to hack",
+        "Monitoring network traffic for DDoS attacks"
+      ],
+      correctAnswer: "Identifying known security flaws in software components",
+      explanation: `
+### Concept: Vulnerability Management
+Scanners like **Trivy** check package lists against databases of known CVEs (Common Vulnerabilities and Exposures).
+      `
+    },
+    {
+      id: 536,
+      question: "Which CNCF project provides a container-native, policy-based firewall?",
+      options: ["Cilium", "Linkerd", "Kube-router", "Calico"],
+      correctAnswer: "Cilium",
+      explanation: `
+### Concept: Network Security
+**Cilium** uses eBPF to provide high-performance networking and security, including identity-aware L7 policy enforcement.
+      `
+    },
+    {
+      id: 537,
+      question: "What is the primary benefit of using 'In-Place' upgrades for Kubernetes cluster components compared to 'Blue/Green' upgrades?",
+      options: [
+        "In-Place upgrades are always faster",
+        "In-Place upgrades require less additional infrastructure during the process",
+        "In-Place upgrades are safer and easier to roll back",
+        "In-Place upgrades automatically fix all security vulnerabilities"
+      ],
+      correctAnswer: "In-Place upgrades require less additional infrastructure during the process",
+      explanation: `
+### Concept: Cluster Lifecycle Security
+While Blue/Green is safer for rollback, In-Place upgrades (like using kubeadm upgrade) are more resource-efficient as they don't require spawning a second cluster.
+      `
+    },
+    {
+      id: 538,
+      question: "Which of the following is a common method for securing the 'Code' layer in the 4C model?",
+      options: [
+        "Setting up a VPN for developers",
+        "Static Application Security Testing (SAST)",
+        "Installing an antivirus on the production nodes",
+        "Using a hardware security module (HSM)"
+      ],
+      correctAnswer: "Static Application Security Testing (SAST)",
+      explanation: `
+### Concept: 4C Model (Code)
+**SAST** tools analyze source code for security vulnerabilities (like SQL injection or hardcoded secrets) before the code is even compiled.
+      `
+    },
+    {
+      id: 539,
+      question: "What is the function of the 'kube-scheduler' in the context of security?",
+      options: [
+        "To encrypt pod communication",
+        "To ensure pods are placed on nodes that meet their security requirements (e.g., taints/tolerations)",
+        "To scan pods for root access",
+        "To manage RBAC for the nodes"
+      ],
+      correctAnswer: "To ensure pods are placed on nodes that meet their security requirements (e.g., taints/tolerations)",
+      explanation: `
+### Concept: Scheduling Security
+The scheduler enforces constraints like **NodeSelector**, **Affinity**, and **Taints/Tolerations**, which can be used to isolate sensitive workloads on specific hardened nodes.
+      `
+    },
+    {
+      id: 540,
+      question: "Which Kubernetes resource allows you to define a set of 'trusted' container registries from which images can be pulled?",
+      options: [
+        "ImagePolicyWebhook",
+        "NetworkPolicy",
+        "PodSecurityPolicy",
+        "ConfigMap"
+      ],
+      correctAnswer: "ImagePolicyWebhook",
+      explanation: `
+### Concept: Admission Control (Image Policy)
+An **ImagePolicyWebhook** allows an external admission controller to decide whether an image should be allowed in the cluster based on its origin or tags.
+      `
+    },
+    {
+      id: 541,
+      question: "What does 'Taint' do to a Kubernetes node?",
+      options: [
+        "It infects the node with a virus for testing",
+        "It allows a node to repel a set of pods unless those pods have a matching toleration",
+        "It encrypts all data stored locally on the node",
+        "It prevents the node from connecting to the internet"
+      ],
+      correctAnswer: "It allows a node to repel a set of pods unless those pods have a matching toleration",
+      explanation: `
+### Concept: Node Isolation
+Taints and Tolerations are used to ensure that pods are not scheduled onto inappropriate nodes (e.g., keeping non-GPU workloads off GPU nodes).
+      `
+    },
+    {
+      id: 542,
+      question: "Which CNCF project provides a universal identity control plane for multi-cloud and hybrid environments?",
+      options: ["SPIFFE", "SPIRE", "Istio", "Kuma"],
+      correctAnswer: "SPIRE",
+      explanation: `
+### Concept: Identity (SPIRE)
+**SPIRE** (the SPIFFE Runtime Environment) is a tool for issuing identities to software components across heterogeneous environments.
+      `
+    },
+    {
+      id: 543,
+      question: "What is the primary goal of the 'Cloud Native Computing Foundation' (CNCF) Security Technical Advisory Group (TAG)?",
+      options: [
+        "To write the code for all CNCF projects",
+        "To provide security guidance, best practices, and audits for cloud-native projects",
+        "To sell security software to enterprises",
+        "To replace the Linux Kernel with a more secure version"
+      ],
+      correctAnswer: "To provide security guidance, best practices, and audits for cloud-native projects",
+      explanation: `
+### Concept: Ecosystem and Community
+The **Security TAG** facilitates the security audits of CNCF projects and helps define the cloud-native security landscape.
+      `
+    },
+    {
+      id: 544,
+      question: "Which of the following describes 'Compliance' as code?",
+      options: [
+        "Writing laws using Python",
+        "Automating the verification of security requirements using programmable tools (e.g., OPA, Kyverno)",
+        "Storing legal documents in a Git repository",
+        "Hiring a developer to be a lawyer"
+      ],
+      correctAnswer: "Automating the verification of security requirements using programmable tools (e.g., OPA, Kyverno)",
+      explanation: `
+### Concept: Compliance-as-Code
+By automating compliance checks, organizations can ensure that every change to their infrastructure follows necessary regulations and internal policies.
+      `
+    },
+    {
+      id: 545,
+      question: "What is an 'Identity Provider' (IdP) in the context of Kubernetes authentication?",
+      options: [
+        "A system that stores and manages user identities (e.g., Google, Okta, Active Directory)",
+        "A tool that creates random passwords for pods",
+        "A hardware device used to identify servers",
+        "A Kubernetes service that lists all users in the cluster"
+      ],
+      correctAnswer: "A system that stores and manages user identities (e.g., Google, Okta, Active Directory)",
+      explanation: `
+### Concept: Authentication (IdP)
+Kubernetes can integrate with external IdPs using protocols like **OIDC** (OpenID Connect) to manage user access centrally.
+      `
+    },
+    {
+      id: 546,
+      question: "In Kubernetes, what happens if a request fails the 'Authorization' step?",
+      options: [
+        "The request is delayed for 10 minutes",
+        "The user's account is deleted",
+        "The API server returns a 403 Forbidden error",
+        "The cluster is restarted automatically"
+      ],
+      correctAnswer: "The API server returns a 403 Forbidden error",
+      explanation: `
+### Concept: API Server Workflow
+1. AuthN (401 if fails)
+2. **AuthZ** (403 if fails)
+3. Admission Control (403 if fails)
+      `
+    },
+    {
+      id: 547,
+      question: "Which Service Mesh project is known for its 'sidecar-less' architecture option?",
+      options: ["Istio", "Linkerd", "Cilium Service Mesh", "Consul"],
+      correctAnswer: "Cilium Service Mesh",
+      explanation: `
+### Concept: Service Mesh Architecture
+Cilium uses eBPF to provide service mesh features at the node level, potentially removing the need for a sidecar proxy in every pod.
+      `
+    },
+    {
+      id: 548,
+      question: "What is the purpose of the 'Secrets Store CSI Driver'?",
+      options: [
+        "To encrypt ordinary files on a node",
+        "To mount secrets from external stores (like Vault, AWS Secrets Manager) as volumes in pods",
+        "To replace the etcd database with a secure alternative",
+        "To back up the Kubernetes control plane"
+      ],
+      correctAnswer: "To mount secrets from external stores (like Vault, AWS Secrets Manager) as volumes in pods",
+      explanation: `
+### Concept: Secrets Management
+The **Secrets Store CSI Driver** allows Kubernetes to integrate naturally with enterprise-grade secrets management systems.
+      `
+    },
+    {
+      id: 549,
+      question: "Which Pod Security Standard profile should be used for highly privileged system components like CNI plugins?",
+      options: ["Restricted", "Baseline", "Privileged", "None"],
+      correctAnswer: "Privileged",
+      explanation: `
+### Concept: Pod Security Standards
+Certain infrastructure components REQUIRE high privileges to function (e.g., modifying network interfaces). These should be the ONLY pods running under the 'Privileged' profile.
+      `
+    },
+    {
+      id: 550,
+      question: "What is a 'Zero-Day Vulnerability'?",
+      options: [
+        "A vulnerability that takes 0 days to fix",
+        "A software flaw that is known to the vendor but not yet patched",
+        "A vulnerability that is discovered and exploited before the vendor is aware of it",
+        "A vulnerability that only exists on the first day of a month"
+      ],
+      correctAnswer: "A vulnerability that is discovered and exploited before the vendor is aware of it",
+      explanation: `
+### Concept: Vulnerability Management
+"Zero-day" refers to the fact that the vendor has had zero days to fix the issue before it starts being exploited.
+      `
+    },
+    {
+      id: 551,
+      question: "Which Kubernetes resource provides a way to define permissions for resources across TWO or more namespaces simultaneously?",
+      options: ["RoleBinding", "ClusterRoleBinding", "NamespaceBinding", "MultiRoleBinding"],
+      correctAnswer: "ClusterRoleBinding",
+      explanation: `
+### Concept: RBAC (Cluster Scope)
+A **ClusterRoleBinding** grants the permissions defined in a ClusterRole to a user across the ENTIRE cluster, including all current and future namespaces.
+      `
+    },
+    {
+      id: 552,
+      question: "What is the primary risk of using 'hostPath' volumes in Kubernetes pods?",
+      options: [
+        "The pod will consume too much disk space",
+        "The pod could potentially read or modify any file on the host node, leading to a container escape",
+        "HostPath volumes are deleted when the pod is deleted",
+        "HostPath volumes are only compatible with Windows nodes"
+      ],
+      correctAnswer: "The pod could potentially read or modify any file on the host node, leading to a container escape",
+      explanation: `
+### Concept: Volume Security
+Using **hostPath** allows a container to reach out of its isolated filesystem and interact with the host OS, which is a major security risk.
+      `
+    },
+    {
+      id: 553,
+      question: "What does 'Threat Intelligence' involve?",
+      options: [
+        "Making servers smarter using AI",
+        "Collecting and analyzing information about current and potential attacks/attackers",
+        "Hiring hackers to join your security team",
+        "Running a script that deletes all suspicious files"
+      ],
+      correctAnswer: "Collecting and analyzing information about current and potential attacks/attackers",
+      explanation: `
+### Concept: Security Operations
+Threat Intelligence helps organizations understand the "who, why, and how" of attacks, allowing them to better prepare their defenses.
+      `
+    },
+    {
+      id: 554,
+      question: "Which CNCF project provides a way to centrally manage and enforce policies across a fleet of Kubernetes clusters?",
+      options: ["OPA Gatekeeper", "ArgoCD", "Crossplane", "Kyverno"],
+      correctAnswer: "OPA Gatekeeper",
+      explanation: `
+### Concept: Policy Management
+**Gatekeeper** is a customizable admission webhook that enforces CRD-based policies executed by **Open Policy Agent (OPA)**.
+      `
+    },
+    {
+      id: 555,
+      question: "What is 'Segmentation' in the context of cloud-native network security?",
+      options: [
+        "Dividing a large image into smaller layers",
+        "Breaking a monolith into microservices",
+        "Dividing a network into smaller, isolated sub-networks or zones to limit the lateral movement of an attacker",
+        "Storing data across multiple physical disks"
+      ],
+      correctAnswer: "Dividing a network into smaller, isolated sub-networks or zones to limit the lateral movement of an attacker",
+      explanation: `
+### Concept: Network Security
+In Kubernetes, segmentation is typically achieved using **Namespaces** and **NetworkPolicies**.
+      `
+    },
+    {
+      id: 556,
+      question: "Which command is used to check the effective RBAC permissions for a specific user in a namespace?",
+      options: ["kubectl get rbac", "kubectl describe user", "kubectl auth can-i", "kubectl check-permissions"],
+      correctAnswer: "kubectl auth can-i",
+      explanation: `
+### Concept: RBAC Verification
+\`kubectl auth can-i\` is a very useful command for debugging permissions and verifying that your RBAC roles are working as intended.
+      `
+    },
+    {
+      id: 557,
+      question: "What is the purpose of 'Gvisor' in container security?",
+      options: [
+        "To provide a GUI for Docker",
+        "To provide an extra layer of kernel isolation by intercepting system calls made by containers",
+        "To speed up container startup times",
+        "To monitor network traffic between pods"
+      ],
+      correctAnswer: "To provide an extra layer of kernel isolation by intercepting system calls made by containers",
+      explanation: `
+### Concept: Sandboxed Runtimes
+**gVisor** (and Kata Containers) provide stronger isolation than standard runtimes by ensuring that the container never interacts directly with the host kernel.
+      `
+    },
+    {
+      id: 558,
+      question: "Which of the following is a key requirement of the 'GDPR' regulation that impacts cloud-native applications?",
+      options: [
+        "All applications must be written in Go",
+        "Data of EU citizens must be protected and handled according to strict privacy rules",
+        "All clusters must be hosted in Europe",
+        "Every pod must have a unique EU-certified ID"
+      ],
+      correctAnswer: "Data of EU citizens must be protected and handled according to strict privacy rules",
+      explanation: `
+### Concept: Compliance (GDPR)
+GDPR compliance involves technical and organizational measures to ensure data privacy and security for European users.
+      `
+    },
+    {
+      id: 559,
+      question: "What does 'Observability' contribute to security operations?",
+      options: [
+        "It makes the system impossible to hack",
+        "It provides the necessary data (logs, traces) to detect and investigate security incidents",
+        "It stores passwords in a secure way",
+        "It prevents all unauthorized logins"
+      ],
+      correctAnswer: "It provides the necessary data (logs, traces) to detect and investigate security incidents",
+      explanation: `
+### Concept: Security Observability
+Observability is critical for "Security Information and Event Management" (SIEM) and incident response.
+      `
+    },
+    {
+      id: 560,
+      question: "Which CNCF project provides an open standards-based framework for cloud-native secret management and rotation?",
+      options: ["Vault", "External Secrets Operator", "Bank-Vaults", "Secrets Store CSI"],
+      correctAnswer: "Bank-Vaults",
+      explanation: `
+### Concept: Secrets Management
+Projects like **Bank-Vaults** (or the widely used HashiCorp Vault) provide advanced features like automatic secret rotation and dynamic secret generation.
+      `
+    },
+    {
+      id: 561,
+      question: "Which of the following is a key security feature provided by a Container Runtime Interface (CRI)?",
+      options: [
+        "Automatic code obfuscation",
+        "Hardware-level encryption for all containers",
+        "Isolation of container processes from the host and other containers",
+        "Real-time malware scanning during execution"
+      ],
+      correctAnswer: "Isolation of container processes from the host and other containers",
+      explanation: `
+### Concept: CRI Security
+The **Container Runtime Interface (CRI)** and the underlying runtime (like containerd or CRI-O) are responsible for utilizing Linux kernel features (Namespaces, cgroups) to provide process-level isolation.
+`
+    },
+    {
+      id: 562,
+      question: "What is the primary security goal of 'Network Segmentation' in a Kubernetes cluster?",
+      options: [
+        "To increase network throughput between pods",
+        "To prevent lateral movement by attackers if one service is compromised",
+        "To assign static IP addresses to all production pods",
+        "To disable the use of the Kubernetes API server"
+      ],
+      correctAnswer: "To prevent lateral movement by attackers if one service is compromised",
+      explanation: `
+### Concept: Network Segmentation
+By dividing the network into segments (using Namespaces and **NetworkPolicies**), you ensure that a breach in one application doesn't automatically grant the attacker access to every other service in the cluster.
+`
+    },
+    {
+      id: 563,
+      question: "Which component is often used in Kubernetes to manage identity and access for users outside the cluster?",
+      options: [
+        "kube-proxy",
+        "OIDC (OpenID Connect) Provider",
+        "CoreDNS",
+        "etcd"
+      ],
+      correctAnswer: "OIDC (OpenID Connect) Provider",
+      explanation: `
+### Concept: External Authentication
+Kubernetes can delegate authentication to external **OIDC providers** (like Okta, Google, or Keycloak), allowing for centralized identity management and Single Sign-On (SSO).
+`
+    },
+    {
+      id: 564,
+      question: "In the context of the '4C' security model, what does the 'Code' layer focus on?",
+      options: [
+        "Securing the data center's physical perimeter",
+        "Hardening the Linux kernel on the worker nodes",
+        "Protecting application logic, dependencies, and handling secrets securely",
+        "Configuring BIOS passwords on physical servers"
+      ],
+      correctAnswer: "Protecting application logic, dependencies, and handling secrets securely",
+      explanation: `
+### Concept: 4C Model (Code)
+The **Code** layer is the top-most layer. It involves practices like SAST/DAST, dependency scanning (SCA), and ensuring that the application itself doesn't leak secrets or have logic flaws.
+`
+    },
+    {
+      id: 565,
+      question: "Which of the following is a common threat targeted by 'Supply Chain Security' measures?",
+      options: [
+        "Phishing attacks against cluster administrators",
+        "Physical theft of a worker node from a data center",
+        "Injection of malicious code into a widely used open-source library",
+        "Accidentally deleting a namespace using kubectl"
+      ],
+      correctAnswer: "Injection of malicious code into a widely used open-source library",
+      explanation: `
+### Concept: Supply Chain Security
+Supply chain attacks (like the SolarWinds breach) focus on compromising the tools, libraries, or distribution channels used to build and deliver software.
+`
+    },
+    {
+      id: 566,
+      question: "What is 'Encryption at Rest' specifically protecting in a Kubernetes environment?",
+      options: [
+        "Data while it is being transmitted over the network",
+        "Data stored in the etcd database when it is written to disk",
+        "User passwords while they are being typed in a browser",
+        "The source code of the application in the Git repository"
+      ],
+      correctAnswer: "Data stored in the etcd database when it is written to disk",
+      explanation: `
+### Concept: Encryption at Rest
+**Encryption at Rest** ensures that if the physical storage media (e.g., an SSD or EBS volume) where **etcd** data resides is stolen, the data (including secrets) remains unreadable without the decryption key.
+`
+    },
+    {
+      id: 567,
+      question: "Which Kubernetes resource is used to limit the amount of CPU or memory a pod can request?",
+      options: [
+        "NetworkPolicy",
+        "ResourceQuota",
+        "SecurityContext",
+        "HorizontalPodAutoscaler"
+      ],
+      correctAnswer: "ResourceQuota",
+      explanation: `
+### Concept: Resource Management
+**ResourceQuotas** are used at the namespace level to prevent any single team or application from consuming all cluster resources, which is a form of Deny of Service (DoS) protection.
+`
+    },
+    {
+      id: 568,
+      question: "What is 'Admission Control' in Kubernetes?",
+      options: [
+        "A process for logging users into the cluster",
+        "A series of plugins that intercept and can modify or reject requests to the API server",
+        "A method for physically controlling access to the server room",
+        "A way to assign static IP addresses to pods"
+      ],
+      correctAnswer: "A series of plugins that intercept and can modify or reject requests to the API server",
+      explanation: `
+### Concept: Admission Control
+**Admission Controllers** act as a gatekeeper. After authentication and authorization, they can validate or mutate resources (like pods or services) before they are persisted in etcd.
+`
+    },
+    {
+      id: 569,
+      question: "Which tool would you use to perform 'Static Analysis' of a Kubernetes YAML file for security misconfigurations?",
+      options: [
+        "Kube-hunter",
+        "Kube-bench",
+        "Checkov or Kube-score",
+        "Wireshark"
+      ],
+      correctAnswer: "Checkov or Kube-score",
+      explanation: `
+### Concept: Static Analysis (IaC)
+Tools like **Checkov**, **Kube-score**, or **Terrascan** analyze "Infrastructure as Code" (YAML/Terraform) to find misconfigurations (like running as root) before they are even deployed.
+`
+    },
+    {
+      id: 570,
+      question: "What is the primary function of a 'Service Mesh' in terms of security?",
+      options: [
+        "To speed up the download of container images",
+        "To provide mutual TLS (mTLS) for all inter-service communication",
+        "To manage the physical cooling of servers",
+        "To replace the Kubernetes API server"
+      ],
+      correctAnswer: "To provide mutual TLS (mTLS) for all inter-service communication",
+      explanation: `
+### Concept: Service Mesh Security
+A **Service Mesh** (like Istio or Linkerd) provides a transparent way to secure service-to-service communication with **mTLS**, providing both encryption and strong identity verification.
+`
+    },
+    {
+      id: 571,
+      question: "Which concept involves addressed security during the planning and coding phases of development?",
+      options: [
+        "Reactive Security",
+        "Shift Right",
+        "Shift Left",
+        "Post-mortem Analysis"
+      ],
+      correctAnswer: "Shift Left",
+      explanation: `
+### Concept: Shift Left
+**Shift Left** security means integrating security checks, testing, and considerations earlier in the software development lifecycle (SDLC) rather than waiting for production.
+`
+    },
+    {
+      id: 572,
+      question: "What is a 'Vulnerability Disclosure Policy' (VDP)?",
+      options: [
+        "A policy that forbids anyone from looking for bugs in your software",
+        "A public-facing policy explaining how researchers can safely report security flaws",
+        "A document that lists every password used by the company",
+        "A contract signed by hackers to keep all bugs secret forever"
+      ],
+      correctAnswer: "A public-facing policy explaining how researchers can safely report security flaws",
+      explanation: `
+### Concept: Vulnerability Disclosure
+A **VDP** encourages 'ethical hackers' to report bugs responsibly, ensuring they have a clear path to do so without fear of legal action.
+`
+    },
+    {
+      id: 573,
+      question: "Which of the following describes 'Mutual TLS' (mTLS)?",
+      options: [
+        "Only the server proves its identity to the client",
+        "Both the client and the server prove their identities to each other using certificates",
+        "A protocol used to encrypt hard disks",
+        "A way for two users to share the same password"
+      ],
+      correctAnswer: "Both the client and the server prove their identities to each other using certificates",
+      explanation: `
+### Concept: mTLS
+In **mTLS**, both parties verify each other's certificates, ensuring that only trusted services can communicate with each other.
+`
+    },
+    {
+      id: 574,
+      question: "What is the security risk of 'Credential Leakage' in a CI/CD pipeline?",
+      options: [
+        "The pipeline will run too slowly",
+        "Attackers could gain access to production environments or sensitive data",
+        "The source code will be deleted automatically",
+        "The build process will consume too much memory"
+      ],
+      correctAnswer: "Attackers could gain access to production environments or sensitive data",
+      explanation: `
+### Concept: Secret Management
+Leaks often occur when secrets (like API keys) are accidentally committed to Git or printed in build logs. Using a dedicated secrets manager is essential.
+`
+    },
+    {
+      id: 575,
+      question: "In threat modeling, what does 'Likelihood' and 'Impact' help determine?",
+      options: [
+        "The speed of the network",
+        "The overall Risk level of a threat",
+        "The number of pods needed for an application",
+        "The physical location of the data center"
+      ],
+      correctAnswer: "The overall Risk level of a threat",
+      explanation: `
+### Concept: Risk Assessment
+**Risk = Likelihood x Impact**. This helps security teams prioritize which threats to address first.
+`
+    },
+    {
+      id: 576,
+      question: "Which Kubernetes component manages and issues certificates for pods when using a Service Mesh?",
+      options: [
+        "Kubelet",
+        "Control Plane (e.g., Istiod)",
+        "Etcd",
+        "Kube-proxy"
+      ],
+      correctAnswer: "Control Plane (e.g., Istiod)",
+      explanation: `
+### Concept: Certificate Authority (CA)
+In a service mesh, the control plane component (like **Istiod**) acts as a CA, issuing and rotating short-lived certificates for the sidecar proxies.
+`
+    },
+    {
+      id: 577,
+      question: "What is the primary purpose of 'Dynamic Application Security Testing' (DAST)?",
+      options: [
+        "To scan the source code for bugs",
+        "To test a running application for vulnerabilities by simulating attacks",
+        "To check the security of the physical server room",
+        "To manage user permissions in the database"
+      ],
+      correctAnswer: "To test a running application for vulnerabilities by simulating attacks",
+      explanation: `
+### Concept: DAST
+**DAST** tools interact with the application from the outside (like an attacker would) to find issues like SQL injection or cross-site scripting while the app is active.
+`
+    },
+    {
+      id: 578,
+      question: "Which type of policy is typically used to restrict which users can run 'kubectl' commands?",
+      options: [
+        "NetworkPolicy",
+        "RBAC (Role-Based Access Control)",
+        "ResourceQuota",
+        "CSI Policy"
+      ],
+      correctAnswer: "RBAC (Role-Based Access Control)",
+      explanation: `
+### Concept: Authorization
+**RBAC** determines which subjects (users, groups, service accounts) have permission to perform specific verbs (get, list, delete) on Kubernetes resources.
+`
+    },
+    {
+      id: 579,
+      question: "What does 'Secrets Encryption at Rest' in Kubernetes specifically encrypt?",
+      options: [
+        "Environment variables in the pod",
+        "Secret data stored in etcd",
+        "Source code in the repository",
+        "Logs in the logging system"
+      ],
+      correctAnswer: "Secret data stored in etcd",
+      explanation: `
+### Concept: Secret Security
+By default, K8s secrets are only base64 encoded. **Encryption at Rest** adds a layer of cryptographic protection when they are saved to disk in etcd.
+`
+    },
+    {
+      id: 580,
+      question: "Which CNCF project is a common choice for 'Cloud Native Logging' and can be used for security auditing?",
+      options: [
+        "Fluentd",
+        "Envoy",
+        "Harbor",
+        "Argo"
+      ],
+      correctAnswer: "Fluentd",
+      explanation: `
+### Concept: Observability
+**Fluentd** (and Fluent Bit) collect, process, and forward logs from containers and nodes to a central location for analysis and long-term storage.
+`
+    },
+    {
+      id: 581,
+      question: "What is 'Container Escape'?",
+      options: [
+        "When a container finishes its task and stops",
+        "When an attacker breaks out of a container's isolation to gain access to the host OS",
+        "When a container is deleted by the scheduler",
+        "When a container uses too much CPU"
+      ],
+      correctAnswer: "When an attacker breaks out of a container's isolation to gain access to the host OS",
+      explanation: `
+### Concept: Runtime Security
+**Container Escape** is a critical security failure where the isolation boundaries (provided by the kernel) are bypassed, giving the attacker control over the underlying node.
+`
+    },
+    {
+      id: 582,
+      question: "Which of the following is a security best practice for managing Kubernetes Secrets?",
+      options: [
+        "Commit them to your public Git repository for transparency",
+        "Avoid using secrets and use plain text ConfigMaps instead",
+        "Use an external secrets manager like HashiCorp Vault or AWS Secrets Manager",
+        "Print secret values in application logs to help with debugging"
+      ],
+      correctAnswer: "Use an external secrets manager like HashiCorp Vault or AWS Secrets Manager",
+      explanation: `
+### Concept: Secrets Management
+External secret managers provide better security, audit trails, and features like automatic rotation compared to native Kubernetes secrets alone.
+`
+    },
+    {
+      id: 583,
+      question: "What is 'Trust Root' in the context of TLS/SSL?",
+      options: [
+        "The highest-level certificate authority (CA) that is trusted by the system",
+        "The main password for the cluster",
+        "The physical location of the first server built",
+        "A special kind of user account"
+      ],
+      correctAnswer: "The highest-level certificate authority (CA) that is trusted by the system",
+      explanation: `
+### Concept: Identity & Trust
+The **Trust Root** is the foundation of the chain of trust. If the root CA is trusted, all certificates issued by it or its intermediates are also trusted.
+`
+    },
+    {
+      id: 584,
+      question: "Which component of the '4C' security model includes securing your cloud provider's console and API access?",
+      options: [
+        "Code",
+        "Container",
+        "Cluster",
+        "Cloud"
+      ],
+      correctAnswer: "Cloud",
+      explanation: `
+### Concept: 4C Model (Cloud)
+The **Cloud** layer is the foundation. It involves securing the IAM, VPCs, and overall account access of your cloud environment (AWS, GCP, Azure, etc.).
+`
+    },
+    {
+      id: 585,
+      question: "What is the purpose of 'Image Signing' in a containerized environment?",
+      options: [
+        "To make the images look more professional",
+        "To ensure that an image hasn't been tampered with and comes from a trusted source",
+        "To reduce the size of the image",
+        "To speed up the container startup time"
+      ],
+      correctAnswer: "To ensure that an image hasn't been tampered with and comes from a trusted source",
+      explanation: `
+### Concept: Supply Chain Security
+**Image Signing** (using tools like Cosign) creates a digital signature that can be verified by the Kubernetes cluster (e.g., using a policy engine) before the image is allowed to run.
+`
+    },
+    {
+      id: 586,
+      question: "Which of the following describes 'Least Privilege' in the context of Kubernetes Service Accounts?",
+      options: [
+        "Every pod should use the default service account with full admin rights",
+        "Pods should only be granted the specific permissions they need to perform their function",
+        "Service accounts should only be used for monitoring tools",
+        "All service accounts must have the same permissions to simplify management"
+      ],
+      correctAnswer: "Pods should only be granted the specific permissions they need to perform their function",
+      explanation: `
+### Concept: RBAC & Service Accounts
+The **Principle of Least Privilege** ensures that if a pod is compromised, the attacker's ability to interact with the Kubernetes API is limited to only what that specific pod was authorized to do.
+`
+    },
+    {
+      id: 587,
+      question: "What is 'Runtime Security Monitoring' primarily looking for?",
+      options: [
+        "Errors in the application's configuration files",
+        "Unexpected or suspicious behavior while containers are running (e.g., shell access, file changes)",
+        "The number of users visiting the website",
+        "The total cost of running the cluster"
+      ],
+      correctAnswer: "Unexpected or suspicious behavior while containers are running (e.g., shell access, file changes)",
+      explanation: `
+### Concept: Runtime Security
+Monitoring tools (like Falco) watch for events that deviate from the 'normal' behavior of a container, alerting on potential compromises in real-time.
+`
+    },
+    {
+      id: 588,
+      question: "What does 'CVE' stand for in the context of cybersecurity?",
+      options: [
+        "Common Vulnerabilities and Exposures",
+        "Container Vulnerability Encryption",
+        "Cluster Verification Engine",
+        "Critical Vulnerability Error"
+      ],
+      correctAnswer: "Common Vulnerabilities and Exposures",
+      explanation: `
+### Concept: Vulnerability Management
+**CVE** is a list of publicly disclosed cybersecurity vulnerabilities. Each entry (e.g., CVE-2021-44228) provides a standardized identifier for a specific flaw in a specific software package.
+`
+    },
+    {
+      id: 589,
+      question: "Which Kubernetes feature can be used to ensure that a pod only runs on a node that has specific security hardware (e.g., a TPM)?",
+      options: [
+        "NetworkPolicy",
+        "NodeSelector or Affinity",
+        "ResourceQuota",
+        "LimitRange"
+      ],
+      correctAnswer: "NodeSelector or Affinity",
+      explanation: `
+### Concept: Node Isolation
+**NodeSelectors** and **Affinity/Anti-affinity** rules allow you to control pod placement, ensuring sensitive workloads only run on appropriately hardened or equipped hardware.
+`
+    },
+    {
+      id: 590,
+      question: "What is the primary benefit of using 'Namespaces' for security in a shared Kubernetes cluster?",
+      options: [
+        "They make the network 10x faster",
+        "They provide a scope for RBAC policies and Resource Quotas, enabling multi-tenancy",
+        "They automatically encrypt all traffic passing through them",
+        "They prevent any communication between pods by default"
+      ],
+      correctAnswer: "They provide a scope for RBAC policies and Resource Quotas, enabling multi-tenancy",
+      explanation: `
+### Concept: Multi-tenancy
+**Namespaces** allow you to logically divide cluster resources, ensuring that Team A's developers cannot accidentally (or maliciously) modify Team B's applications.
+`
+    },
+    {
+      id: 591,
+      question: "What does 'SCA' (Software Composition Analysis) focus on?",
+      options: [
+        "Testing the speed of the application",
+        "Identifying vulnerabilities in open-source libraries and dependencies used by your application",
+        "Scanning the physical network for unauthorized devices",
+        "Managing the deployment of virtual machines"
+      ],
+      correctAnswer: "Identifying vulnerabilities in open-source libraries and dependencies used by your application",
+      explanation: `
+### Concept: Supply Chain Security
+**SCA** tools (like Snyk or OWASP Dependency-Check) analyze your project's manifest files (e.g., package.json, pom.xml) to find known vulnerabilities in the third-party code you rely on.
+`
+    },
+    {
+      id: 592,
+      question: "Which of the following is a security risk of 'Excessive Permissions' given to a CI/CD service account?",
+      options: [
+        "The build process will be too slow",
+        "A compromise of the CI/CD pipeline could allow an attacker to take over the entire Kubernetes cluster",
+        "The application will use more memory than usual",
+        "The logs will be harder to read"
+      ],
+      correctAnswer: "A compromise of the CI/CD pipeline could allow an attacker to take over the entire Kubernetes cluster",
+      explanation: `
+### Concept: Pipeline Security
+Always follow the **Principle of Least Privilege** for CI/CD tools. They should only have the minimum permissions required to deploy specific resources in specific namespaces.
+`
+    },
+    {
+      id: 593,
+      question: "What is 'Audit Sink' in Kubernetes?",
+      options: [
+        "A place where old and unused logs are deleted",
+        "An API object that defines where audit events should be sent (e.g., an external log collector)",
+        "A security vulnerability that allows logs to be leaked",
+        "A tool for cleaning up disk space on worker nodes"
+      ],
+      correctAnswer: "An API object that defines where audit events should be sent (e.g., an external log collector)",
+      explanation: `
+### Concept: Auditing
+**Audit Sinks** allow you to stream Kubernetes audit logs to external platforms for real-time monitoring, alerting, and long-term compliance storage.
+`
+    },
+    {
+      id: 594,
+      question: "Which CNCF project provides a cloud-native service mesh with a focus on ease of use and 'Security by Default'?",
+      options: [
+        "Linkerd",
+        "Kelsey",
+        "Prometheus",
+        "Helm"
+      ],
+      correctAnswer: "Linkerd",
+      explanation: `
+### Concept: Service Mesh
+**Linkerd** is known for being extremely lightweight and providing automatic **mTLS** out-of-the-box without requiring complex configuration.
+`
+    },
+    {
+      id: 595,
+      question: "What is 'Compliance Drift'?",
+      options: [
+        "When an application gets faster over time",
+        "When a system's configuration changes over time, moving away from its initial secure and compliant state",
+        "When a cluster is moved from one cloud provider to another",
+        "When developers stop following the company's dress code"
+      ],
+      correctAnswer: "When a system's configuration changes over time, moving away from its initial secure and compliant state",
+      explanation: `
+### Concept: Governance & Compliance
+Continuous monitoring and automated remediation are needed to detect and fix **Compliance Drift** before it becomes a security risk.
+`
+    },
+    {
+      id: 596,
+      question: "What is the purpose of 'Pod Disruption Budgets' (PDBs) in the context of security maintenance?",
+      options: [
+        "To limit the cost of running pods",
+        "To ensure that a minimum number of pods remain available during voluntary disruptions (like security patching/upgrades)",
+        "To prevent pods from being deleted by the administrator",
+        "To manage network traffic during a DDoS attack"
+      ],
+      correctAnswer: "To ensure that a minimum number of pods remain available during voluntary disruptions (like security patching/upgrades)",
+      explanation: `
+### Concept: Availability
+**PDBs** ensure that as you roll out security updates to your cluster nodes, the availability of your critical applications is maintained.
+`
+    },
+    {
+      id: 597,
+      question: "Which of the following describes 'Zero Trust Architecture'?",
+      options: [
+        "Trusting all internal traffic automatically",
+        "Continuously verifying the identity and integrity of every request, regardless of where it originates",
+        "A network where no one is allowed to log in",
+        "A system that has zero security vulnerabilities"
+      ],
+      correctAnswer: "Continuously verifying the identity and integrity of every request, regardless of where it originates",
+      explanation: `
+### Concept: Zero Trust
+In a **Zero Trust** model, "location" (being inside the network) is no longer a proxy for "trust". Every connection must be authenticated and authorized.
+`
+    },
+    {
+      id: 598,
+      question: "What is 'Secrets Sprawl'?",
+      options: [
+        "When a secret is used in more than one application",
+        "The unintentional and unmanaged distribution of secrets (keys, passwords) across various platforms and tools",
+        "When a database grows too large to manage",
+        "When a developer shares their password with a teammate"
+      ],
+      correctAnswer: "The unintentional and unmanaged distribution of secrets (keys, passwords) across various platforms and tools",
+      explanation: `
+### Concept: Secrets Management
+**Secrets Sprawl** makes it difficult to rotate keys, audit access, or ensure that credentials aren't leaked in logs or shared drives.
+`
+    },
+    {
+      id: 599,
+      question: "Which Kubernetes component should be restricted from direct public internet access to prevent attacks?",
+      options: [
+        "Kube-apiserver",
+        "Etcd",
+        "Kubelet",
+        "All of the above"
+      ],
+      correctAnswer: "All of the above",
+      explanation: `
+### Concept: Control Plane Hardening
+Exposing core Kubernetes components to the internet increases the risk of brute-force attacks or exploitation of unpatched vulnerabilities. They should be behind VPNs or firewalls.
+`
+    },
+    {
+      id: 600,
+      question: "What is 'Container Sandboxing'?",
+      options: [
+        "Running containers in a visual simulator",
+        "Using additional technologies (like gVisor or Kata) to provide stronger isolation than standard Linux containers",
+        "Using a smaller base image for your container",
+        "Encrypting the container's filesystem"
+      ],
+      correctAnswer: "Using additional technologies (like gVisor or Kata) to provide stronger isolation than standard Linux containers",
+      explanation: `
+### Concept: Deep Isolation
+Standard containers share the host kernel. **Sandboxing** provides an extra layer (like a guest kernel) to further isolate the container and protect the host.
+`
+    },
+    {
+      id: 601,
+      question: "What is 'Dynamic Secret Generation' in a tool like HashiCorp Vault?",
+      options: [
+        "Creating a random password for a user",
+        "Creating short-lived, unique credentials on-demand for a specific task or session",
+        "Generating secrets that change their value every 5 seconds",
+        "Automating the backup of existing secrets"
+      ],
+      correctAnswer: "Creating short-lived, unique credentials on-demand for a specific task or session",
+      explanation: `
+### Concept: Secrets Management
+**Dynamic secrets** (e.g., for a database) are created when requested and automatically deleted when they expire, making stolen credentials useless after a short period.
+`
+    },
+    {
+      id: 602,
+      question: "Which of the following is a security risk of 'Default' configurations in Kubernetes?",
+      options: [
+        "The defaults are often optimized for ease of use rather than maximum security",
+        "The defaults are always 10 versions behind the latest release",
+        "The defaults require more CPU and Memory than custom configs",
+        "The defaults cannot be changed by the administrator"
+      ],
+      correctAnswer: "The defaults are often optimized for ease of use rather than maximum security",
+      explanation: `
+### Concept: Cluster Hardening
+Many Kubernetes defaults (like open pod-to-pod communication) should be tightened according to your specific security requirements before going to production.
+`
+    },
+    {
+      id: 603,
+      question: "What is an 'Identity Provider' (IdP) responsible for?",
+      options: [
+        "Assigning IP addresses to containers",
+        "Verifying and managing user identities and providing tokens for authentication",
+        "Scanning images for vulnerabilities",
+        "Monitoring the performance of the cluster"
+      ],
+      correctAnswer: "Verifying and managing user identities and providing tokens for authentication",
+      explanation: `
+### Concept: Identity Management
+An **IdP** (like Google, Azure AD, or an on-prem LDAP) is the source of truth for "who" a user is.
+`
+    },
+    {
+      id: 604,
+      question: "What is 'Data Sovereignty'?",
+      options: [
+        "The idea that data should be free for everyone to access",
+        "The concept that data is subject to the laws and governance structures of the nation where it is physically located",
+        "A protocol for encrypting data during international transit",
+        "A system for assigning 'kingdoms' to different datasets"
+      ],
+      correctAnswer: "The concept that data is subject to the laws and governance structures of the nation where it is physically located",
+      explanation: `
+### Concept: Governance & Compliance
+**Data Sovereignty** is a major factor in cloud-native design, often requiring that sensitive data be stored and processed within specific geographic boundaries.
+`
+    },
+    {
+      id: 605,
+      question: "Which '4C' layer would focus on setting up a Web Application Firewall (WAF) to block malicious traffic?",
+      options: [
+        "Code",
+        "Container",
+        "Cluster",
+        "Cloud"
+      ],
+      correctAnswer: "Cloud",
+      explanation: `
+### Concept: 4C Model (Cloud)
+A **WAF** typically sits at the edge of your cloud environment, intercepting HTTP traffic before it even reaches your Kubernetes cluster.
+`
+    },
+    {
+      id: 606,
+      question: "What does 'mTLS' solve that standard TLS does not?",
+      options: [
+        "It makes the encryption 100% unbreakable",
+        "It allows the server to verify the identity of the client (and vice versa)",
+        "It works without requiring any certificates",
+        "It hide the IP address of the server"
+      ],
+      correctAnswer: "It allows the server to verify the identity of the client (and vice versa)",
+      explanation: `
+### Concept: Identity & Authentication
+Standard TLS only verifies the server. **mTLS** ensures that ONLY authorized clients (other services in your mesh) can talk to your service.
+`
+    },
+    {
+      id: 607,
+      question: "What is the primary goal of the 'CIS Benchmarks' for Kubernetes?",
+      options: [
+        "To provide a guide for passing the CKA exam",
+        "To provide a set of best-practice settings and configurations for hardening a cluster",
+        "To list all known security vulnerabilities in Kubernetes",
+        "To provide a comparison of different cloud providers"
+      ],
+      correctAnswer: "To provide a set of best-practice settings and configurations for hardening a cluster",
+      explanation: `
+### Concept: Compliance & Hardening
+The **CIS (Center for Internet Security) Benchmarks** are the industry standard for verifying that your Kubernetes components (API server, kubelet, etcd) are configured securely.
+`
+    },
+    {
+      id: 608,
+      question: "What is 'Process Whitelisting' (or Allowlisting) in container security?",
+      options: [
+        "Allowing any process to run in a container as long as it's signed",
+        "Defining the exact set of processes that are allowed to run in a container and blocking everything else",
+        "Giving all processes 'root' access for better performance",
+        "A list of developers who are allowed to create containers"
+      ],
+      correctAnswer: "Defining the exact set of processes that are allowed to run in a container and blocking everything else",
+      explanation: `
+### Concept: Runtime Security
+If an attacker manages to get a shell in your container but it's not on the **allowlist**, the runtime security tool will block it immediately.
+`
+    },
+    {
+      id: 609,
+      question: "Which type of volume is generally considered 'more secure' for sensitive data, as it only exists as long as the pod is running and is stored in memory?",
+      options: [
+        "hostPath",
+        "persistentVolume",
+        "emptyDir with medium: Memory",
+        "NFS"
+      ],
+      correctAnswer: "emptyDir with medium: Memory",
+      explanation: `
+### Concept: Data Privacy
+Using **Memory-backed emptyDir** ensures that sensitive temporary data is never written to a physical disk, reducing the risk of data leakage after the pod is deleted.
+`
+    },
+    {
+      id: 610,
+      question: "What is the purpose of 'Network Isolation' between different stages of a CI/CD pipeline (e.g., Build vs Prod)?",
+      options: [
+        "To make the build process faster",
+        "To prevent a compromise in the build stage from affecting the production environment",
+        "To reduce the cost of network egress",
+        "To ensure that all developers use the same version of Linux"
+      ],
+      correctAnswer: "To prevent a compromise in the build stage from preceding to the production environment",
+      explanation: `
+### Concept: Pipeline Security
+Isolation ensures that even if an attacker compromises a 'Build' server, they cannot use it as a bridge to reach and attack your 'Production' clusters.
+`
     }
   ],
   kcna: [
@@ -3602,10 +5010,1084 @@ While the **kubelet** is the architect, the **container runtime** is the actual 
       correctAnswer: "Deep insights into 'unknown unknowns' and complex system behaviors",
       explanation: `
 ### Concept: Monitoring vs Observability
-- **Monitoring**: Tells you *what* is happening (CPU is 90%, Server is down). It handles \"known unknowns.\"
-- **Observability**: Tells you *why* it's happening by exploring the internal state of a system based on its outputs. It handles \"unknown unknowns.\"
+- Monitoring: Tells you *what* is happening (CPU is 90%, Server is down). It handles \"known unknowns.\"
+- Observability: Tells you *why* it's happening by exploring the internal state of a system based on its outputs. It handles \"unknown unknowns.\"
 
 **Observability requires**: Logs, Metrics, and Traces (The Three Pillars) to be correlated.
+      `
+    },
+    {
+      id: 430,
+      question: "Which component of the Kubernetes Control Plane is responsible for maintaining the state of resources like Deployments and Services through various reconciliation loops?",
+      options: [
+        "kube-apiserver",
+        "kube-scheduler",
+        "kube-controller-manager",
+        "etcd"
+      ],
+      correctAnswer: "kube-controller-manager",
+      explanation: `
+### Concept: Control Plane Components
+The **kube-controller-manager** runs various controllers that handle the background synchronization of the cluster.
+
+**Key Controllers:**
+- **Deployment Controller**: Manages the lifecycle of ReplicaSets and Pods.
+- **Node Controller**: Monitors node health and status.
+- **Service Account Controller**: Creates default accounts for new namespaces.
+- **EndpointSlice Controller**: Populates network endpoints for services.
+
+**Why other options are incorrect:**
+- **kube-apiserver**: Front-end for the control plane; handles validation and persistence.
+- **kube-scheduler**: Only responsible for placing pods on nodes.
+- **etcd**: The database that stores the state, but doesn't perform the logic to maintain it.
+      `
+    },
+    {
+      id: 431,
+      question: "In the context of Distributed Tracing, what is the primary purpose of 'Context Propagation'?",
+      options: [
+        "To reduce the storage size of trace data",
+        "To pass trace IDs and metadata across service boundaries and protocols",
+        "To encrypt sensitive data within a trace span",
+        "To automatically generate logs when a trace fails"
+      ],
+      correctAnswer: "To pass trace IDs and metadata across service boundaries and protocols",
+      explanation: `
+### Concept: Observability (Tracing)
+**Context Propagation** is the mechanism that allows a single request's identity to be maintained as it travels through a distributed system.
+
+- **Trace ID**: A unique identifier for the entire request path.
+- **Span ID**: Identifies individual operations within a service.
+- **Baggage**: User-defined key-value pairs passed across services.
+- **Implementation**: Usually handled by injecting headers (like W3C Trace Context) into HTTP/gRPC requests.
+
+**High Difficulty Note**: Without context propagation, you would have disconnected "spans" from different services and no way to correlate them into a single journey.
+      `
+    },
+    {
+      id: 432,
+      question: "Which Service Mesh feature allows the platform to intercept and manage traffic without requiring any changes to the application's source code?",
+      options: [
+        "In-cluster load balancing",
+        "Sidecar Proxy Injection",
+        "Mutual TLS (mTLS)",
+        "Service Discovery"
+      ],
+      correctAnswer: "Sidecar Proxy Injection",
+      explanation: `
+### Concept: Service Mesh Data Plane
+**Sidecar Proxy Injection** (using proxies like Envoy) is the fundamental pattern that enables service mesh features transparently.
+
+- **Traffic Interception**: The sidecar uses IP tables to redirect all incoming and outgoing traffic through the proxy.
+- **Language Independence**: Since the proxy is a separate process, the mesh works with any programming language.
+- **Decoupling**: Security (mTLS) and Traffic Management (retries) are offloaded from the app developer to the platform.
+      `
+    },
+    {
+      id: 433,
+      question: "What is the specific role of the Container Runtime Interface (CRI) in a Kubernetes cluster?",
+      options: [
+        "To provide a GUI for managing containers",
+        "To create a standardized API for the kubelet to communicate with different container runtimes",
+        "To speed up the pulling of large container images",
+        "To replace Docker with a more secure alternative"
+      ],
+      correctAnswer: "To create a standardized API for the kubelet to communicate with different container runtimes",
+      explanation: `
+### Concept: Kubernetes Architecture (Interfaces)
+The **CRI** is the plugin interface which enables the kubelet to use a wide variety of container runtimes, without the need to recompile the cluster.
+
+- **Standardization**: Allows runtimes like **containerd**, **CRI-O**, and **Mirantis Container Runtime** to be swapped easily.
+- **Components**: Consists of a RuntimeService (to manage pods/containers) and an ImageService (to manage images).
+- **History**: Introduced to move away from the "hardcoded" Docker dependency in early Kubernetes versions.
+      `
+    },
+    {
+      id: 434,
+      question: "In a GitOps workflow using a tool like ArgoCD, how is 'Configuration Drift' typically managed?",
+      options: [
+        "The developer manually logs into the cluster to fix the drift",
+        "A webhook triggers a Slack alert for the admin to take action",
+        "The controller continuously reconciles the live state to match the desired state in Git",
+        "The cluster automatically shuts down if drift is detected"
+      ],
+      correctAnswer: "The controller continuously reconciles the live state to match the desired state in Git",
+      explanation: `
+### Concept: GitOps and Drift
+**Configuration Drift** occurs when someone manually changes a resource in the cluster (e.g., using 'kubectl edit'), making it different from the version in Git.
+
+- **Reconciliation Loop**: GitOps tools use a "pull" model where they watch Git for changes AND watch the cluster for drift.
+- **Self-Healing**: If drift is detected, the tool can automatically overwrite the manual change with the "truth" from Git.
+- **Source of Truth**: Git is always the single source of truth for the entire infrastructure state.
+      `
+    },
+    {
+      id: 435,
+      question: "During the Kubernetes scheduling process, what is the difference between 'Filtering' and 'Scoring'?",
+      options: [
+        "Filtering checks for disk space; Scoring checks for CPU",
+        "Filtering removes nodes that don't meet requirements; Scoring ranks the remaining nodes",
+        "Filtering is for Pods; Scoring is for Nodes",
+        "Filtering happens after a pod is scheduled; Scoring happens before"
+      ],
+      correctAnswer: "Filtering removes nodes that don't meet requirements; Scoring ranks the remaining nodes",
+      explanation: `
+### Concept: Scheduling Process
+The **kube-scheduler** selects the best node for a pod in two main phases:
+
+1.  **Filtering (Predicates)**: Finds the set of Nodes where it's even *possible* to schedule the Pod (checking taints, resource limits, node selectors).
+2.  **Scoring (Priorities)**: Ranks the nodes that survived filtering to find the *best* fit (e.g., picking nodes balanced across zones, or nodes with the most free resources).
+
+**Note**: If no nodes survive the filtering phase, the pod remains in 'Pending' state.
+      `
+    },
+    {
+      id: 436,
+      question: "What is the primary motivation for introducing the Container Storage Interface (CSI) in cloud-native ecosystems?",
+      options: [
+        "To make cloud storage cheaper",
+        "To provide a standard interface for storage vendors to write plugins that work across different orchestrators (K8s, Mesos, etc.)",
+        "To allow containers to share the same local disk",
+        "To encrypt data automatically at the storage layer"
+      ],
+      correctAnswer: "To provide a standard interface for storage vendors to write plugins that work across different orchestrators (K8s, Mesos, etc.)",
+      explanation: `
+### Concept: Storage (Interfaces)
+The **CSI** allows storage providers (like AWS, NetApp, or Portworx) to write a single driver that works across all OCI-compliant orchestrators.
+
+- **Out-of-Tree**: It allowed Kubernetes to remove "in-tree" storage code, meaning the K8s core doesn't need to be updated every time a storage vendor releases a feature.
+- **Flexibility**: Enables dynamic provisioning, snapshots, and resizing across various hardware and cloud backends.
+      `
+    },
+    {
+      id: 437,
+      question: "According to the CNCF definition, why is 'Immutable Infrastructure' considered a core pillar of cloud-native computing?",
+      options: [
+        "Because hardware doesn't change once it's installed in a data center",
+        "To ensure that changes are predictable, repeatable, and easily reversible",
+        "To prevent hackers from changing the system configuration",
+        "Because it makes the system run faster than mutable infrastructure"
+      ],
+      correctAnswer: "To ensure that changes are predictable, repeatable, and easily reversible",
+      explanation: `
+### Concept: Cloud Native Definition
+**Immutable Infrastructure** means that instead of patching or configuring existing servers, you replace them with a new version built from a common image.
+
+- **Predictability**: You know exactly what version of the OS and app is running because the image was tested in CI/CD.
+- **Consistency**: Eliminates "Configuration Drift" across multiple servers.
+- **Recovery**: If a deployment fails, you simply roll back to the previously known-good "immutable" image.
+      `
+    },
+    {
+      id: 438,
+      question: "Which security mechanism in Linux (used by Kubernetes) restricts the available system calls (syscalls) a process can make to the host kernel?",
+      options: [
+        "AppArmor",
+        "Seccomp",
+        "RBAC",
+        "Network Policies"
+      ],
+      correctAnswer: "Seccomp",
+      explanation: `
+### Concept: Runtime Security
+**Seccomp (Secure Computing Mode)** is a Linux kernel feature that acts as a sandbox for processes, restricting their ability to use syscalls.
+
+- **Attack Surface**: Most vulnerabilities require specific syscalls. Blocking unnecessary ones (like 'mount' or 'reboot') dramatically reduces the risk.
+- **Kubernetes Usage**: You can apply a seccomp profile to a pod or container via the 'securityContext'.
+- **Runtime Default**: Many clusters now use the 'RuntimeDefault' profile for better baseline security.
+      `
+    },
+    {
+      id: 439,
+      question: "What is the fundamental difference between Horizontal Pod Autoscaler (HPA) and Vertical Pod Autoscaler (VPA) in Kubernetes?",
+      options: [
+        "HPA scales nodes; VPA scales pods",
+        "HPA increases the number of pod replicas; VPA increases the CPU/RAM allocated to existing pods",
+        "HPA is for cloud; VPA is for on-premise",
+        "HPA is for web servers; VPA is for databases"
+      ],
+      correctAnswer: "HPA increases the number of pod replicas; VPA increases the CPU/RAM allocated to existing pods",
+      explanation: `
+### Concept: Autoscaling
+The **CNCF definition** emphasizes scalability, resilience, and manageability in dynamic cloud environments.
+
+**Core Techniques:**
+- **Containers**: Isolated environments for applications.
+- **Service Meshes**: Managing communication between services.
+- **Microservices**: Breaking apps into small, independent parts.
+- **Immutable Infrastructure**: Replacing servers instead of patching them.
+- **Declarative APIs**: Defining the 'what' instead of the 'how'.
+      `
+    },
+    {
+      id: 441,
+      question: "What is the primary role of the 'kube-scheduler' in a Kubernetes cluster?",
+      options: [
+        "To manage the lifecycle of containers on a node",
+        "To decide which node a newly created or unscheduled pod should run on",
+        "To provide an API for users to interact with the cluster",
+        "To store the cluster state and configuration"
+      ],
+      correctAnswer: "To decide which node a newly created or unscheduled pod should run on",
+      explanation: `
+### Concept: Control Plane Components
+The **kube-scheduler** watches for newly created Pods that have no Node assigned and selects a Node for them to run on.
+
+**Selection Factors:**
+- **Individual and collective resource requirements**: CPU, Memory, Disk.
+- **Hardware/Software/Policy constraints**: Taints, Tolerations, NodeSelectors.
+- **Affinity and anti-affinity specifications**.
+- **Data locality**: Running pods near the data they need.
+      `
+    },
+    {
+      id: 442,
+      question: "Which Kubernetes resource is used to provide an IP address and a single DNS name for a set of Pods, enabling basic load balancing?",
+      options: [
+        "Deployment",
+        "ConfigMap",
+        "Service",
+        "Ingress"
+      ],
+      correctAnswer: "Service",
+      explanation: `
+### Concept: Kubernetes Networking
+A **Service** is an abstraction which defines a logical set of Pods and a policy by which to access them.
+
+**Common Types:**
+- **ClusterIP**: Exposes the Service on a cluster-internal IP (Default).
+- **NodePort**: Exposes the Service on each Node's IP at a static port.
+- **LoadBalancer**: Exposes the Service externally using a cloud provider's load balancer.
+- **ExternalName**: Maps a Service to a DNS name.
+      `
+    },
+    {
+      id: 443,
+      question: "What is the purpose of a 'Readiness Probe' in Kubernetes?",
+      options: [
+        "To check if the container is running and if it should be restarted",
+        "To check if the application in the container is ready to accept traffic",
+        "To check if the node has enough resources for the container",
+        "To check if the container image has security vulnerabilities"
+      ],
+      correctAnswer: "To check if the application in the container is ready to accept traffic",
+      explanation: `
+### Concept: Health Checks
+Kubernetes uses three types of probes:
+1.  **Liveness Probe**: Determines if a container needs to be restarted (e.g., app is stuck in a loop).
+2.  **Readiness Probe**: Determines if a container should receive traffic. If it fails, the pod is removed from Service endpoints.
+3.  **Startup Probe**: Disables liveness and readiness checks until the app has finished starting up.
+      `
+    },
+    {
+      id: 444,
+      question: "In the context of 'Serverless' computing, what does 'Scale to Zero' mean?",
+      options: [
+        "Deleting the application when it has too many errors",
+        "Reducing the infrastructure cost to zero when there is no incoming traffic",
+        "A bug that causes all pods to crash",
+        "Limiting the application to only run on one CPU core"
+      ],
+      correctAnswer: "Reducing the infrastructure cost to zero when there is no incoming traffic",
+      explanation: `
+### Concept: Serverless Computing
+**Scale to Zero** is a key benefit of serverless platforms (like Knative). 
+
+- When no requests are being processed, no active containers/instances are running.
+- This results in zero resource billing during idle times.
+- The platform automatically spins up an instance as soon as a new request arrives (potentially causing a "cold start").
+      `
+    },
+    {
+      id: 445,
+      question: "Which component is responsible for implementing the 'Service' networking logic on each node (e.g., managing iptables or IPVS)?",
+      options: [
+        "kube-apiserver",
+        "kube-controller-manager",
+        "kube-proxy",
+        "containerd"
+      ],
+      correctAnswer: "kube-proxy",
+      explanation: `
+### Concept: Node Components
+**kube-proxy** is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
+
+**Modes:**
+- **iptables**: Legacy mode, uses Linux iptables rules.
+- **IPVS**: Higher performance, better load-balancing algorithms.
+- **userspace**: Very old, slowest mode.
+      `
+    },
+    {
+      id: 446,
+      question: "What is 'Prometheus' primarily used for in the cloud-native ecosystem?",
+      options: [
+        "Distributed tracing",
+        "Log aggregation and analysis",
+        "Metric collection and alerting",
+        "Container runtime management"
+      ],
+      correctAnswer: "Metric collection and alerting",
+      explanation: `
+### Concept: Cloud Native Observability
+**Prometheus** is a leading monitoring tool that collects data from targets as time-series metrics.
+
+- **Pull Model**: Prometheus scrapes metrics from applications/exporters via HTTP.
+- **PromQL**: A powerful query language for slicing and dicing metric data.
+- **AlertManager**: Handles alerts based on defined metric thresholds.
+      `
+    },
+    {
+      id: 447,
+      question: "What is the role of a 'Sidecar' container in a Pod?",
+      options: [
+        "To replace the primary application container",
+        "To run a helper process that supports the main application (e.g., logging, proxying, caching)",
+        "To increase the storage capacity of the pod",
+        "To provide a backup image in case the main one fails"
+      ],
+      correctAnswer: "To run a helper process that supports the main application (e.g., logging, proxying, caching)",
+      explanation: `
+### Concept: Pod Patterns
+The **Sidecar pattern** involves running a second container alongside the main one to extend or enhance its functionality without modifying its code.
+
+**Common use cases:**
+- **Proxying**: Envoy as a sidecar in a Service Mesh.
+- **Logging**: A log collector like Fluent Bit.
+- **Syncing**: A process that pulls files from Git.
+      `
+    },
+    {
+      id: 448,
+      question: "Which of the following describes 'Horizontal Scaling'?",
+      options: [
+        "Adding more CPU and RAM to an existing server",
+        "Adding more instances (replicas) of an application or server",
+        "Reducing the number of users on a system",
+        "Moving data from a hard drive to an SSD"
+      ],
+      correctAnswer: "Adding more instances (replicas) of an application or server",
+      explanation: `
+### Concept: Scalability
+- **Horizontal Scaling (Scaling Out)**: Adding more nodes/pods. This is the preferred method for cloud-native applications as it provides better fault tolerance.
+- **Vertical Scaling (Scaling Up)**: Increasing the resources of a single machine. It has a physical limit and creates a single point of failure.
+      `
+    },
+    {
+      id: 449,
+      question: "What is 'Helm' in the Kubernetes ecosystem?",
+      options: [
+        "A container runtime that replaces Docker",
+        "A package manager for Kubernetes applications that uses 'Charts'",
+        "A tool for debugging network latency",
+        "The security engine for the control plane"
+      ],
+      correctAnswer: "A package manager for Kubernetes applications that uses 'Charts'",
+      explanation: `
+### Concept: Application Delivery
+**Helm** simplifies the deployment of complex applications by grouping multiple YAML manifests into a single reusable package called a **Chart**.
+
+- **Templates**: Allows parameterized YAML files.
+- **Release Management**: Easy rollback to previous versions of a deployment.
+- **Repository**: Shareable collections of charts.
+      `
+    },
+    {
+      id: 450,
+      question: "What is 'GITOPS'?",
+      options: [
+        "A branding term for working with Git",
+        "Using Git as the single source of truth for declarative infrastructure and applications",
+        "A way to write code that only works on GitHub",
+        "A manual process for managing server configuration"
+      ],
+      correctAnswer: "Using Git as the single source of truth for declarative infrastructure and applications",
+      explanation: `
+### Concept: Modern CD
+**GitOps** is an operational framework that takes DevOps best practices used for application development (version control, collaboration, compliance, CI/CD) and applies them to infrastructure automation.
+
+**Key principles:**
+1.  **Declarative**: The state is described in Git.
+2.  **Versioned & Immutable**: Every change is a commit.
+3.  **Pulled Automatically**: Tools like ArgoCD pull changes to the cluster.
+4.  **Continuously Reconciled**: Discrepancies are automatically corrected.
+      `
+    },
+    {
+      id: 451,
+      question: "What is 'Container Orchestration'?",
+      options: [
+        "Writing a script to start a single container",
+        "The automation of lifecycle management for containers, including deployment, scaling, and networking",
+        "Designing the UI for a Docker management tool",
+        "Purchasing servers from a cloud provider"
+      ],
+      correctAnswer: "The automation of lifecycle management for containers, including deployment, scaling, and networking",
+      explanation: `
+### Concept: Orchestration
+While tools like Docker manage individual containers, **Orchestrators** (like Kubernetes) manage the entire system of containers across a cluster of machines.
+
+**Tasks include:**
+- Load balancing.
+- Self-healing (restarting failed containers).
+- Dynamic scheduling.
+- Resource allocation.
+      `
+    },
+    {
+      id: 452,
+      question: "In cloud-native observability, what are the 'Three Pillars'?",
+      options: [
+        "CPU, Memory, and Disk",
+        "Logs, Metrics, and Traces",
+        "Nodes, Pods, and Services",
+        "Docker, Kubernetes, and Helm"
+      ],
+      correctAnswer: "Logs, Metrics, and Traces",
+      explanation: `
+### Concept: Observability Pillars
+1.  **Metrics**: Numeric data measured over time (e.g., CPU usage, Request count).
+2.  **Logs**: Discrete events emitted by applications (e.g., "User logged in").
+3.  **Traces**: The journey of a single request through a distributed system.
+      `
+    },
+    {
+      id: 453,
+      question: "What is an 'Ingress' in Kubernetes?",
+      options: [
+        "An internal load balancer for pods",
+        "An API object that manages external access to the services in a cluster, typically HTTP",
+        "A specialized node for database storage",
+        "A security policy that blocks all incoming traffic"
+      ],
+      correctAnswer: "An API object that manages external access to the services in a cluster, typically HTTP",
+      explanation: `
+### Concept: Ingress
+**Ingress** provides a way to expose multiple services under a single IP/hostname, handling things like SSL termination and path-based routing.
+
+**Comparison:**
+- **Service (NodePort/LoadBalancer)**: One service per entry point.
+- **Ingress**: A single entry point for many services (e.g., example.com/app1 and example.com/app2).
+      `
+    },
+    {
+      id: 454,
+      question: "What is 'Service Mesh'?",
+      options: [
+        "A physical network of cables connecting servers",
+        "A dedicated infrastructure layer for managing service-to-service communication, including security, traffic management, and observability",
+        "A way to combine multiple databases into one",
+        "A Kubernetes plugin for managing pod storage"
+      ],
+      correctAnswer: "A dedicated infrastructure layer for managing service-to-service communication, including security, traffic management, and observability",
+      explanation: `
+### Concept: Service Mesh
+As microservices grow, managing the network between them becomes complex. A **Service Mesh** (like Istio or Linkerd) offloads network logic from the application to the infrastructure.
+
+**Features:**
+- **mTLS**: Automatic encryption of data-in-transit.
+- **Traffic Spitting**: Canary deployments (90% traffic to V1, 10% to V2).
+- **Retries and Circuit Breaking**.
+- **Observability**: Automatic tracing and metrics for all network calls.
+      `
+    },
+    {
+      id: 455,
+      question: "What is the primary purpose of 'Namespaces' in Kubernetes?",
+      options: [
+        "To speed up the pod startup time",
+        "To provide a mechanism for isolating groups of resources within a single cluster",
+        "To hide resources from the cluster administrator",
+        "To group pods by their physical location in the data center"
+      ],
+      correctAnswer: "To provide a mechanism for isolating groups of resources within a single cluster",
+      explanation: `
+### Concept: Multi-tenancy
+**Namespaces** allow you to partition a single cluster into multiple virtual clusters.
+
+**Use cases:**
+- **Environment Separation**: 'dev', 'staging', 'prod' in one cluster.
+- **Team Isolation**: Each team gets its own namespace.
+- **Resource Quotas**: Limiting the total CPU/Memory that a specific group can use.
+      `
+    },
+    {
+      id: 456,
+      question: "What is 'Microservices' architecture?",
+      options: [
+        "A single large application that is easy to deploy",
+        "An architectural style that structures an application as a collection of small, autonomous services modeled around a business domain",
+        "Using very small servers to run your code",
+        "Minifying Javascript files to improve performance"
+      ],
+      correctAnswer: "An architectural style that structures an application as a collection of small, autonomous services modeled around a business domain",
+      explanation: `
+### Concept: Microservices
+Microservices allow for independent development, deployment, and scaling of different parts of an application.
+
+**Contrast with Monolith:**
+- **Monolith**: One code base, one deployment, one scale unit. Hard to change.
+- **Microservices**: Many services, many deployments, independent scale units. Complex to manage but provides high agility.
+      `
+    },
+    {
+      id: 457,
+      question: "What is 'Immutable Infrastructure'?",
+      options: [
+        "Infrastructure that is impossible to hack",
+        "Infrastructure where servers are never modified after deployment; instead, they are replaced with new versions",
+        "A data center that cannot be moved",
+        "Using read-only hard drives for all servers"
+      ],
+      correctAnswer: "Infrastructure where servers are never modified after deployment; instead, they are replaced with new versions",
+      explanation: `
+### Concept: Immutability
+In **Immutable Infrastructure**, you don't use tools like Ansible to "patch" a running server. Instead, you build a new image (e.g., an AMI or a Container Image), test it, and deploy it as a replacement.
+
+- **Benefit**: Eliminates "Configuration Drift" where servers that started the same become different over time due to manual tweaks.
+- **Benefit**: Easier rollbacks (just switch back to the old image).
+      `
+    },
+    {
+      id: 458,
+      question: "Which CNCF project graduated first?",
+      options: [
+        "Prometheus",
+        "Kubernetes",
+        "Envoy",
+        "Helm"
+      ],
+      correctAnswer: "Kubernetes",
+      explanation: `
+### Concept: CNCF History
+**Kubernetes** was the first project to graduate from the CNCF (in 2018), marking its maturity as a production-grade orchestration platform.
+      `
+    },
+    {
+      id: 459,
+      question: "In Kubernetes, what is a 'ReplicaSet' responsible for?",
+      options: [
+        "Defining the network policy for a pod",
+        "Ensuring that a specified number of pod replicas are running at any given time",
+        "Storing the persisted data for a pod",
+        "Managing the deployment of helm charts"
+      ],
+      correctAnswer: "Ensuring that a specified number of pod replicas are running at any given time",
+      explanation: `
+### Concept: Self-Healing
+A **ReplicaSet**'s purpose is to maintain a stable set of replica Pods. It is often used to guarantee the availability of a specified number of identical Pods.
+
+**Note**: You should generally use a **Deployment** instead of directly using a ReplicaSet, as Deployments provide declarative updates and rolling versions.
+      `
+    },
+    {
+      id: 460,
+      question: "What is an 'Admission Controller' in Kubernetes?",
+      options: [
+        "A person who decides who can join the cluster",
+        "A piece of code that intercepts requests to the Kubernetes API server prior to persistence of the object",
+        "A plugin that allows pods to join the network",
+        "A specialized node for handling user logins"
+      ],
+      correctAnswer: "A piece of code that intercepts requests to the Kubernetes API server prior to persistence of the object",
+      explanation: `
+### Concept: API Server Security
+**Admission Controllers** can "Validate" (decide whether to allow a request) or "Mutate" (change the request).
+
+**Examples:**
+- **ResourceQuota**: Checks if the namespace has room for the new pod.
+- **LimitRanger**: Sets default resource limits if none were specified.
+- **AlwaysPullImages**: Forces containers to always pull the latest image.
+      `
+    },
+    {
+      id: 461,
+      question: "What is 'Cloud Native Storage'?",
+      options: [
+        "Any hard drive used in a cloud data center",
+        "Storage solutions designed specifically for containerized environments, providing features like dynamic provisioning and high availability",
+        "A way to store files on a personal laptop",
+        "A specialized type of RAM"
+      ],
+      correctAnswer: "Storage solutions designed specifically for containerized environments, providing features like dynamic provisioning and high availability",
+      explanation: `
+### Concept: Storage
+**Cloud Native Storage** (like Rook or Longhorn) understands orchestrators like Kubernetes.
+
+- **Dynamic Provisioning**: Storage is created automatically when a pod requests it via a PersistentVolumeClaim (PVC).
+- **High Availability**: Data is replicated across multiple nodes/zones.
+- **Agility**: Storage follows the pod even if it moves to a different node.
+      `
+    },
+    {
+      id: 462,
+      question: "What is 'OpenTelemetry'?",
+      options: [
+        "A free version of a popular monitoring tool",
+        "A standardized framework and set of tools for generating, collecting, and exporting telemetry data (Metrics, Logs, Traces)",
+        "A method for opening network ports in a firewall",
+        "A replacement for the Kubernetes API"
+      ],
+      correctAnswer: "A standardized framework and set of tools for generating, collecting, and exporting telemetry data (Metrics, Logs, Traces)",
+      explanation: `
+### Concept: Standardized Observability
+**OpenTelemetry (OTel)** provides a single set of APIs and SDKs to capture telemetry data from your applications in a vendor-neutral way.
+
+- **Unified**: Handles all three pillars of observability.
+- **Vendor-Neutral**: You can change your backend (e.g., from Jaeger to Honeycomb) without changing your application code.
+      `
+    },
+    {
+      id: 463,
+      question: "Which component in Kubernetes is the 'Source of Truth' for the cluster's state?",
+      options: [
+        "kube-apiserver",
+        "etcd",
+        "kubelet",
+        "kube-proxy"
+      ],
+      correctAnswer: "etcd",
+      explanation: `
+### Concept: Control Plane Components
+**etcd** is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+
+**Importance:**
+- If etcd is lost, the entire cluster configuration is lost.
+- It is critical to have a reliable backup plan for etcd.
+- It uses the Raft consensus algorithm for consistency.
+      `
+    },
+    {
+      id: 464,
+      question: "What does 'Eventual Consistency' mean in a cloud-native system?",
+      options: [
+        "The system is always perfectly accurate at every millisecond",
+        "If no new updates are made to a specific data item, eventually all accesses to that item will return the last updated value",
+        "The system will eventually crash",
+        "The application will only work during business hours"
+      ],
+      correctAnswer: "If no new updates are made to a specific data item, eventually all accesses to that item will return the last updated value",
+      explanation: `
+### Concept: Distributed Systems
+In highly distributed systems, achieving perfect consistency (CAP theorem) is difficult. Many cloud-native services choose **Eventual Consistency** to ensure high availability and performance.
+
+- **Trade-off**: For a short period, different users might see slightly different versions of the data.
+      `
+    },
+    {
+      id: 465,
+      question: "Which of the following is a core characteristic of a 'Cloud Native' application?",
+      options: [
+        "It consists of a single large binary",
+        "It is designed to be resilient and thrive in dynamic environments",
+        "It must be hosted in a public cloud data center",
+        "It requires manual scaling by a system administrator"
+      ],
+      correctAnswer: "It is designed to be resilient and thrive in dynamic environments",
+      explanation: `
+### Concept: Cloud Native Characteristics
+Cloud - native apps are built and run using technologies that empower them to be scalable, resilient, and manageable.
+
+** Key traits:**
+- ** Resilience **: The app can recover from failures(nodes, disks, network) automatically.
+- ** Dynamic **: The environment changes constantly(scaling, deployments), and the app adapts.
+- ** Automation **: Minimal manual intervention for operations.
+      `
+    },
+    {
+      id: 466,
+      question: "What is the primary benefit of 'Serverless' architectures for developers?",
+      options: [
+        "It allows them to manage the underlying OS more effectively",
+        "It abstracts away infrastructure management, allowing them to focus solely on writing code",
+        "It makes applications run faster on any hardware",
+        "It eliminates the need for any cloud provider"
+      ],
+      correctAnswer: "It abstracts away infrastructure management, allowing them to focus solely on writing code",
+      explanation: `
+### Concept: Serverless Computing
+In ** Serverless **, the cloud provider manages the allocation and provisioning of servers.Developers only provide the code(functions) and triggers.
+
+- ** Developer focus **: Logic and value, not maintenance.
+- ** Scale **: Automatic scaling based on demand.
+- ** Cost **: Pay - per - execution model.
+      `
+    },
+    {
+      id: 467,
+      question: "In the 'OCI' (Open Container Initiative) standards, what does the 'Runtime Specification' define?",
+      options: [
+        "How a container image should be stored in a registry",
+        "How a container should be launched and run by a container runtime",
+        "The syntax for a Dockerfile",
+        "The networking protocol for service-to-service communication"
+      ],
+      correctAnswer: "How a container should be launched and run by a container runtime",
+      explanation: `
+### Concept: OCI Standards
+The ** OCI Runtime Spec ** ensures that different runtimes(like runc, Kata, or gVisor) can all run the same container bundles in a consistent way.
+
+- ** Bundle **: A directory containing a 'config.json' and a root filesystem.
+- ** Lifecycle **: Standard operations like 'create', 'start', 'state', 'delete'.
+      `
+    },
+    {
+      id: 468,
+      question: "Which component in a Service Mesh is responsible for the actual traffic routing, encryption, and telemetry collection?",
+      options: [
+        "Control Plane",
+        "Data Plane (Sidecar Proxies)",
+        "API Gateway",
+        "Kubernetes API Server"
+      ],
+      correctAnswer: "Data Plane (Sidecar Proxies)",
+      explanation: `
+### Concept: Service Mesh Data Plane
+The ** Data Plane ** consists of lightweight proxies(like Envoy) deployed as sidecars alongside every service instance.
+
+- ** Mediation **: Intercepts all network traffic between services.
+- ** Enforcement **: Applies policies defined by the control plane(e.g., mTLS, retries).
+- ** Observation **: Collects metrics and traces for every request.
+      `
+    },
+    {
+      id: 469,
+      question: "What does 'Observability' help developers understand about 'Unknown Unknowns'?",
+      options: [
+        "It helps them count how many users were on the site yesterday",
+        "It allows them to ask new questions of their system to debug complex, unforeseen failures",
+        "It provides a list of all potential bugs in the code",
+        "It tells them exactly when a server will fail in the future"
+      ],
+      correctAnswer: "It allows them to ask new questions of their system to debug complex, unforeseen failures",
+      explanation: `
+### Concept: Observability vs Monitoring
+  ** Monitoring ** handles "Known Unknowns"(e.g., I know memory can run out, so I monitor memory usage).
+
+** Observability ** handles "Unknown Unknowns"(e.g., the system is slow only for users in Japan using Safari on a Tuesday).You use the rich telemetry data to explore and pinpoint the cause of issues you didn't even know were possible.
+  `
+    },
+    {
+      id: 470,
+      question: "Which CNCF project provides an open-source system for automating deployment, scaling, and management of containerized applications?",
+      options: [
+        "Docker",
+        "Kubernetes",
+        "Ansible",
+        "Jenkins"
+      ],
+      correctAnswer: "Kubernetes",
+      explanation: `
+### Concept: Orchestration
+  ** Kubernetes ** is the most widely adopted container orchestrator in the world, originally developed by Google and now maintained by the CNCF.
+      `
+    },
+    {
+      id: 471,
+      question: "What is 'Distributed Tracing' specifically designed to solve?",
+      options: [
+        "High CPU usage on a single node",
+        "Tracking a single request as it passes through many different services and networks",
+        "Aggregating logs from multiple physical machines",
+        "Ensuring that all containers use the same base image"
+      ],
+      correctAnswer: "Tracking a single request as it passes through many different services and networks",
+      explanation: `
+### Concept: Observability(Tracing)
+In microservices, a single user click might touch dozens of services. ** Distributed Tracing ** (like Jaeger) correlates the work done by each service using a unique Trace ID.
+
+- ** Visualize **: See the timing and dependencies of each step.
+- ** Bottlenecks **: Quickly find which service is causing a delay.
+      `
+    },
+    {
+      id: 472,
+      question: "In Kubernetes, what is the 'Controller Pattern'?",
+      options: [
+        "A way to write code using only 'if' statements",
+        "A control loop that watches the shared state of the cluster through the API server and makes changes attempting to move the current state towards the desired state",
+        "A specialized hardware device for controlling a cluster",
+        "A UI element in the Kubernetes dashboard"
+      ],
+      correctAnswer: "A control loop that watches the shared state of the cluster through the API server and makes changes attempting to move the current state towards the desired state",
+      explanation: `
+### Concept: Control Loops
+Kubernetes is a system of ** Controllers **.Each controller is responsible for a specific part of the cluster state.
+
+** The Loop:**
+  1. ** Observe **: Check the current state.
+2. ** Diff **: Compare current state with desired state(YAML).
+3. ** Act **: Perform actions to fix the difference.
+      `
+    },
+    {
+      id: 473,
+      question: "What is a 'Persistent Volume' (PV) in Kubernetes?",
+      options: [
+        "A temporary folder for log files",
+        "A piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes",
+        "A backup of the etcd database",
+        "A container that never stops running"
+      ],
+      correctAnswer: "A piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes",
+      explanation: `
+### Concept: Storage
+A ** PV ** is a cluster resource(like a Node) that has a lifecycle independent of any individual Pod that uses it.
+
+- ** PV **: The actual storage(NFS, AWS EBS, Local Disk).
+- ** PVC **: A request for storage by a user / pod.
+- ** StorageClass **: Allows for "Just-in-Time" dynamic provisioning of PVs.
+      `
+    },
+    {
+      id: 474,
+      question: "What is the primary function of the 'kubelet'?",
+      options: [
+        "To manage the cluster's network policies",
+        "To ensure that containers are running in a Pod according to the PodSpec",
+        "To decide which node a pod should run on",
+        "To provide a web interface for the cluster"
+      ],
+      correctAnswer: "To ensure that containers are running in a Pod according to the PodSpec",
+      explanation: `
+### Concept: Node Components
+The ** kubelet ** is the primary "node agent" that runs on each node.It takes a set of PodSpecs provided via the API server and ensures that the containers described in those PodSpecs are running and healthy.
+      `
+    },
+    {
+      id: 475,
+      question: "Which CNCF project provides a cloud-native, open-source logging solution?",
+      options: [
+        "Fluentd / Fluent Bit",
+        "Prometheus",
+        "Jaeger",
+        "Envoy"
+      ],
+      correctAnswer: "Fluentd / Fluent Bit",
+      explanation: `
+### Concept: Observability(Logging)
+  ** Fluentd ** and ** Fluent Bit ** are unified logging layers that collect, process, and forward logs from various sources to various destinations(like Elasticsearch, S3, or Splunk).
+      `
+    },
+    {
+      id: 476,
+      question: "What is 'Cloud Native Application Delivery' focusing on?",
+      options: [
+        "Buying more physical servers for the data center",
+        "The complete lifecycle of software development, from code to production using automation and cloud-native tools",
+        "The shipping speed of hardware components",
+        "Manual deployment of zip files to a server"
+      ],
+      correctAnswer: "The complete lifecycle of software development, from code to production using automation and cloud-native tools",
+      explanation: `
+### Concept: App Delivery
+Modern application delivery emphasizes speed and reliability through ** CI / CD **, ** GitOps **, and ** Progressive Delivery ** (e.g., Canary, Blue / Green).
+      `
+    },
+    {
+      id: 477,
+      question: "What is 'Autoscaling' in a Kubernetes sense?",
+      options: [
+        "Automatically buying more cloud credits",
+        "Dynamically adjusting the resources (Nodes or Pods) dedicated to a workload based on demand",
+        "A script that restarts the cluster every night",
+        "Upgrading the Kubernetes version automatically"
+      ],
+      correctAnswer: "Dynamically adjusting the resources (Nodes or Pods) dedicated to a workload based on demand",
+      explanation: `
+### Concept: Autoscaling
+  - ** HPA(Horizontal Pod Autoscaler) **: Scaled number of pods.
+- ** VPA(Vertical Pod Autoscaler) **: Scales CPU / Memory of existing pods.
+- ** Cluster Autoscaler **: Adds or removes physical Nodes to the cluster.
+      `
+    },
+    {
+      id: 478,
+      question: "What are 'Taints and Tolerations' used for in Kubernetes?",
+      options: [
+        "To encrypt data in etcd",
+        "To ensure that pods are not scheduled onto inappropriate nodes",
+        "To manage user roles and permissions",
+        "To speed up container networking"
+      ],
+      correctAnswer: "To ensure that pods are not scheduled onto inappropriate nodes",
+      explanation: `
+### Concept: Scheduling
+  - ** Taint **: A marker applied to a ** Node ** to "repel" pods unless they have a matching toleration. (e.g., "This node is for GPUs only").
+- ** Toleration **: Applied to a ** Pod ** to allow it to be scheduled on a tainted node.
+      `
+    },
+    {
+      id: 479,
+      question: "Which of the following describes 'Policy-as-Code'?",
+      options: [
+        "Writing comments in the code explaining company rules",
+        "The practice of managing and enforcing policies (security, compliance, governance) using programmable and automated files (e.g. Kyverno, OPA)",
+        "A document in Git that lists out developer rules",
+        "Using AI to write code for you"
+      ],
+      correctAnswer: "The practice of managing and enforcing policies (security, compliance, governance) using programmable and automated files (e.g. Kyverno, OPA)",
+      explanation: `
+### Concept: Modern Governance
+  ** Policy - as - Code ** moves policy enforcement into the CI / CD pipeline and the orchestrator.
+
+- ** Example **: A policy that says "No container can run as root".
+- ** Enforcement **: Admission controllers(like Kyverno) block any YAML that violates the policy.
+      `
+    },
+    {
+      id: 480,
+      question: "What is an 'Operator' in the Kubernetes world?",
+      options: [
+        "A system administrator who manages the cluster",
+        "A method of packaging, deploying, and managing a Kubernetes application using both CRDs and custom controller logic",
+        "A specialized tool for managing network cables",
+        "A built-in Kubernetes component for manual scaling"
+      ],
+      correctAnswer: "A method of packaging, deploying, and managing a Kubernetes application using both CRDs and custom controller logic",
+      explanation: `
+### Concept: The Operator Pattern
+An ** Operator ** encodes the domain - specific knowledge of a human operator into software.
+
+- ** Goal **: Automate complex stateful apps(like Databases).
+- ** CRD **: Defines the state(e.g., "I want a 3-node Postgres cluster").
+- ** Controller **: Performs the complex work(e.g., setting up replication, handling failover).
+      `
+    },
+    {
+      id: 481,
+      question: "What is 'Cilium' primarily known for in a cluster?",
+      options: [
+        "Replacing the Kubernetes API server",
+        "A high-performance CNI that uses eBPF for networking, security, and observability",
+        "A tool for managing Helm charts",
+        "A dashboard for visualizing pod status"
+      ],
+      correctAnswer: "A high-performance CNI that uses eBPF for networking, security, and observability",
+      explanation: `
+### Concept: Cloud Native Networking
+  ** Cilium ** is an open - source project that uses ** eBPF ** (Extended Berkeley Packet Filter) technology to provide powerful networking and security features directly in the Linux kernel.
+      `
+    },
+    {
+      id: 482,
+      question: "What is the role of a 'Registry' in containerization?",
+      options: [
+        "To store the cluster's user passwords",
+        "To store and share container images",
+        "To track the resource usage of each pod",
+        "To manage the DNS names for services"
+      ],
+      correctAnswer: "To store and share container images",
+      explanation: `
+### Concept: Container Images
+A ** Registry ** (like Docker Hub, Quay, or Google Artifact Registry) is a centralized place where images are uploaded(pushed) and downloaded(pulled) by nodes.
+      `
+    },
+    {
+      id: 483,
+      question: "What is the primary difference between a 'Deployment' and a 'StatefulSet'?",
+      options: [
+        "StatefulSet is faster than Deployment",
+        "Deployment is for stateless apps; StatefulSet is for apps that require persistent identity and stable storage (e.g., databases)",
+        "StatefulSet is only for on-premise clusters",
+        "Deployment can only run one pod at a time"
+      ],
+      correctAnswer: "Deployment is for stateless apps; StatefulSet is for apps that require persistent identity and stable storage (e.g., databases)",
+      explanation: `
+### Concept: Workload API
+  - ** Deployment **: Pods are interchangeable(cattle).If one dies, a new one with a random name replaces it.
+- ** StatefulSet **: Pods have unique, sticky identities(pets).E.g., 'mysql-0' always gets the same network ID and same persistent disk even after a restart.
+      `
+    },
+    {
+      id: 484,
+      question: "What does 'eBPF' stand for and what is its significance in cloud-native?",
+      options: [
+        "Extended Berkeley Packet Filter; allows running sandboxed programs in the Linux kernel without changing kernel source code",
+        "Electronic Build Power Framework; speeds up container builds",
+        "Embedded Binary Process Flow; a method for tracing microservices",
+        "Encryption Block Packet Format; a new security standard for storage"
+      ],
+      correctAnswer: "Extended Berkeley Packet Filter; allows running sandboxed programs in the Linux kernel without changing kernel source code",
+      explanation: `
+### Concept: eBPF
+  ** eBPF ** has revolutionized cloud - native infrastructure by enabling high - performance networking(Cilium), deep observability(Hubble), and advanced security(Falco) with minimal overhead.
+      `
+    },
+    {
+      id: 485,
+      question: "What is the 'Twelve-Factor App' methodology?",
+      options: [
+        "A list of twelve steps for installing Kubernetes",
+        "A set of best practices for building modern, cloud-native applications that are portable and resilient",
+        "A security standard for twelve different types of cloud providers",
+        "A mathematical formula for calculating cloud costs"
+      ],
+      correctAnswer: "A set of best practices for building modern, cloud-native applications that are portable and resilient",
+      explanation: `
+### Concept: App Design
+The ** Twelve - Factor App ** methodology(e.g., Codebase, Dependencies, Config in env vars, Statelessness) provides a roadmap for building apps that fit perfectly into containerized environments.
+      `
+    },
+    {
+      id: 486,
+      question: "What is the purpose of 'Network Policies' in Kubernetes?",
+      options: [
+        "To assign static IP addresses to nodes",
+        "To provide a declarative way to specify which pods are allowed to communicate with each other",
+        "To increase the bandwidth of the cluster network",
+        "To manage the firewall of the physical data center"
+      ],
+      correctAnswer: "To provide a declarative way to specify which pods are allowed to communicate with each other",
+      explanation: `
+### Concept: Zero Trust
+By default, all pods in Kubernetes can talk to each other. ** Network Policies ** allow you to implement a "Default Deny" posture and only allow necessary traffic, improving security.
+      `
+    },
+    {
+      id: 487,
+      question: "What is 'Grafana' commonly used for?",
+      options: [
+        "A database for storing logs",
+        "A visualization and dashboarding platform for observing metric data (often from Prometheus)",
+        "A tool for managing container images",
+        "A security scanner for Kubernetes clusters"
+      ],
+      correctAnswer: "A visualization and dashboarding platform for observing metric data (often from Prometheus)",
+      explanation: `
+### Concept: Visualization
+  ** Grafana ** allows you to create beautiful, interactive dashboards to monitor the health and performance of your applications and infrastructure.
+      `
+    },
+    {
+      id: 488,
+      question: "What is 'Istio'?",
+      options: [
+        "A container runtime like containerd",
+        "A popular open-source Service Mesh that provides advanced traffic management, security, and observability",
+        "A package manager for Kubernetes",
+        "A tool for backing up etcd"
+      ],
+      correctAnswer: "A popular open-source Service Mesh that provides advanced traffic management, security, and observability",
+      explanation: `
+### Concept: Service Mesh
+  ** Istio ** is one of the most mature service meshes, offering features like request routing, mTLS, and rich telemetry out - of - the - box.
+      `
+    },
+    {
+      id: 489,
+      question: "Which of the following is an example of an 'Admission Controller' task?",
+      options: [
+        "Deciding which node a pod should run on",
+        "Checking if a specific image registry is allowed before allowing a pod to be created",
+        "Encrypting a database on disk",
+        "Managing the CSS of the application dashboard"
+      ],
+      correctAnswer: "Checking if a specific image registry is allowed before allowing a pod to be created",
+      explanation: `
+### Concept: Admission Control
+Admission controllers can enforce rules like "Only allow images from 'mycompany.registry.io'".This happens during the API request phase, before any pod is actually scheduled or run.
       `
     }
   ]
